@@ -1,0 +1,4 @@
+#Fri Mar 20 19:00:28 PDT 2020
+base.0=C\:\\Users\\aliza\\BudgetManagementApplication\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

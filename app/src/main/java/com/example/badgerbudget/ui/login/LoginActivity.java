@@ -5,6 +5,7 @@ import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -22,12 +23,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.badgerbudget.CreateAccountActivity;
 import com.example.badgerbudget.R;
 import com.example.badgerbudget.ui.login.LoginViewModel;
 import com.example.badgerbudget.ui.login.LoginViewModelFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static final String EXTRA_MESSAGE = "Test";
     private LoginViewModel loginViewModel;
 
     @Override
@@ -127,5 +130,13 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showLoginFailed(@StringRes Integer errorString) {
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+    }
+
+    public void createAccount(View view){
+        Intent intent = new Intent(this, CreateAccountActivity.class);
+        EditText editText = (EditText) findViewById(R.id.username);
+        String message = editText.getText().toString();
+        intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
     }
 }
