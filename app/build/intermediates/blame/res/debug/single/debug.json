@@ -492,6 +492,10 @@
         "source": "C:\\Users\\aliza\\.gradle\\caches\\transforms-2\\files-2.1\\697f71c0c12135256cbfe98df498a7e4\\appcompat-1.0.2\\res\\drawable-mdpi-v4\\abc_ab_share_pack_mtrl_alpha.9.png"
     },
     {
+        "merged": "C:\\Users\\aliza\\BudgetManagementApplication\\app\\build\\intermediates\\res\\merged\\debug\\drawable_wisc.png.flat",
+        "source": "C:\\Users\\aliza\\BudgetManagementApplication\\app\\src\\main\\res\\drawable\\wisc.png"
+    },
+    {
         "merged": "C:\\Users\\aliza\\BudgetManagementApplication\\app\\build\\intermediates\\res\\merged\\debug\\anim_design_snackbar_out.xml.flat",
         "source": "C:\\Users\\aliza\\.gradle\\caches\\transforms-2\\files-2.1\\c7eb9cd3508ac3959447c14fd76c9fb9\\material-1.0.0\\res\\anim\\design_snackbar_out.xml"
     },
