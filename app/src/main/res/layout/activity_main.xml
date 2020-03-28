@@ -7,7 +7,7 @@
     tools:context=".CreateAccountActivity">
 
     <EditText
-        android:id="@+id/editText5"
+        android:id="@+id/s2answerTest"
         android:layout_width="168dp"
         android:layout_height="44dp"
         android:layout_marginTop="10dp"
@@ -17,7 +17,7 @@
         android:hint="Answer"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText4" />
+        app:layout_constraintTop_toBottomOf="@+id/s1AnswerText" />
 
     <TextView
         android:id="@+id/CreateAccountTextView"
@@ -127,10 +127,11 @@
         android:id="@+id/textInputLayout4"
         android:layout_width="234dp"
         android:layout_height="58dp"
-        app:layout_constraintEnd_toStartOf="@+id/editText4"
+        app:layout_constraintEnd_toStartOf="@+id/s1AnswerText"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/s1QuestionText"
             android:layout_width="228dp"
             android:layout_height="wrap_content"
             android:hint="Security Question 1" />
@@ -138,7 +139,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/s1AnswerText"
         android:layout_width="168dp"
         android:layout_height="44dp"
         android:layout_marginTop="14dp"
@@ -154,12 +155,13 @@
         android:id="@+id/textInputLayout5"
         android:layout_width="231dp"
         android:layout_height="57dp"
-        app:layout_constraintEnd_toStartOf="@+id/editText5"
+        app:layout_constraintEnd_toStartOf="@+id/s2answerTest"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/s2QuestionText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:hint="Security Question 2" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -167,17 +169,18 @@
         android:id="@+id/textInputLayout6"
         android:layout_width="228dp"
         android:layout_height="58dp"
-        app:layout_constraintEnd_toStartOf="@+id/editText6"
+        app:layout_constraintEnd_toStartOf="@+id/s3AnswerText"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/s3QuestionText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Security Question 3" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <EditText
-        android:id="@+id/editText6"
+        android:id="@+id/s3AnswerText"
         android:layout_width="185dp"
         android:layout_height="43dp"
         android:layout_marginTop="15dp"

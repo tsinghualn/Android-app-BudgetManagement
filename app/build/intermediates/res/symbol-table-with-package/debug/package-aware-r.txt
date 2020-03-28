@@ -1029,9 +1029,14 @@ id ALT
 id CTRL
 id CreateAccountTextView
 id FUNCTION
+id FirstCategory
+id FirstCategoryBudget
 id META
 id SHIFT
 id SYM
+id Salary
+id SecondCategory
+id SecondCategoryBudget
 id action_bar
 id action_bar_activity_content
 id action_bar_container
@@ -1092,9 +1097,6 @@ id design_navigation_view
 id dimensions
 id direct
 id disableHome
-id editText4
-id editText5
-id editText6
 id edit_query
 id end
 id enterAlways
@@ -1165,6 +1167,12 @@ id radio
 id right
 id right_icon
 id right_side
+id s1AnswerText
+id s1QuestionText
+id s2QuestionText
+id s2answerTest
+id s3AnswerText
+id s3QuestionText
 id salaryView
 id save_image_matrix
 id save_non_transition_alpha
@@ -1211,6 +1219,7 @@ id submenuarrow
 id submit_area
 id tabMode
 id tableGoesHereView
+id tableLayout
 id tag_transition_group
 id tag_unhandled_key_event_manager
 id tag_unhandled_key_listeners

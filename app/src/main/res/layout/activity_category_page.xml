@@ -13,7 +13,9 @@
         android:layout_marginTop="37dp"
         android:layout_marginEnd="141dp"
         android:layout_marginRight="141dp"
-        android:text="Categories Page"
+        android:text="Categories "
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,31 +23,105 @@
         android:id="@+id/addButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="94dp"
+        android:layout_marginRight="94dp"
         android:text="Add Category"
-        tools:layout_editor_absoluteX="60dp"
-        tools:layout_editor_absoluteY="162dp" />
+        app:layout_constraintEnd_toStartOf="@+id/deleteButton"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
 
     <Button
         android:id="@+id/deleteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginRight="26dp"
         android:text="Delete Category"
-        tools:layout_editor_absoluteX="70dp"
-        tools:layout_editor_absoluteY="286dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
 
     <TextView
         android:id="@+id/tableGoesHereView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Table Goes here"
-        tools:layout_editor_absoluteX="69dp"
-        tools:layout_editor_absoluteY="473dp" />
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="147dp"
+        android:layout_marginRight="147dp"
+        android:text="Current Categories"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Salary" />
 
     <TextView
         android:id="@+id/salaryView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="84dp"
+        android:text="Your current salary: "
+        app:layout_constraintEnd_toStartOf="@+id/Salary"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/Salary"
+        android:layout_width="269dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
         android:text="Salary Goes Here"
-        tools:layout_editor_absoluteX="35dp"
-        tools:layout_editor_absoluteY="76dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headingView" />
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="409dp"
+        android:layout_height="366dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginRight="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableGoesHereView">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/FirstCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category 1    " />
+
+            <TextView
+                android:id="@+id/FirstCategoryBudget"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category 1 Budget " />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/SecondCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category 2" />
+
+            <TextView
+                android:id="@+id/SecondCategoryBudget"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category 2 Budget " />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="85dp" />
+    </TableLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
