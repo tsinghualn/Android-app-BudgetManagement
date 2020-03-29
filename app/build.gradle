@@ -34,5 +34,8 @@ dependencies {
     // for graph
     implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
     implementation 'com.android.support:multidex:1.0.3'
+    // for line graph @Joon
+    implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
+
 
 }
