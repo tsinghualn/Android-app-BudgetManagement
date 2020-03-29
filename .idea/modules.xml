@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BadgerBudget.iml" filepath="$PROJECT_DIR$/BadgerBudget.iml" group="BadgerBudget" />
-      <module fileurl="file://$PROJECT_DIR$/BudgetManagementApplication.iml" filepath="$PROJECT_DIR$/BudgetManagementApplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="BadgerBudget/app" />
     </modules>
   </component>
