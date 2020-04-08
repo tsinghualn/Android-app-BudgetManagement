@@ -1,12 +1,19 @@
 package com.example.badgerbudget;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +39,6 @@ public class MainPageActivity extends AppCompatActivity {
         Spinner typeSpinner = (Spinner) findViewById(R.id.typeSpinner);
         Spinner categorySpinner = (Spinner) findViewById(R.id.categorySpinner);
 
-        //
         LineChartView lineChartView = findViewById(R.id.chart);
 
         String[] axisData = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept",
@@ -55,7 +61,35 @@ public class MainPageActivity extends AppCompatActivity {
         lineChartView.setLineChartData(data);
 
 
-
+        // navigation bar
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        break;
+                    case R.id.nav_report:
+                        Intent a = new Intent(MainPageActivity.this, report.class);
+                        startActivity(a);
+                        break;
+                    case R.id.nav_setting:
+                        Intent b = new Intent(MainPageActivity.this,SettingActivity.class);
+                        startActivity(b);
+                        break;
+                    case R.id.nav_goal:
+                        // Intent c = new Intent(MainPageActivity.this, GoalsActivity.class);
+                        // startActivity(c)
+                        break;
+                    case R.id.nav_category:
+                        Intent d = new Intent(MainPageActivity.this, CategoryPageActivity.class);
+                        startActivity(d);
+                        break;
+                }
+                return false;
+            }
+        });
 
     }
+
 }

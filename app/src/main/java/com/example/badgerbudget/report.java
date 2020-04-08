@@ -1,15 +1,20 @@
 package com.example.badgerbudget;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.Pie;
 import com.anychart.charts.Cartesian;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +42,37 @@ public class report extends AppCompatActivity {
 
         barChartView=findViewById(R.id.bar_chart_view);
         createBarChart();
+
+        // navigation bar
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        Intent a = new Intent(report.this, MainPageActivity.class);
+                        startActivity(a);
+                        break;
+                    case R.id.nav_report:
+                        // Intent b = new Intent(report.this, report.class);
+                        // startActivity(b);
+                        break;
+                    case R.id.nav_setting:
+                        Intent c = new Intent(report.this,SettingActivity.class);
+                        startActivity(c);
+                        break;
+                    case R.id.nav_goal:
+                        // Intent d = new Intent(report.this, GoalsActivity.class);
+                        // startActivity(d)
+                        break;
+                    case R.id.nav_category:
+                        Intent e = new Intent(report.this, CategoryPageActivity.class);
+                        startActivity(e);
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     public void createBarChart(){

@@ -5,13 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.badgerbudget.ui.login.LoginActivity;
-import com.example.badgerbudget.R;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
@@ -28,7 +23,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_createaccount);
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
         usernameBox = (EditText) findViewById(R.id.usernameBox);
