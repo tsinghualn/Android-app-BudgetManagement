@@ -25,6 +25,8 @@ animator mtrl_fab_hide_motion_spec
 animator mtrl_fab_show_motion_spec
 animator mtrl_fab_transformation_sheet_collapse_spec
 animator mtrl_fab_transformation_sheet_expand_spec
+array Month
+array Year
 attr actionBarDivider
 attr actionBarItemBackground
 attr actionBarPopupTheme
@@ -1264,6 +1266,7 @@ id start
 id stateText
 id stretch
 id submenuarrow
+id submit
 id submit_area
 id tabMode
 id tableGoesHereView

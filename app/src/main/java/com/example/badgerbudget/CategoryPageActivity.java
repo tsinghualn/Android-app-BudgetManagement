@@ -16,6 +16,12 @@ public class CategoryPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_page);
 
+        navigation();
+
+    }
+
+
+    private void navigation() {
 
         // navigation bar
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -47,5 +53,6 @@ public class CategoryPageActivity extends AppCompatActivity {
                 return false;
             }
         });
+
     }
 }

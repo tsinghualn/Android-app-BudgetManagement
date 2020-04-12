@@ -28,6 +28,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.login.LoginActivity" />
         </activity>
+        <activity android:name="com.example.badgerbudget.SettingActivity" />
+        <activity android:name="com.example.badgerbudget.MainPageActivity" />
         <activity
             android:name="com.example.badgerbudget.ui.login.LoginActivity"
             android:label="@string/app_name" >

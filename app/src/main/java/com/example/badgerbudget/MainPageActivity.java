@@ -61,6 +61,11 @@ public class MainPageActivity extends AppCompatActivity {
         lineChartView.setLineChartData(data);
 
 
+        navigation();
+    }
+
+    private void navigation() {
+
         // navigation bar
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

@@ -18,6 +18,11 @@ public class SettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
+
+
+        navigation();
+
+
         final Button profileButton = (Button) findViewById(R.id.profileButton);
         Button downloadButton = (Button) findViewById(R.id.downloadButton);
         Button notificationButton = (Button) findViewById(R.id.notificationButton);
@@ -32,6 +37,10 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    private void navigation(){
 
         // navigation bar
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -63,7 +72,5 @@ public class SettingActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-
     }
 }
