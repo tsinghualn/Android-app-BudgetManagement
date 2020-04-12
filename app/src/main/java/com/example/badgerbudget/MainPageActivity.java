@@ -1,5 +1,6 @@
 package com.example.badgerbudget;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -74,7 +75,7 @@ public class MainPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
         String[] arrayTypeSpinner = new String[] {
-                "1", "2", "3", "4", "5", "6", "7"
+                "Expense", "Income"
         };
         final ArrayAdapter<String> typeAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, arrayTypeSpinner);
@@ -86,7 +87,11 @@ public class MainPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(typeAdapter == null || typeSpinner == null || amountText == null){
-                    Toast.makeText(getApplicationContext(), "Please fill in the options before adding transaction", Toast.LENGTH_LONG).show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainPageActivity.this);
+                    builder.setMessage("Failed. Check categories, type, and amount.")
+                            .setPositiveButton("okay", null)
+                            .create()
+                            .show();
                 }
                 else{
                     // todo: add to data base
