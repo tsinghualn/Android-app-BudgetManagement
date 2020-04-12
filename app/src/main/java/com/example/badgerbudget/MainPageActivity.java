@@ -2,10 +2,15 @@ package com.example.badgerbudget;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,23 +31,33 @@ public class MainPageActivity extends AppCompatActivity {
         TextView currentBalanceText = (TextView) findViewById(R.id.currentBalanceText);
         TextView currentExpenseText = (TextView) findViewById(R.id.currentExpenseText);
         TextView targetExpenseText = (TextView) findViewById(R.id.targetExpenseText);
-        Spinner typeSpinner = (Spinner) findViewById(R.id.typeSpinner);
+        final Spinner typeSpinner = (Spinner) findViewById(R.id.typeSpinner);
         Spinner categorySpinner = (Spinner) findViewById(R.id.categorySpinner);
+        EditText noteText = (EditText) findViewById(R.id.noteText);
+        final EditText amountText = (EditText) findViewById(R.id.amountText);
+        Button addButton = (Button) findViewById(R.id.addButton);
+
 
         // current balance
         TextView currentBalance = new TextView(getApplicationContext());
-        String currentBalanceString = "";
+        String currentBalanceString = "5252";
         currentBalance.setText(currentBalanceString);
 
         // current expense
         TextView currentExpense = new TextView(getApplicationContext());
-        String currentExpenseString = "";
+        String currentExpenseString = "5252";
         currentExpense.setText(currentExpenseString);
 
         // target expense
         TextView targetExpense = new TextView(getApplicationContext());
-        String targetExpenseString = "";
+        String targetExpenseString = "5252";
         targetExpense.setText(targetExpenseString);
+
+        // note
+        String note = noteText.getText().toString();
+
+        // amount
+        String amount = amountText.getText().toString();
 
         // get categories
         super.onCreate(savedInstanceState);
@@ -61,15 +76,29 @@ public class MainPageActivity extends AppCompatActivity {
         String[] arrayTypeSpinner = new String[] {
                 "1", "2", "3", "4", "5", "6", "7"
         };
-        ArrayAdapter<String> typeAdapter = new ArrayAdapter<String>(this,
+        final ArrayAdapter<String> typeAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, arrayTypeSpinner);
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         typeSpinner.setAdapter(typeAdapter);
 
+        // ok button
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(typeAdapter == null || typeSpinner == null || amountText == null){
+                    Toast.makeText(getApplicationContext(), "Please fill in the options before adding transaction", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    // todo: add to data base
 
+                    // refresh
+                    Intent addIntent = new Intent(MainPageActivity.this, MainPageActivity.class);
+                    MainPageActivity.this.startActivity(addIntent);
+                }
+            }
+        });
         // graph
         LineChartView lineChartView = findViewById(R.id.chart);
-
         String[] axisData = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept",
                 "Oct", "Nov", "Dec"};
         int[] yAxisData = {50, 20, 15, 30, 20, 60, 15, 40, 45, 10, 90, 18};
