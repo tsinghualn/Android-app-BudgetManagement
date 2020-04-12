@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -12,6 +13,10 @@ import android.widget.Toast;
 
 import com.example.badgerbudget.ui.login.LoginActivity;
 import com.example.badgerbudget.R;
+import com.example.badgerbudget.data.model.*;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
@@ -41,13 +46,18 @@ public class CreateAccountActivity extends AppCompatActivity {
         s1a = (EditText) findViewById(R.id.s1AnswerText);
         s2a = (EditText) findViewById(R.id.s2answerTest);
         s3a = (EditText) findViewById(R.id.s3AnswerText);
+        //harddcode the theree security questions, only want to store the answers.
     }
 
-    public void createAccount(View view){
+    public void createAccount(View view) throws UnknownHostException {
         if(usernameBox.length() == 0 || passwordBox.length() == 0 || nameBox.length() == 0 || birthday.length() == 0 || s1q.length() == 0 || s2q.length() == 0 || s2a.length() == 0 || s3q.length()== 0 || s3a.length() ==0)
         {
-            Toast.makeText(getApplicationContext(), "All fields must be filled before creating account!", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "All fields must be filled before creating account!", Toast.LENGTH_LONG).show();
         }
-
+        //System.out.println(InetAddress.getLocalHost().toString());
+        Client client = new Client(8000, InetAddress.getLocalHost().getHostName());
+        client.sendMessage("createuser;"+ "test test test test test test test");
+        //if username already exists in the database, we let the user know
+            //Toast.makeText(getApplicationContext(),"Username already exists!", Toast.LENGTH_LONG).show();
     }
 }

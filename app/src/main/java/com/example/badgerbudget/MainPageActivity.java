@@ -2,6 +2,7 @@ package com.example.badgerbudget;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.EditText;
@@ -25,6 +26,8 @@ public class MainPageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
+        //getting intent from login page, will have to send the server information via the intent as well. 
+        Intent intent = getIntent();
 
         TextView currentBalenceText = (TextView) findViewById(R.id.currentBalenceText);
         TextView currentExpenseText = (TextView) findViewById(R.id.currentExpenseText);

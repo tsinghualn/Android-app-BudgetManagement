@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.badgerbudget">
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -12,6 +13,11 @@
         <activity android:name=".calculator"></activity>
         <activity android:name=".report" />
         <activity android:name=".CategoryPageActivity" />
+        <activity android:name=".MainPageActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.login.LoginActivity" />
+        </activity>
         <activity android:name=".CreateAccountActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

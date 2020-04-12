@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="94dp"
-        android:layout_marginRight="94dp"
+        android:onClick="addCategory"
         android:text="Add Category"
         app:layout_constraintEnd_toStartOf="@+id/deleteButton"
         app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="26dp"
-        android:layout_marginRight="26dp"
+        android:onClick="deleteCategory"
         android:text="Delete Category"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
