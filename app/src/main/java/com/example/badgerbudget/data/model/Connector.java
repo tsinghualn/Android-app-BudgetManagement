@@ -11,13 +11,11 @@ public class Connector {
      * and returns back to the function above sending the client the data
      * @param query
      */
-    public Connector(String message) {
+    public Connector() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Users?allowPublicKeyRetrieval=true&useSSL=false", "root", "Kangaroo1");
-            if (message.equals("insertUser")) {
 
-            }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -42,6 +40,7 @@ public class Connector {
             e.printStackTrace();
             return failure;
         }
+
     }
     /**
      * Creates a table holding all of the users' login information
@@ -117,7 +116,7 @@ public class Connector {
      * to repeat the hash process and compare hashes.
      * @return
      */
-    public boolean passwordCheck(String username, String password) {
+    public String passwordCheck(String username, String password) {
         //TODO: Implement Password Hashing for next iteration
         try {
             Statement stmt = conn.createStatement();
@@ -125,12 +124,12 @@ public class Connector {
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()) {
                 if (rs.getString(2).equals(username) && rs.getString(3).equals(password)) {
-                    return true;
+                    return "true";
                 }
-            } return false;
+            } return "Invalid Combination of Username and Password";
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return "Could not validate information";
         }
     }
 
@@ -400,4 +399,3 @@ public class Connector {
         return goals;
     }
 }
-
