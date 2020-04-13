@@ -33,4 +33,12 @@
         <item>2020</item>
     </string-array>
 
+    <string-array name="Tip">
+        <item>12%</item>
+        <item>12%</item>
+        <item>18%</item>
+        <item>20%</item>
+        <item>23%</item>
+    </string-array>
+
 </resources>

@@ -4850,7 +4850,7 @@ public final class R {
     public static final int passwordBox=0x7f0900a7;
     public static final int percent=0x7f0900a8;
     public static final int phoneText=0x7f0900a9;
-    public static final int pie_chart_view=0x7f0900aa;
+    public static final int piechart=0x7f0900aa;
     public static final int pin=0x7f0900ab;
     public static final int profileButton=0x7f0900ac;
     public static final int progress_circular=0x7f0900ad;

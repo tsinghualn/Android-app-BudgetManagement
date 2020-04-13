@@ -1203,7 +1203,7 @@ id password
 id passwordBox
 id percent
 id phoneText
-id pie_chart_view
+id piechart
 id pin
 id profileButton
 id progress_circular

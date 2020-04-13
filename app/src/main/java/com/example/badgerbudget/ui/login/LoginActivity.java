@@ -30,6 +30,7 @@ import com.example.badgerbudget.CreateAccountActivity;
 import com.example.badgerbudget.MainPageActivity;
 import com.example.badgerbudget.R;
 import com.example.badgerbudget.SettingActivity;
+import com.example.badgerbudget.calculator;
 import com.example.badgerbudget.report;
 import com.example.badgerbudget.ui.login.LoginViewModel;
 import com.example.badgerbudget.ui.login.LoginViewModelFactory;
@@ -44,7 +45,10 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
+
+
+
+ /*       loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
 
@@ -130,10 +134,14 @@ public class LoginActivity extends AppCompatActivity {
                         passwordEditText.getText().toString());
             }
         });
-
+*/
 
     }
 
+    public void tempLogin(View view){
+        Intent intent = new Intent(this, calculator.class);
+        startActivity(intent);
+    }
 
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();

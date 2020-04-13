@@ -1202,7 +1202,7 @@ int id password 0x7f0900a6
 int id passwordBox 0x7f0900a7
 int id percent 0x7f0900a8
 int id phoneText 0x7f0900a9
-int id pie_chart_view 0x7f0900aa
+int id piechart 0x7f0900aa
 int id pin 0x7f0900ab
 int id profileButton 0x7f0900ac
 int id progress_circular 0x7f0900ad

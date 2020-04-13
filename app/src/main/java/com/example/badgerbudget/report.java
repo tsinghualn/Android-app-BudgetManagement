@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,12 @@ import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.Pie;
 import com.anychart.charts.Cartesian;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -30,12 +37,15 @@ public class report extends AppCompatActivity {
 
     // A pie chart that shows overall spending per category
     AnyChartView pieChartView;
-    String[] categories={"Category1","Category2","Category3"};
+    String[] categories = {"categ1", "categ2", "categ3"};
     int[] catExpense={300,200,600};
 
     String[] months={"January","February","March"};
     int[] monExpense={1000,600,1500};
     int[] monIncome={2000,2400,3000};
+
+    // new pie chart
+    PieChart pieChart;
 
     // A bar chart that shows trend of overall spending/expense
     AnyChartView barChartView;
@@ -101,7 +111,6 @@ public class report extends AppCompatActivity {
         addListenerOnButton();
 
 
-        pieChartView=findViewById(R.id.pie_chart_view);
         viewCategPieChart();
 
         barChartView=findViewById(R.id.bar_chart_view);
@@ -153,16 +162,65 @@ public class report extends AppCompatActivity {
 
     public void viewCategPieChart(){
 
-        Pie pie = AnyChart.pie();
-        List<DataEntry> pieDataEntries = new ArrayList<>();
+        pieChart = (PieChart)findViewById(R.id.piechart);
 
-        for(int i=0;i<categories.length;i++){
-            pieDataEntries.add(new ValueDataEntry(categories[i],catExpense[i]));
+        pieChart.setUsePercentValues(true);
+        pieChart.getDescription().setEnabled(false);
+        pieChart.setExtraOffsets(5,10,5,5);
+
+        pieChart.setDragDecelerationFrictionCoef(0.95f);
+
+        pieChart.setDrawHoleEnabled(false);
+        pieChart.setHoleColor(Color.BLACK);
+        pieChart.setTransparentCircleRadius(61f);
+
+        ArrayList<PieEntry> yValues = new ArrayList<PieEntry>();
+
+        for(int i=0; i < categories.length; i++){
+            yValues.add(new PieEntry(catExpense[i],categories[i]));
         }
 
+        Description description = new Description();
+        description.setText("Expense");
+        description.setTextSize(10);
+        pieChart.setDescription(description);
+
+        PieDataSet dataSet = new PieDataSet(yValues,"");
+        dataSet.setSliceSpace(3f);
+        dataSet.setSelectionShift(5f);
+        dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+
+        PieData data = new PieData((dataSet));
+        data.setValueTextSize(10f);
+        data.setValueTextColor(Color.BLACK);
+
+        pieChart.setData(data);
+
+
+
+
+
+
+
+
+
+
+/*        Pie pie = AnyChart.pie();
+        List<DataEntry> pieDataEntries = new ArrayList<>();
+
+*//*        for(int i=0;i<categories.length;i++){
+            pieDataEntries.add(new ValueDataEntry(categories[i],catExpense[i]));
+        }*//*
+
+        pieDataEntries.add(new ValueDataEntry("categ1", 50));
+
+        pieDataEntries.add(new ValueDataEntry("categ2", 50));
+
         pie.data(pieDataEntries);
-        pie.title("Expense");
-        pieChartView.setChart(pie);
+        //pie.title("Expense");
+
+        pieChartView=(AnyChartView) findViewById(R.id.pie_chart_view);
+        pieChartView.setChart(pie);*/
 
     }
 
@@ -222,16 +280,28 @@ public class report extends AppCompatActivity {
         });
     }
 
+
+    public void setData(String startMonth, String endMonth, String startYear, String endYear){
+
+        // get data from database with args
+
+        // for loop iterate through and put data into array
+
+        // check if two array length are matched
+
+
+    }
     /* get a list of categories and corresponding expense from database */
-    public HashMap<String, Double> getCategories(String startMonth, String endMonth, String startYear, String endYear){
+    public HashMap<String, Double> getCategories(){
 
 
         return categList;
     }
 
     /* Get a list of months (from starting month to end month) and corresponding expense from database */
-    public HashMap<String, Double> getExpense(String startMonth, String endMonth, String startYear, String endYear) {
+    public HashMap<String, Double> getExpense() {
 
+        //expenseByMonth.put("January", 3000.5);
 
         return expenseByMonth;
     }
