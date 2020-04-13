@@ -26,6 +26,7 @@ animator mtrl_fab_show_motion_spec
 animator mtrl_fab_transformation_sheet_collapse_spec
 animator mtrl_fab_transformation_sheet_expand_spec
 array Month
+array Tip
 array Year
 attr actionBarDivider
 attr actionBarItemBackground
@@ -1085,6 +1086,8 @@ id birthdayText
 id blocking
 id bottom
 id bottom_navigation
+id btn_tax
+id btn_tip
 id button
 id buttonPanel
 id calc_title

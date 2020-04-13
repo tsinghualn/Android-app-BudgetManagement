@@ -261,7 +261,7 @@ public class report extends AppCompatActivity {
     }
 
     /* get the selected dropdown list value */
-    public void addListenerOnButton() {
+    private void addListenerOnButton() {
 
         startMonth = (Spinner) findViewById(R.id.sMonth);
         btnSubmit = (Button) findViewById(R.id.submit);

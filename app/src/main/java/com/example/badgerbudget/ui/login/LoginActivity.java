@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
- /*       loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
+        loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
 
@@ -134,14 +134,9 @@ public class LoginActivity extends AppCompatActivity {
                         passwordEditText.getText().toString());
             }
         });
-*/
 
     }
 
-    public void tempLogin(View view){
-        Intent intent = new Intent(this, report.class);
-        startActivity(intent);
-    }
 
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
