@@ -15,9 +15,6 @@
         <activity android:name=".report" />
         <activity android:name=".CategoryPageActivity" />
         <activity android:name=".MainPageActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.login.LoginActivity" />
         </activity>
         <activity android:name=".CreateAccountActivity">
             <meta-data

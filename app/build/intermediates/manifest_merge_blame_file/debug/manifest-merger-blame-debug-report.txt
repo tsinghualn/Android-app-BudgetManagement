@@ -19,7 +19,7 @@
 13    </uses-permission>
 14
 15    <application
-15-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:7:5-36:19
+15-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:7:5-33:19
 16        android:name="androidx.multidex.MultiDexApplication"
 17        android:allowBackup="true"
 17-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:8:9-35
@@ -47,53 +47,47 @@
 28-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:16:9-58
 28-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:16:19-55
 29        <activity android:name="com.example.badgerbudget.MainPageActivity" >
-29-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:17:9-21:20
+29-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:17:9-18:20
 29-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:17:19-51
-30            <meta-data
-30-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:18:13-20:59
-31                android:name="android.support.PARENT_ACTIVITY"
-31-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:19:17-63
-32                android:value=".ui.login.LoginActivity" />
-32-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:20:17-56
-33        </activity>
-34        <activity android:name="com.example.badgerbudget.CreateAccountActivity" >
-34-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:22:9-26:20
-34-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:22:19-56
-35            <meta-data
-35-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:18:13-20:59
-36                android:name="android.support.PARENT_ACTIVITY"
-36-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:19:17-63
-37                android:value=".ui.login.LoginActivity" />
-37-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:20:17-56
-38        </activity>
-39        <activity
-39-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:27:9-35:20
-40            android:name="com.example.badgerbudget.ui.login.LoginActivity"
-40-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:28:13-51
-41            android:label="@string/app_name" >
-41-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:29:13-45
-42            <intent-filter>
-42-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:30:13-34:29
-43                <action android:name="android.intent.action.MAIN" />
-43-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:31:17-69
-43-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:31:25-66
-44
-45                <category android:name="android.intent.category.LAUNCHER" />
-45-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:33:17-77
-45-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:33:27-74
-46            </intent-filter>
-47        </activity>
-48
-49        <provider
-49-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\aliza\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:23:9-27:43
-50            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
-50-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\aliza\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:24:13-79
-51            android:authorities="com.example.badgerbudget.lifecycle-process"
-51-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\aliza\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:25:13-69
-52            android:exported="false"
-52-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\aliza\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:26:13-37
-53            android:multiprocess="true" />
-53-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\aliza\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:27:13-40
-54    </application>
-55
-56</manifest>
+30        </activity>
+31        <activity android:name="com.example.badgerbudget.CreateAccountActivity" >
+31-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:19:9-23:20
+31-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:19:19-56
+32            <meta-data
+32-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:20:13-22:59
+33                android:name="android.support.PARENT_ACTIVITY"
+33-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:21:17-63
+34                android:value=".ui.login.LoginActivity" />
+34-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:22:17-56
+35        </activity>
+36        <activity
+36-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:24:9-32:20
+37            android:name="com.example.badgerbudget.ui.login.LoginActivity"
+37-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:25:13-51
+38            android:label="@string/app_name" >
+38-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:26:13-45
+39            <intent-filter>
+39-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:27:13-31:29
+40                <action android:name="android.intent.action.MAIN" />
+40-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:28:17-69
+40-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:28:25-66
+41
+42                <category android:name="android.intent.category.LAUNCHER" />
+42-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:30:17-77
+42-->C:\Users\aliza\BudgetManagementApplication\app\src\main\AndroidManifest.xml:30:27-74
+43            </intent-filter>
+44        </activity>
+45
+46        <provider
+46-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\aliza\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:23:9-27:43
+47            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
+47-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\aliza\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:24:13-79
+48            android:authorities="com.example.badgerbudget.lifecycle-process"
+48-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\aliza\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:25:13-69
+49            android:exported="false"
+49-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\aliza\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:26:13-37
+50            android:multiprocess="true" />
+50-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\aliza\.gradle\caches\transforms-2\files-2.1\6fbf654d3db04d7d9e48eb73ccf59f45\lifecycle-process-2.0.0\AndroidManifest.xml:27:13-40
+51    </application>
+52
+53</manifest>

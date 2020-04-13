@@ -28,9 +28,6 @@
         <activity android:name="com.example.badgerbudget.report" />
         <activity android:name="com.example.badgerbudget.CategoryPageActivity" />
         <activity android:name="com.example.badgerbudget.MainPageActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.login.LoginActivity" />
         </activity>
         <activity android:name="com.example.badgerbudget.CreateAccountActivity" >
             <meta-data

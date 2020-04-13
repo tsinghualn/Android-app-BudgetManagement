@@ -56,20 +56,26 @@ public class CreateAccountActivity extends AppCompatActivity {
     public void createAccount(View view) throws UnknownHostException {
         if(usernameBox.length() == 0 || passwordBox.length() == 0 || nameBox.length() == 0 || birthday.length() == 0 || s1q.length() == 0 || s2q.length() == 0 || s2a.length() == 0 || s3q.length()== 0 || s3a.length() ==0)
         {
-            //Toast.makeText(getApplicationContext(), "All fields must be filled before creating account!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "All fields must be filled before creating account!", Toast.LENGTH_LONG).show();
+            return;
         }
-        //System.out.println(InetAddress.getLocalHost().toString());
-        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        //StrictMode.setThreadPolicy(policy);
+        if(passwordBox.length() < 5){
+            Toast.makeText(getApplicationContext(),"Password must be at least 5 characters!", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        String params[] = {"6868", InetAddress.getLocalHost().getHostName()};
+       // String params[] = {"6868", InetAddress.getLocalHost().getHostName()};
         Client client = new Client(6868, "10.0.2.2");
         //client.execute(params);
         System.out.println("Client created");
-        client.sendMessage("createuser;"+ "dummy password test test test test test");
         //if username already exists in the database, we let the user know
             //Toast.makeText(getApplicationContext(),"Username already exists!", Toast.LENGTH_LONG).show();
+        client.sendMessage("createuser;"+
+                usernameBox.getText() + " " + passwordBox.getText() + " " + s1a.getText() + " " + s2a.getText() + " " +
+                s3a.getText() + " " + birthday.getText() + " " + nameBox.getText());
+
+
     }
 }
