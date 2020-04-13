@@ -139,7 +139,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void tempLogin(View view){
-        Intent intent = new Intent(this, calculator.class);
+        Intent intent = new Intent(this, report.class);
         startActivity(intent);
     }
 
