@@ -24,9 +24,9 @@ public class CreateAccountActivity extends AppCompatActivity {
     EditText passwordBox ;
     EditText nameBox;
     EditText birthday;
-    EditText s1q;
-    EditText s2q;
-    EditText s3q;
+    TextView s1q;
+    TextView s2q;
+    TextView s3q;
     EditText s1a;
     EditText s2a;
     EditText s3a;
@@ -40,12 +40,16 @@ public class CreateAccountActivity extends AppCompatActivity {
         passwordBox = (EditText) findViewById(R.id.passwordBox);
         nameBox = (EditText) findViewById(R.id.nameBox);
         birthday = (EditText) findViewById(R.id.birthdayBox);
-        s1q = (EditText) findViewById(R.id.s1QuestionText);
-        s2q = (EditText) findViewById(R.id.s2QuestionText);
-        s3q = (EditText) findViewById(R.id.s3QuestionText);
+        s1q = (TextView) findViewById(R.id.s1QuestionText);
+        s2q = (TextView) findViewById(R.id.s2QuestionText);
+        s3q = (TextView) findViewById(R.id.s3QuestionText);
         s1a = (EditText) findViewById(R.id.s1AnswerText);
         s2a = (EditText) findViewById(R.id.s2answerTest);
         s3a = (EditText) findViewById(R.id.s3AnswerText);
+
+        s1q.setText("What is your mother's maiden name?");
+        s2q.setText("What is your favorite color?");
+        s3q.setText("What was the name of your best friend in 1st grade?");
         //harddcode the theree security questions, only want to store the answers.
     }
 
@@ -55,8 +59,11 @@ public class CreateAccountActivity extends AppCompatActivity {
             //Toast.makeText(getApplicationContext(), "All fields must be filled before creating account!", Toast.LENGTH_LONG).show();
         }
         //System.out.println(InetAddress.getLocalHost().toString());
+        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        //StrictMode.setThreadPolicy(policy);
+        Server ser = new Server(8000);
         Client client = new Client(8000, InetAddress.getLocalHost().getHostName());
-        client.sendMessage("createuser;"+ "test test test test test test test");
+        //client.sendMessage("createuser;"+ "test test test test test test test");
         //if username already exists in the database, we let the user know
             //Toast.makeText(getApplicationContext(),"Username already exists!", Toast.LENGTH_LONG).show();
     }

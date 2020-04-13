@@ -130,12 +130,12 @@
         app:layout_constraintEnd_toStartOf="@+id/s1AnswerText"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <TextView
             android:id="@+id/s1QuestionText"
-            android:layout_width="228dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Security Question 1" />
-
+            android:layout_weight="1"
+            android:text="TextView" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <EditText
@@ -158,11 +158,12 @@
         app:layout_constraintEnd_toStartOf="@+id/s2answerTest"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <TextView
             android:id="@+id/s2QuestionText"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:hint="Security Question 2" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -172,11 +173,12 @@
         app:layout_constraintEnd_toStartOf="@+id/s3AnswerText"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <TextView
             android:id="@+id/s3QuestionText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Security Question 3" />
+            android:layout_weight="1"
+            android:text="TextView" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <EditText
