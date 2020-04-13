@@ -71,11 +71,14 @@ public class CreateAccountActivity extends AppCompatActivity {
         //client.execute(params);
         System.out.println("Client created");
         //if username already exists in the database, we let the user know
-            //Toast.makeText(getApplicationContext(),"Username already exists!", Toast.LENGTH_LONG).show();
-        client.sendMessage("createuser;"+
+        if(client.sendMessage("createuser;"+
                 usernameBox.getText() + " " + passwordBox.getText() + " " + s1a.getText() + " " + s2a.getText() + " " +
-                s3a.getText() + " " + birthday.getText() + " " + nameBox.getText());
+                s3a.getText() + " " + birthday.getText() + " " + nameBox.getText()).equals("username already exists!")){
 
+            Toast.makeText(getApplicationContext(),"Username already exists!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        Toast.makeText(getApplicationContext(),"Account created!", Toast.LENGTH_LONG).show();
 
     }
 }
