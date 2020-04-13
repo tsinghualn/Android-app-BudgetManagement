@@ -159,6 +159,7 @@ public class LoginActivity extends AppCompatActivity {
     public void createAccount(View view){
         Intent intent = new Intent(this, CreateAccountActivity.class);
         startActivity(intent);
+        Intent returnIntent = getIntent();
     }
 
     public void switchToMainPage(View view){

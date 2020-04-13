@@ -79,6 +79,8 @@ public class CreateAccountActivity extends AppCompatActivity {
             return;
         }
         Toast.makeText(getApplicationContext(),"Account created!", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
 
     }
 }
