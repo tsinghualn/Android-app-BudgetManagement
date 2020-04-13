@@ -1,5 +1,7 @@
 package com.example.badgerbudget.data.model;
 
+import android.os.AsyncTask;
+
 import java.io.*;
 import java.net.*;
 import java.sql.*;
@@ -7,13 +9,13 @@ import java.util.Properties;
 
 
 
-public class Server {
+public class Server extends AsyncTask<String, Void, Void> {
         //initialize socket and input stream
         private ServerSocket server = null;
         private BufferedReader in =  null;
         private PrintWriter out;
         // constructor with port
-
+        public Server(){}
         public Server(int port)
         {
             // starts server and waits for a connection
@@ -76,5 +78,33 @@ public class Server {
 
             //Server server = new Server(6868);
         }
+
+    @Override
+    protected Void doInBackground(String... strings) {
+        try
+        {
+            server = new ServerSocket(Integer.parseInt(strings[0]));
+            System.out.println("Server started");
+            System.out.println("Waiting for a client ...");
+            Socket clientSocket = server.accept();
+            System.out.println("Client accepted");
+            // takes input from the client socket
+            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream())), true);
+            String line = "";
+            String message = "";
+            while ((line = in.readLine()) != null)
+            {
+                message+=line;
+                accessMySQL(message);
+                out.println("data retrieved from database: $125");
+            }
+        }
+        catch(IOException i)
+        {
+            i.printStackTrace();
+        }
+        return null;
     }
+}
 

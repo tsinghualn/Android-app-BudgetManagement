@@ -132,9 +132,9 @@ public class LoginActivity extends AppCompatActivity {
                 String u = usernameEditText.getText().toString();
                 String p = passwordEditText.getText().toString();
 
-                Client client = new Client(8000, "localhost");
+                Client client = new Client(6868, "10.0.2.2");
 
-                if(client.sendMessage("login; "+ u + " "+p).equals("true")){
+                if(client.sendMessage("login;"+ u + " "+p).equals("true")){
                     switchToMainPage(v);
                 }
 

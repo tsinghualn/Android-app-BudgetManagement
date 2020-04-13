@@ -1,8 +1,10 @@
 package com.example.badgerbudget.data.model;
+import android.os.AsyncTask;
+
 import java.net.*;
 import java.io.*;
 
-public class Client {
+public class Client extends AsyncTask<String,Void,String> {
     private Socket socket;
     private BufferedReader in;
     private PrintWriter out;
@@ -11,6 +13,7 @@ public class Client {
     private static volatile String returnValue;
     private static volatile String message;
 
+    public Client(){}
     public Client(int port, String hostname) {
         this.port = port;
         this.hostname = hostname;
@@ -19,7 +22,7 @@ public class Client {
 
     public String sendMessage(String message) {
         this.message = message;
-        Thread thread = new Thread(new ClientThread());
+        Thread thread = new Thread(new ClientThread(port,hostname));
         thread.start();
         try {
             thread.join();
@@ -38,12 +41,30 @@ public class Client {
 		}
 		return response;*/ return returnValue;
     }
-    class ClientThread implements Runnable {
 
+    @Override
+    protected String doInBackground(String[] objects) {
+        this.port = port;
+        this.hostname = hostname;
+        return null;
+    }
+
+
+    class ClientThread implements Runnable  {
+        int port;
+        String hostname;
+        public ClientThread(int port, String hostname){
+            this.port = port;
+            this.hostname = hostname;
+        }
         public void run() {
+            android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
+
             try {
-                InetAddress serverAddr = InetAddress.getByName(hostname);
-                socket = new Socket(serverAddr, port);
+                System.out.println(this.hostname);
+                System.out.println(this.port);
+                InetAddress serverAddr = InetAddress.getByName(this.hostname);
+                socket = new Socket(serverAddr, this.port);
                 out = new PrintWriter(new BufferedWriter(
                         new OutputStreamWriter(socket.getOutputStream())),
                         true);

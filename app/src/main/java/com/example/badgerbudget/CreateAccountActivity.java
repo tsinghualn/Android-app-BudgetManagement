@@ -61,9 +61,14 @@ public class CreateAccountActivity extends AppCompatActivity {
         //System.out.println(InetAddress.getLocalHost().toString());
         //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         //StrictMode.setThreadPolicy(policy);
-        Server ser = new Server(8000);
-        Client client = new Client(8000, InetAddress.getLocalHost().getHostName());
-        //client.sendMessage("createuser;"+ "test test test test test test test");
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        String params[] = {"6868", InetAddress.getLocalHost().getHostName()};
+        Client client = new Client(6868, "10.0.2.2");
+        //client.execute(params);
+        System.out.println("Client created");
+        client.sendMessage("createuser;"+ "dummy password test test test test test");
         //if username already exists in the database, we let the user know
             //Toast.makeText(getApplicationContext(),"Username already exists!", Toast.LENGTH_LONG).show();
     }
