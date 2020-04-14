@@ -14,8 +14,7 @@ Select your OS from the dropdown bar: https://dev.mysql.com/downloads/workbench/
 Download the MySQL Driver so that the connector can run properly on your machine. 
 https://dev.mysql.com/downloads/connector/j/5.1.html
 Select Platform Independent here as we’re putting it in Android Studio. 
-Once the download is complete, the file we need to put into Android Studio is called: 
-Mysql-connector-java-5.1.48-bin.jar
+Once the download is complete, the file we need to put into Android Studio is called: Mysql-connector-java-5.1.48-bin.jar
 Afterwards, since we need to run the server separately from the Android Studio Project, we need to place the connector in a separate IDE, we used Eclipse, along with the Server and Connector classes. 
 Since we used Eclipse, here’s how to do it in Eclipse: 
 First, we need the server and connector classes from github. Grab those and make a new Eclipse project with them.
