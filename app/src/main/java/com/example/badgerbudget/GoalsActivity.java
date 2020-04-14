@@ -6,7 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-/*
+
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -19,7 +19,7 @@ public class GoalsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goals);
-        Client client = new Client(5000, "localhost");
+/*        Client client = new Client(5000, "localhost");
         //send message from client to server for eacg goals max spending and current spending
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
         ProgressBar progressBar2 = (ProgressBar) findViewById(R.id.progressBar2);
@@ -33,10 +33,10 @@ public class GoalsActivity extends AppCompatActivity {
         progressBar.setProgress(50/75);
         textView4.setText("Set a New Goal!");
         progressBar.setProgress(0);
-        textView5.setText("Budget Goals");
+        textView5.setText("Budget Goals");*/
 
 
     }
 
 }
-*/
+

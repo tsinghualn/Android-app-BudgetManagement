@@ -1108,7 +1108,7 @@ id content
 id contentPanel
 id coordinator
 id createAccount
-id currentBalenceText
+id currentBalanceText
 id currentExpenseText
 id currentPasswordText
 id custom
@@ -1195,7 +1195,6 @@ id notificationButton
 id notification_background
 id notification_main_column
 id notification_main_column_container
-id okButton
 id outline
 id packed
 id parallax
@@ -1209,6 +1208,8 @@ id phoneText
 id piechart
 id pin
 id profileButton
+id progressBar
+id progressBar2
 id progress_circular
 id progress_horizontal
 id radio
@@ -1382,12 +1383,14 @@ layout abc_tooltip
 layout activity_calculator
 layout activity_category_page
 layout activity_createaccount
+layout activity_goals
 layout activity_login
 layout activity_main
 layout activity_main_page
 layout activity_profile_setting
 layout activity_report
 layout activity_setting
+layout content_goals
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog
 layout design_layout_snackbar

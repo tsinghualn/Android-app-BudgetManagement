@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".GoalsActivity">
 
+
+    <!--
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
@@ -20,6 +22,8 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
+-->
+
 
     <include layout="@layout/content_goals" />
 
