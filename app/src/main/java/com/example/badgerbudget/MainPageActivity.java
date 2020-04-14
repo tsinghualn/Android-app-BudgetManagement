@@ -51,17 +51,33 @@ public class MainPageActivity extends AppCompatActivity {
         // current balance
         TextView currentBalance = new TextView(getApplicationContext());
         String currentBalanceString = "5252";
+        /*
+        select Balance from Transaction
+        where Datetime = (select Max(Datetime) from Transaction) AND UserName = 'test1';
+         */
+        // setCurrentBalance(currentBalanceString);
         currentBalanceText.setText(currentBalanceString);
+
 
 
         // current expense
         TextView currentExpense = new TextView(getApplicationContext());
         String currentExpenseString = "5252";
+        /*
+        select sum(Amount) from Transaction
+        where Type = 'expense' AND month(Datetime) = 3 And year(Datetime) = 2020 AND
+        UserName = 'test1';
+         */
         currentExpenseText.setText(currentExpenseString);
 
         // target expense
         TextView targetExpense = new TextView(getApplicationContext());
         String targetExpenseString = "5252";
+        /*
+        select * from Goal;
+        select Amount from Goal
+        where month(YearMonth) = 3 And year(YearMonth) = 2020 AND UserName = 'test1';
+         */
         targetExpenseText.setText(targetExpenseString);
 
 
@@ -80,6 +96,9 @@ public class MainPageActivity extends AppCompatActivity {
         String[] arrayCategorySpinner = new String[] {
                 "food", "groceries", "clothes", "4", "5", "6", "7"
         };
+        /*
+        select * from Category;
+         */
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>( MainPageActivity.this,
                 android.R.layout.simple_spinner_item, arrayCategorySpinner);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -93,6 +112,9 @@ public class MainPageActivity extends AppCompatActivity {
         String[] arrayTypeSpinner = new String[] {
                 "Expense", "Income"
         };
+        /*
+        select Type from Transaction
+         */
         final ArrayAdapter<String> typeAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, arrayTypeSpinner);
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -129,6 +151,12 @@ public class MainPageActivity extends AppCompatActivity {
 
 
         // graph
+
+        /*
+        select day(DateTime) as Day, sum(Amount) as Expense from Transaction
+        where Type = 'expense' AND month(Datetime) = 3 And year(Datetime) = 2020 AND
+	    UserName = 'test1' Group by day(DateTime);
+         */
         LineChartView lineChartView = findViewById(R.id.chart);
         String[] axisData = {"4.02", "4.03", "4.04", "4.05", "4.06", "4.07", "4.08", "4.09", "4.10",
                 "4.11", "4.12", "4.13"};
