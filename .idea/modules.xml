@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/BadgerBudget.iml" filepath="$PROJECT_DIR$/BadgerBudget.iml" group="BadgerBudget" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/BudgetManagementApplication.iml" filepath="$PROJECT_DIR$/.idea/BudgetManagementApplication.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="BadgerBudget/app" />
+      <module fileurl="file://$PROJECT_DIR$/mysql-connector-java-5.1.48-bin/mysql-connector-java-5.1.48-bin.iml" filepath="$PROJECT_DIR$/mysql-connector-java-5.1.48-bin/mysql-connector-java-5.1.48-bin.iml" group="BadgerBudget/mysql-connector-java-5.1.48-bin" />
+    </modules>
+  </component>
+</project>
