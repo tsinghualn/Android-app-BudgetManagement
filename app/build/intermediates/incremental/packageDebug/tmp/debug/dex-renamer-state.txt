@@ -1,4 +1,10 @@
-#Sat Mar 28 15:15:11 PDT 2020
-base.0=C\:\\Users\\aliza\\BudgetManagementApplication\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
+#Mon Apr 13 18:12:32 CDT 2020
+path.2=classes2.dex
+path.1=classes.dex
 path.0=classes.dex
+renamed.2=classes3.dex
+renamed.1=classes2.dex
 renamed.0=classes.dex
+base.2=C\:\\Users\\anna9\\AndroidStudioProjects\\BudgetManagementApplication\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\out\\classes2.dex
+base.1=C\:\\Users\\anna9\\AndroidStudioProjects\\BudgetManagementApplication\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\out\\classes.dex
+base.0=C\:\\Users\\anna9\\AndroidStudioProjects\\BudgetManagementApplication\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\out\\classes.dex

@@ -1,3 +1,4 @@
+package com.example.badgerbudget.data.model;
 import java.net.*;
 import java.io.*;
 

@@ -6,14 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".report">
 
+    <!--
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_navigation"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </FrameLayout>
+-->
+
+
     <Spinner
         android:id="@+id/eMonth"
-        android:layout_width="121dp"
+        android:layout_width="160dp"
         android:layout_height="30dp"
         android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="@+id/sMonth"
         app:layout_constraintStart_toStartOf="@+id/sMonth"
-        app:layout_constraintTop_toBottomOf="@+id/sMonth"/>
+        app:layout_constraintTop_toBottomOf="@+id/sMonth" />
 
     <Spinner
         android:id="@+id/eYear"
@@ -28,33 +43,33 @@
         android:id="@+id/sYear"
         android:layout_width="121dp"
         android:layout_height="30dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="5dp"
-        android:layout_marginEnd="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"/>
+        app:layout_constraintStart_toEndOf="@+id/sMonth"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="Report"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="60dp"
         android:text="From:"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView3"
@@ -73,7 +88,10 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="130dp"
         android:layout_marginBottom="90dp"
-        android:text="TotalSpending"
+        android:text="Total Spending"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -82,55 +100,58 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:text="TotalIncome"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/TotSpendDisp"
+        app:layout_constraintStart_toStartOf="@+id/TotSpendDisp"
         app:layout_constraintTop_toBottomOf="@+id/TotSpendDisp" />
 
     <TextView
         android:id="@+id/TotSpendDisp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         android:hint="$totalspending"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="@+id/textView4"
         app:layout_constraintStart_toStartOf="@+id/textView4"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <TextView
         android:id="@+id/TotIncDisp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginTop="8dp"
         android:hint="$totalincome"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="@+id/textView5"
         app:layout_constraintStart_toStartOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
 
     <Button
         android:id="@+id/button"
         android:layout_width="158dp"
         android:layout_height="57dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="24dp"
         android:text="ViewTransactionHistory"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TotIncDisp" />
 
     <Spinner
         android:id="@+id/sMonth"
-        android:layout_width="121dp"
+        android:layout_width="160dp"
         android:layout_height="30dp"
         android:layout_marginTop="5dp"
-        app:layout_constraintEnd_toStartOf="@+id/sYear"
-        app:layout_constraintHorizontal_bias="0.442"
         app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView"/>
-
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+<!--
     <com.anychart.AnyChartView
         android:id="@+id/pie_chart_view"
         android:layout_width="200dp"
@@ -142,14 +163,57 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
+    -->
 
     <com.anychart.AnyChartView
         android:id="@+id/bar_chart_view"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="68dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+
+    </com.anychart.AnyChartView>
+
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="90dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        android:id="@+id/piechart">
+
+    </com.github.mikephil.charting.charts.PieChart>
+
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="?android:attr/windowBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_navigation" />
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="61dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="60dp"
+        android:text="Submit"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/eYear"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="home" />
+
+    <item
+        android:id="@+id/nav_category"
+        android:icon="@drawable/ic_category_black_24dp"
+        android:title="category" />
+
+
+    <item
+        android:id="@+id/nav_goal"
+        android:icon="@drawable/ic_goal_black_24dp"
+        android:title="goal" />
+
+    <item
+        android:id="@+id/nav_report"
+        android:icon="@drawable/ic_report_black_24dp"
+        android:title="report" />
+
+    <item
+        android:id="@+id/nav_setting"
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="setting" />
+
+
+    <!--
+        <item
+            android:id="@+id/nav_calculator"
+            android:icon="@drawable/ic_calculator_black_24dp"
+            android:title="calculator" />
+    -->
+
+</menu>

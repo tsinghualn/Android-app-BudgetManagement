@@ -1,11 +1,15 @@
 package com.example.badgerbudget;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class SettingActivity extends AppCompatActivity {
 
@@ -13,6 +17,11 @@ public class SettingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+
+
+
+        navigation();
+
 
         final Button profileButton = (Button) findViewById(R.id.profileButton);
         Button downloadButton = (Button) findViewById(R.id.downloadButton);
@@ -29,5 +38,39 @@ public class SettingActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void navigation(){
+
+        // navigation bar
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        Intent a = new Intent(SettingActivity.this, MainPageActivity.class);
+                        startActivity(a);
+                        break;
+                    case R.id.nav_report:
+                        Intent b = new Intent(SettingActivity.this, report.class);
+                        startActivity(b);
+                        break;
+                    case R.id.nav_setting:
+                        //Intent c = new Intent(SettingActivity.this,SettingActivity.class);
+                        //startActivity(c);
+                        break;
+                    case R.id.nav_goal:
+                        // Intent d = new Intent(SettingActivity.this, GoalsActivity.class);
+                        // startActivity(d)
+                        break;
+                    case R.id.nav_category:
+                        Intent e = new Intent(SettingActivity.this, CategoryPageActivity.class);
+                        startActivity(e);
+                        break;
+                }
+                return false;
+            }
+        });
     }
 }
