@@ -2,7 +2,6 @@ package com.example.badgerbudget.ui.login;
 
 import android.app.Activity;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -13,10 +12,10 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.StrictMode;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -25,39 +24,31 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.badgerbudget.CategoryPageActivity;
 import com.example.badgerbudget.CreateAccountActivity;
+import com.example.badgerbudget.data.model.*;
 import com.example.badgerbudget.MainPageActivity;
 import com.example.badgerbudget.R;
-import com.example.badgerbudget.SettingActivity;
-import com.example.badgerbudget.calculator;
-import com.example.badgerbudget.report;
 import com.example.badgerbudget.ui.login.LoginViewModel;
 import com.example.badgerbudget.ui.login.LoginViewModelFactory;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class LoginActivity extends AppCompatActivity {
 
     private static final String EXTRA_MESSAGE = "Test";
     private LoginViewModel loginViewModel;
-
+    Server server;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-
-
+        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        //StrictMode.setThreadPolicy(policy);
+        //server = new Server(8000);
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
-
-
-
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
-
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -118,9 +109,8 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString());
                 }
                 return false;
             }
@@ -129,19 +119,37 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /**
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+                 */
+                //Start client instance here
+                //get username and password from text boxes
+                //make query to see if there's a username and password account combo from the database
+                //if we have one, we switch over to home page
+                //else, we say that there is no such account created in the database.
+                String u = usernameEditText.getText().toString();
+                String p = passwordEditText.getText().toString();
+
+                Client client = new Client(6868, "10.0.2.2");
+
+                if(client.sendMessage("login;"+ u + " "+p).equals("true")){
+                    switchToMainPage(v);
+                }
+
+                else{
+                  //we have not found success with the login, so we are going to just return a failed login
+                    String failedLogin = "This account does not exist";
+                    Toast.makeText(getApplicationContext(),failedLogin,Toast.LENGTH_LONG).show();
+                }
             }
         });
-
     }
-
 
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
-        // TODO : initiate successful logged in experience
-        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
+       // Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
 
     private void showLoginFailed(@StringRes Integer errorString) {
@@ -150,6 +158,12 @@ public class LoginActivity extends AppCompatActivity {
 
     public void createAccount(View view){
         Intent intent = new Intent(this, CreateAccountActivity.class);
+        startActivity(intent);
+        Intent returnIntent = getIntent();
+    }
+
+    public void switchToMainPage(View view){
+        Intent intent = new Intent(this, MainPageActivity.class);
         startActivity(intent);
     }
 }
