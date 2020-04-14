@@ -21,6 +21,8 @@
                 android:value=".ui.login.LoginActivity" />
         </activity>
         <activity android:name=".SettingActivity"></activity>
+        <activity android:name=".ProfileSettingActivity"></activity>
+
         <activity android:name=".MainPageActivity"></activity>
 
         <activity
