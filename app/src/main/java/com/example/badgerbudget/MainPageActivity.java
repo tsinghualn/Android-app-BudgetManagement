@@ -4,16 +4,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-
-import android.widget.ArrayAdapter;
-
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
-
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -22,10 +22,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
+import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
+import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.view.LineChartView;
 
 public class MainPageActivity extends AppCompatActivity {
@@ -40,51 +42,96 @@ public class MainPageActivity extends AppCompatActivity {
         TextView targetExpenseText = (TextView) findViewById(R.id.targetExpenseText);
         Spinner typeSpinner = (Spinner) findViewById(R.id.typeSpinner);
         Spinner categorySpinner = (Spinner) findViewById(R.id.categorySpinner);
+        EditText noteText = (EditText) findViewById(R.id.noteText);
+        final EditText amountText = (EditText) findViewById(R.id.amountText);
+        Button addButton = (Button) findViewById(R.id.addButton);
+
+
 
         // current balance
         TextView currentBalance = new TextView(getApplicationContext());
-        String currentBalanceString = "";
-        currentBalance.setText(currentBalanceString);
+        String currentBalanceString = "5252";
+        currentBalanceText.setText(currentBalanceString);
+
 
         // current expense
         TextView currentExpense = new TextView(getApplicationContext());
-        String currentExpenseString = "";
-        currentExpense.setText(currentExpenseString);
+        String currentExpenseString = "5252";
+        currentExpenseText.setText(currentExpenseString);
 
         // target expense
         TextView targetExpense = new TextView(getApplicationContext());
-        String targetExpenseString = "";
-        targetExpense.setText(targetExpenseString);
+        String targetExpenseString = "5252";
+        targetExpenseText.setText(targetExpenseString);
+
+
+        // note
+        String note = noteText.getText().toString();
+
+        // amount
+        String amount = amountText.getText().toString();
+
+
 
         // get categories
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_page);
+
+        // super.onCreate(savedInstanceState);
+       //  setContentView(R.layout.activity_main_page);
         String[] arrayCategorySpinner = new String[] {
-                "1", "2", "3", "4", "5", "6", "7"
+                "food", "groceries", "clothes", "4", "5", "6", "7"
         };
-        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>( MainPageActivity.this,
                 android.R.layout.simple_spinner_item, arrayCategorySpinner);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(categoryAdapter);
 
+
         // get type
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_page);
+
+        //super.onCreate(savedInstanceState);
+       // setContentView(R.layout.activity_main_page);
         String[] arrayTypeSpinner = new String[] {
-                "1", "2", "3", "4", "5", "6", "7"
+                "Expense", "Income"
         };
-        ArrayAdapter<String> typeAdapter = new ArrayAdapter<String>(this,
+        final ArrayAdapter<String> typeAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, arrayTypeSpinner);
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         typeSpinner.setAdapter(typeAdapter);
 
 
+
+        // ok button
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(amountText.getText().toString().equals("")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainPageActivity.this);
+                    builder.setMessage("Failed. Check categories, type, and amount.")
+                            .setPositiveButton("okay", null)
+                            .create()
+                            .show();
+                }
+                else{
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainPageActivity.this);
+                    builder.setMessage("successfully added")
+                            .setPositiveButton("okay", null)
+                            .create()
+                            .show();
+                    // todo: add to data base
+
+                    // refresh
+                   // Intent addIntent = new Intent(MainPageActivity.this, MainPageActivity.class);
+                   // MainPageActivity.this.startActivity(addIntent);
+                }
+            }
+        });
+
+
+
         // graph
-
         LineChartView lineChartView = findViewById(R.id.chart);
-
-        String[] axisData = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept",
-                "Oct", "Nov", "Dec"};
+        String[] axisData = {"4.02", "4.03", "4.04", "4.05", "4.06", "4.07", "4.08", "4.09", "4.10",
+                "4.11", "4.12", "4.13"};
         int[] yAxisData = {50, 20, 15, 30, 20, 60, 15, 40, 45, 10, 90, 18};
         List yAxisValues = new ArrayList();
         List axisValues = new ArrayList();
