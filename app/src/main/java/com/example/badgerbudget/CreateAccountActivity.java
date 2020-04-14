@@ -19,9 +19,9 @@ public class CreateAccountActivity extends AppCompatActivity {
     EditText passwordBox ;
     EditText nameBox;
     EditText birthday;
-    EditText s1q;
-    EditText s2q;
-    EditText s3q;
+    TextView s1q;
+    TextView s2q;
+    TextView s3q;
     EditText s1a;
     EditText s2a;
     EditText s3a;
