@@ -29,7 +29,7 @@ b) First, we need the server and connector classes from github. Grab those and m
 
 c) After we have a project in Eclipse right click on your project go to ‘Build Path’ and click ‘Configure Build Path’. Click on ‘Classpath’ to highlight it and then click on ‘Add External JARS…’
 
-d) Just as a check before you start the server, make sure that the port is set to “6868” as that is what we used for the client in Android Studio. 
+d) Just as a check before you start the server, make sure that the port is set to “6868” as that is what we used for the client in Android Studio. The client 10.0.2.2, which is the local emulator host for Android Studio. 
 
 e) Make sure that the server is already running when you run the Android Studio project. 
 
@@ -48,5 +48,3 @@ Here are some instructions on how to run our application! After you have cloned 
 3. To build our application, go to Build -> Make Project. This should run without any issues.
 4. Now to run our application, you will need an Android Virtual Device (AVD). Follow the instructions located at https://developer.android.com/studio/run/managing-avds to create an AVD. 
 5. Now, you should be able to hit the green triangle near the top left of the screen in Android Studio, and it can run on the AVD that you created earlier. You should be able to see the first page of our application, the login page.
-
-
