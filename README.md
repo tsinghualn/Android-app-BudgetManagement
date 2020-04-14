@@ -3,14 +3,19 @@
 First, you need to implement the server.
 
 1. Download MySQL
+
 a) Select your OS from the dropdown bar: https://dev.mysql.com/downloads/mysql/
+
 b) When you download MySQL, make sure it’s started and that you create a password for the root user of your database. Make sure to remember that password as you’ll need to insert it into line 15 of the Connector class in the string right after “root”. 
 
 2. Download MySQL Workbench
+
 a) Select your OS from the dropdown bar: https://dev.mysql.com/downloads/workbench/
 
 3. Download the MySQL Driver so that the connector can run properly on your machine. 
+
 a) https://dev.mysql.com/downloads/connector/j/5.1.html
+
 b) Select Platform Independent here as we’re putting it in Android Studio. 
 
 4. Once the download is complete, the file we need to put into Android Studio is called: 
@@ -19,10 +24,15 @@ Mysql-connector-java-5.1.48-bin.jar
 5. Afterwards, since we need to run the server separately from the Android Studio Project, we need to place the connector in a separate IDE, we used Eclipse, along with the Server and Connector classes. 
 
 a) Since we used Eclipse, here’s how to do it in Eclipse: 
+
 b) First, we need the server and connector classes from github. Grab those and make a new Eclipse project with them.
+
 c) After we have a project in Eclipse right click on your project go to ‘Build Path’ and click ‘Configure Build Path’. Click on ‘Classpath’ to highlight it and then click on ‘Add External JARS…’
+
 d) Just as a check before you start the server, make sure that the port is set to “6868” as that is what we used for the client in Android Studio. 
+
 e) Make sure that the server is already running when you run the Android Studio project. 
+
 f) Should be able to access the app with database after this.
 
 6. Before you run it, since you’re required to log into MySQL with a database, we need to make one. 
