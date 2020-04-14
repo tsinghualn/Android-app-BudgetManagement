@@ -38,17 +38,20 @@ public class report extends AppCompatActivity {
     // A pie chart that shows overall spending per category
     AnyChartView pieChartView;
     String[] categories = {"categ1", "categ2", "categ3"};
-    int[] catExpense={300,200,600};
+    double[] catExpense={300,200,600};
 
     String[] months={"January","February","March"};
-    int[] monExpense={1000,600,1500};
-    int[] monIncome={2000,2400,3000};
+    double[] monExpense={1000,600,1500};
+    double[] monIncome={2000,2400,3000};
 
     // new pie chart
     PieChart pieChart;
+    ArrayList<PieEntry> yValues;
 
     // A bar chart that shows trend of overall spending/expense
     AnyChartView barChartView;
+    List<DataEntry> barDataEntries;
+    double totalAmount;
 
     private Spinner startMonth, endMonth, startYear, endYear;
     private Button btnSubmit;
@@ -73,6 +76,38 @@ public class report extends AppCompatActivity {
         // show&use navigation
 
         // navigation bar
+
+
+        navigation();
+
+        // drop down menu (spinner)
+        createDropDownMenu();
+        addListenerOnButton();
+
+
+        viewCategPieChart();
+
+        barChartView=findViewById(R.id.bar_chart_view);
+
+        addExpense(months, monExpense);
+        viewExpenseBarChart();
+
+
+
+        // get total expense
+        TextView textView_totSpDisp = (TextView) findViewById(R.id.TotSpendDisp);
+        totalSpend = getTotalValue(monExpense);
+        textView_totSpDisp.setText("$" + totalSpend);
+
+        // get total income
+        TextView textView_totIncDisp = (TextView) findViewById(R.id.TotIncDisp);
+        totalIncome = getTotalValue(monIncome);
+        textView_totIncDisp.setText("$" + totalIncome);
+
+    }
+
+
+    private void navigation() {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
 
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -103,36 +138,6 @@ public class report extends AppCompatActivity {
                 return false;
             }
         });
-
-        //navigation();
-
-        // drop down menu (spinner)
-        createDropDownMenu();
-        addListenerOnButton();
-
-
-        viewCategPieChart();
-
-        barChartView=findViewById(R.id.bar_chart_view);
-        viewExpenseBarChart();
-
-
-
-        // get total expense
-        TextView textView_totSpDisp = (TextView) findViewById(R.id.TotSpendDisp);
-        totalSpend = getTotalValue(monExpense);
-        textView_totSpDisp.setText("$" + totalSpend);
-
-        // get total income
-        TextView textView_totIncDisp = (TextView) findViewById(R.id.TotIncDisp);
-        totalIncome = getTotalValue(monIncome);
-        textView_totIncDisp.setText("$" + totalIncome);
-
-    }
-
-
-    private void navigation() {
-
     }
 
     /*
@@ -143,15 +148,20 @@ public class report extends AppCompatActivity {
     public void viewExpenseBarChart(){
 
         Cartesian bar = AnyChart.column();
-        List<DataEntry> barDataEntries = new ArrayList<>();
+
+        bar.data(barDataEntries);
+        bar.title("Monthly expense trend");
+        barChartView.setChart(bar);
+    }
+
+    public void addExpense(String[] months, double[] monExpense){
+
+        barDataEntries = new ArrayList<>();
 
         for(int i=0;i<months.length;i++){
             barDataEntries.add(new ValueDataEntry(months[i],monExpense[i]));
         }
 
-        bar.data(barDataEntries);
-        bar.title("Monthly expense trend");
-        barChartView.setChart(bar);
     }
 
 
@@ -174,11 +184,13 @@ public class report extends AppCompatActivity {
         pieChart.setHoleColor(Color.BLACK);
         pieChart.setTransparentCircleRadius(61f);
 
-        ArrayList<PieEntry> yValues = new ArrayList<PieEntry>();
+        yValues = new ArrayList<PieEntry>();
 
         for(int i=0; i < categories.length; i++){
-            yValues.add(new PieEntry(catExpense[i],categories[i]));
+            float a = (float) catExpense[i];
+            yValues.add(new PieEntry(a,categories[i]));
         }
+
 
         Description description = new Description();
         description.setText("Expense");
@@ -307,9 +319,9 @@ public class report extends AppCompatActivity {
     }
 
     /* Calculate total spending for a specified period of time by adding all the monthly spending in expenseByMonth. */
-    public double getTotalValue(int[] amount){
+    public double getTotalValue(double[] amount){
 
-        double totalAmount = 0.0;
+        totalAmount = 0;
         for (int i=0 ; i < amount.length; i++) {
             totalAmount += amount[i];
         }
