@@ -20,18 +20,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/addButton"
+        android:id="@+id/addCategoryBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="94dp"
-        android:layout_marginRight="94dp"
+        android:layout_marginEnd="92dp"
         android:text="Add Category"
-        app:layout_constraintEnd_toStartOf="@+id/deleteButton"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+        app:layout_constraintEnd_toStartOf="@+id/deleteCateogryBtn"
+        app:layout_constraintTop_toBottomOf="@+id/categoryTable" />
 
     <Button
-        android:id="@+id/deleteButton"
+        android:id="@+id/deleteCateogryBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
@@ -39,7 +37,7 @@
         android:layout_marginRight="26dp"
         android:text="Delete Category"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/categoryTable" />
 
     <TextView
         android:id="@+id/tableGoesHereView"
@@ -50,35 +48,30 @@
         android:layout_marginRight="147dp"
         android:text="Current Categories"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Salary" />
+        app:layout_constraintTop_toBottomOf="@+id/salaryTextView" />
 
     <TextView
-        android:id="@+id/salaryView"
+        android:id="@+id/salaryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="84dp"
         android:text="Your current salary: "
-        app:layout_constraintEnd_toStartOf="@+id/Salary"
+        app:layout_constraintEnd_toStartOf="@+id/salaryTextView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/Salary"
+        android:id="@+id/curSalaryTextView"
         android:layout_width="269dp"
         android:layout_height="20dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginRight="2dp"
+        android:layout_marginTop="12dp"
         android:text="Salary Goes Here"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/headingView" />
 
     <TableLayout
-        android:id="@+id/tableLayout"
-        android:layout_width="409dp"
-        android:layout_height="366dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginRight="1dp"
+        android:id="@+id/categoryTable"
+        android:layout_width="405dp"
+        android:layout_height="301dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableGoesHereView">
 

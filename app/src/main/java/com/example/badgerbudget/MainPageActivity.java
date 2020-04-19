@@ -2,12 +2,9 @@ package com.example.badgerbudget;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,12 +19,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
-import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Line;
 import lecho.lib.hellocharts.model.LineChartData;
 import lecho.lib.hellocharts.model.PointValue;
-import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.view.LineChartView;
 
 public class MainPageActivity extends AppCompatActivity {
@@ -44,7 +39,7 @@ public class MainPageActivity extends AppCompatActivity {
         Spinner categorySpinner = (Spinner) findViewById(R.id.categorySpinner);
         EditText noteText = (EditText) findViewById(R.id.noteText);
         final EditText amountText = (EditText) findViewById(R.id.amountText);
-        Button addButton = (Button) findViewById(R.id.addButton);
+        Button addButton = (Button) findViewById(R.id.addCategoryBtn);
 
 
 

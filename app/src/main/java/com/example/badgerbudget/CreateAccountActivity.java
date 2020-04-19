@@ -6,16 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
-import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.badgerbudget.ui.login.LoginActivity;
-import com.example.badgerbudget.R;
 import com.example.badgerbudget.data.model.*;
 
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 public class CreateAccountActivity extends AppCompatActivity {
@@ -33,7 +30,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_createaccount);
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
         usernameBox = (EditText) findViewById(R.id.usernameBox);
@@ -66,9 +63,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-       // String params[] = {"6868", InetAddress.getLocalHost().getHostName()};
         Client client = new Client(6868, "10.0.2.2");
-        //client.execute(params);
         System.out.println("Client created");
         //if username already exists in the database, we let the user know
         if(client.sendMessage("createuser;"+
