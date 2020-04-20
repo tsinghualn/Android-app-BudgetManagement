@@ -76,6 +76,7 @@ public class Client extends AsyncTask<String,Void,String> {
 					response = in.readLine();
 					System.out.println(response);
 					returnValue = response;
+					socket.close();
 				} catch(IOException e) {
 					System.out.println("Could not receive response.");
 				}
