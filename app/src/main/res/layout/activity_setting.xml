@@ -104,4 +104,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation" />
+
+    <Button
+        android:id="@+id/goCalc"
+        android:layout_width="56dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="32dp"
+        android:onClick="onClick_calc"
+        android:text="C"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
