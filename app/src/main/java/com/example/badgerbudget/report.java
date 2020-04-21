@@ -37,8 +37,6 @@ import java.util.Map;
 
 public class report extends AppCompatActivity {
 
-    // A pie chart that shows overall spending per category
-    AnyChartView pieChartView;
     String[] categories = {"categ1", "categ2", "categ3"};
     double[] catExpense={300,200,600};
 
@@ -170,10 +168,14 @@ public class report extends AppCompatActivity {
         barChartView.setChart(bar);
     }
 
+
+
     public void addExpense(String[] months, double[] monExpense){
 
         barDataEntries = new ArrayList<>();
 
+        // use hashmap! 
+        
         for(int i=0;i<months.length;i++){
             barDataEntries.add(new ValueDataEntry(months[i],monExpense[i]));
         }
@@ -200,13 +202,8 @@ public class report extends AppCompatActivity {
         pieChart.setHoleColor(Color.BLACK);
         pieChart.setTransparentCircleRadius(61f);
 
-        yValues = new ArrayList<PieEntry>();
-
-        for(int i=0; i < categories.length; i++){
-            float a = (float) catExpense[i];
-            yValues.add(new PieEntry(a,categories[i]));
-        }
-
+        setyValues();
+        
         Description description = new Description();
         description.setText("Expense");
         description.setTextSize(10);
@@ -222,6 +219,17 @@ public class report extends AppCompatActivity {
         data.setValueTextColor(Color.BLACK);
 
         pieChart.setData(data);
+
+    }
+
+    public void setyValues(){
+
+        yValues = new ArrayList<PieEntry>();
+
+        for(int i=0; i < categories.length; i++){
+            float a = (float) catExpense[i];
+            yValues.add(new PieEntry(a,categories[i]));
+        }
 
     }
 
@@ -343,23 +351,24 @@ public class report extends AppCompatActivity {
 
     }
     /* get a list of categories and corresponding expense from database */
-    public HashMap<String, Double> getCategories(){
+    public void setCategories(){
 
 
 
-        return categList;
     }
 
     /* Get a list of months (from starting month to end month) and corresponding expense from database */
-    public HashMap<String, Double> getExpense() {
+    public void setExpense() {
 
         //expenseByMonth.put("January", 3000.5);
 
-        return expenseByMonth;
     }
 
     /* Calculate total spending for a specified period of time by adding all the monthly spending in expenseByMonth. */
     public double getTotalValue(double[] amount){
+
+        // get Expense for each month from hashmap 
+        // sum up for each month, for each transaction
 
         totalAmount = 0;
         for (int i=0 ; i < amount.length; i++) {

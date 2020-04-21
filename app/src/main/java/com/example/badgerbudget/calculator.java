@@ -25,24 +25,25 @@ import java.util.Set;
 
 public class calculator extends AppCompatActivity {
 
-    private double userPrice;
-    private double tipPerc, taxPerc;
-    private String state;
-    private double tipAmount;
-    private double taxAmount;
+    double userPrice;
+    double tipPerc, taxPerc;
+    String state;
+    double tipAmount;
+    double taxAmount;
 
-    private Spinner tip, tax;
-    private Button btn_tip, btn_tax;
+    Spinner tip, tax;
+    Button btn_tip, btn_tax;
 
     EditText text_amount_tip, text_amount_tax;
     TextView tipDisp, taxDisp;
     TextView taxPercDisp;
 
-
     List<String> statesList = new ArrayList<String>();
     List<Double> taxPercList = new ArrayList<Double>();
     Map<String, Double> stateTaxList = new HashMap<String,Double>();
 
+    BufferedReader reader;
+    InputStream is;
 
     private double double_amount_tip, double_amount_tax;
 
@@ -61,10 +62,9 @@ public class calculator extends AppCompatActivity {
 
     public void setStateTax(){
         taxPercDisp = (TextView) findViewById(R.id.taxPercDisp);
+        is = this.getResources().openRawResource(R.raw.statetax);
+        reader = new BufferedReader(new InputStreamReader(is));
         String data = "";
-        InputStream is = this.getResources().openRawResource(R.raw.statetax);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-
         if(is != null){
             try{
                 while((data = reader.readLine()) != null){
@@ -81,7 +81,6 @@ public class calculator extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-
         // if lists are filled after above code
         if(!(statesList.isEmpty() && taxPercList.isEmpty())){
             for(int i=0; i < statesList.size(); i++){
@@ -134,6 +133,7 @@ public class calculator extends AppCompatActivity {
     private boolean isEmpty(EditText eText) {
 
         return eText.getText().toString().trim().length() == 0;
+
     }
 
     public void onClick_tax(View view){
@@ -184,12 +184,13 @@ public class calculator extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String tempState = tax.getSelectedItem().toString();
                 Set<String> keys = stateTaxList.keySet();
-                for(String key : keys){
+/*                for(String key : keys){
                     if(tempState.equals(key)){
                         taxPerc = 0.01 * Double.valueOf(stateTaxList.get(key));
                         break;
                     }
-                }
+                }*/
+                taxPerc = findTaxPerc(tempState, keys);
                 Toast.makeText(getApplicationContext(), "SELECTED " + taxPerc, Toast.LENGTH_SHORT). show();
             }
 
@@ -198,6 +199,19 @@ public class calculator extends AppCompatActivity {
 
             }
         });
+    }
+
+
+    public double findTaxPerc(String state, Set<String> keys){
+
+        double tempTaxPerc = 0.0;
+        for(String key : keys){
+            if(state.equals(key)){
+                tempTaxPerc = 0.01 * Double.valueOf(stateTaxList.get(key));
+                break;
+            }
+        }
+        return tempTaxPerc;
     }
 
 
