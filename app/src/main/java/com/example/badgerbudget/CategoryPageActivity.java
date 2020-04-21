@@ -3,11 +3,14 @@ package com.example.badgerbudget;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -22,12 +25,16 @@ public class CategoryPageActivity extends AppCompatActivity {
     TextView category1;
     Button addCategory;
     Button deleteCategory;
+    String passable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_page);
-
+        Bundle un = getIntent().getExtras();
+        String username = un.getString("username");
+        passable = username;
+        System.out.println("username in categories: " + username);
         salary = findViewById(R.id.curSalaryTextView);
         categoryTable = findViewById(R.id.categoryTable);
         category1 = findViewById(R.id.FirstCategory);
@@ -38,16 +45,26 @@ public class CategoryPageActivity extends AppCompatActivity {
 
         //Make new client instance to get the user categories from the database
         Client client = new Client(6868, "10.0.2.2");
-        String result = client.sendMessage("getcategories;andy_boho");
+        String result = client.sendMessage("getcategories;" + username);
         String[] parsed = result.split(";");
         salary.setText("$10000000");
         category1.setText(parsed[0]);
         addCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                //Take to the delete category page.
-                toastMessage("Add Category Clicked");
+                System.out.println("In OnClickListener");
+                AlertDialog.Builder addCat = new AlertDialog.Builder(CategoryPageActivity.this);
+                addCat.setTitle("Add a Category");
+                final EditText input = new EditText(CategoryPageActivity.this);
+                addCat.setView(input);
+                addCat.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        toastMessage("Category Successfully Added.");
+                    }
+
+                });
+                addCat.show();
 
             }
         });
@@ -78,18 +95,24 @@ public class CategoryPageActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
                         Intent a = new Intent(CategoryPageActivity.this, MainPageActivity.class);
+                        a.putExtra("username", passable);
                         startActivity(a);
                         break;
                     case R.id.nav_report:
                         Intent b = new Intent(CategoryPageActivity.this, report.class);
+                        b.putExtra("username", passable);
                         startActivity(b);
                         break;
                     case R.id.nav_setting:
                         Intent c = new Intent(CategoryPageActivity.this,SettingActivity.class);
+                        c.putExtra("username", passable);
+
                         startActivity(c);
                         break;
                     case R.id.nav_goal:
                         // Intent d = new Intent(MainPageActivity.this, GoalsActivity.class);
+                        //d.putExtra("username", username);
+
                         // startActivity(d)
                         break;
                     case R.id.nav_category:
