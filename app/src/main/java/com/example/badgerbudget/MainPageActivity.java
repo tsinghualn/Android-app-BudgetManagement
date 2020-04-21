@@ -125,7 +125,7 @@ public class MainPageActivity extends AppCompatActivity {
         // super.onCreate(savedInstanceState);
        //  setContentView(R.layout.activity_main_page);
 
-        String category = client.sendMessage("getcategories;andy_boho");
+        String category = client.sendMessage("getcategories;" + passable);
         String[] categories = category.split(";");
         String[] arrayCategorySpinner = new String[categories.length + 3];
 //                "Food", "Groceries", "Clothes"
