@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.MonthDisplayHelper;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -27,10 +28,11 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
+import java.lang.Object.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class report extends AppCompatActivity {
@@ -44,6 +46,7 @@ public class report extends AppCompatActivity {
     double[] monExpense={1000,600,1500};
     double[] monIncome={2000,2400,3000};
 
+    String sMonth, sYear, eMonth, eYear;
     // new pie chart
     PieChart pieChart;
     ArrayList<PieEntry> yValues;
@@ -53,14 +56,32 @@ public class report extends AppCompatActivity {
     List<DataEntry> barDataEntries;
     double totalAmount;
 
-    private Spinner startMonth, endMonth, startYear, endYear;
-    private Button btnSubmit;
+    Spinner startMonth, endMonth, startYear, endYear;
+    Button btnSubmit;
 
     // A list of pairs of category with corresponding expense in dollar
     // A list of pairs of month with corresponding expense in dollar
-    private HashMap<String, Double> categList, expenseByMonth;
+    HashMap<String, Double> categList, expenseByMonth;
 
-    private String str_startMonth, str_endMonth, str_startYear, str_endYear;
+    // map of month in string - month in integer
+    private static final Map<String, Integer> MONTHMAP = new HashMap<String, Integer>() {
+        {
+            put("January", 1);
+            put("February",2);
+            put("March",3);
+            put("April",4);
+            put("May",5);
+            put("June",6);
+            put("July",7);
+            put("August",8);
+            put("September",9);
+            put("October",10);
+            put("November",11);
+            put("December",12);
+        }
+    };
+
+    String str_startMonth, str_endMonth, str_startYear, str_endYear;
 
     // Display total spend on report and use for calculating expense proportion of each category
     double totalSpend = 0;
@@ -74,25 +95,16 @@ public class report extends AppCompatActivity {
         setContentView(R.layout.activity_report);
 
         // show&use navigation
-
         // navigation bar
-
-
         navigation();
 
         // drop down menu (spinner)
         createDropDownMenu();
         addListenerOnButton();
 
-
         viewCategPieChart();
 
-        barChartView=findViewById(R.id.bar_chart_view);
-
-        addExpense(months, monExpense);
         viewExpenseBarChart();
-
-
 
         // get total expense
         TextView textView_totSpDisp = (TextView) findViewById(R.id.TotSpendDisp);
@@ -147,6 +159,10 @@ public class report extends AppCompatActivity {
      */
     public void viewExpenseBarChart(){
 
+        barChartView=findViewById(R.id.bar_chart_view);
+
+        addExpense(months, monExpense);
+
         Cartesian bar = AnyChart.column();
 
         bar.data(barDataEntries);
@@ -191,7 +207,6 @@ public class report extends AppCompatActivity {
             yValues.add(new PieEntry(a,categories[i]));
         }
 
-
         Description description = new Description();
         description.setText("Expense");
         description.setTextSize(10);
@@ -207,32 +222,6 @@ public class report extends AppCompatActivity {
         data.setValueTextColor(Color.BLACK);
 
         pieChart.setData(data);
-
-
-
-
-
-
-
-
-
-
-/*        Pie pie = AnyChart.pie();
-        List<DataEntry> pieDataEntries = new ArrayList<>();
-
-*//*        for(int i=0;i<categories.length;i++){
-            pieDataEntries.add(new ValueDataEntry(categories[i],catExpense[i]));
-        }*//*
-
-        pieDataEntries.add(new ValueDataEntry("categ1", 50));
-
-        pieDataEntries.add(new ValueDataEntry("categ2", 50));
-
-        pie.data(pieDataEntries);
-        //pie.title("Expense");
-
-        pieChartView=(AnyChartView) findViewById(R.id.pie_chart_view);
-        pieChartView.setChart(pie);*/
 
     }
 
@@ -281,15 +270,66 @@ public class report extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v){
+
+                sMonth = String.valueOf(startMonth.getSelectedItem());
+                sYear =  String.valueOf(startYear.getSelectedItem());
+                eMonth = String.valueOf(endMonth.getSelectedItem());
+                eYear = String.valueOf(endYear.getSelectedItem());
+
+                if(isValidRange(sMonth, sYear, eMonth, eYear)){
+                    // valid
+                    // call transaction query here (if month/year are valid)
+
+                } else {
+                    Toast.makeText(report.this,
+                            "OnClickListener: " +
+                                    "Please select a valid range of months",
+                            Toast.LENGTH_SHORT).show();
+                }
+
                 Toast.makeText(report.this,
                         "OnClickListener: " +
-                        "\nstartMonth : " + String.valueOf(startMonth.getSelectedItem()) +
-                                " startYear: " + String.valueOf(startYear.getSelectedItem()) +
-                        "\nendMoth : " + String.valueOf(endMonth.getSelectedItem()) +
-                        " endYear: " + String.valueOf(endYear.getSelectedItem()),
+                        "\nstartMonth : " + sMonth +
+                                " startYear: " + sYear +
+                        "\nendMoth : " + eMonth +
+                        " endYear: " + eYear,
                         Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public boolean isValidRange(String sm, String sy, String em, String ey){
+
+        int eyInt = Integer.parseInt(ey.trim());
+        int syInt = Integer.parseInt(sy.trim());
+
+        // check if endYear < staryYear
+        if( eyInt < syInt ) {
+            // invalid
+            return false;
+        } else {
+            // valid year endYear >= staryYear
+
+            Integer smInt = MONTHMAP.get(sm);
+            Integer emInt = MONTHMAP.get(em);
+
+            // if two years are same
+            if(eyInt == syInt){
+
+                if(smInt <= emInt){
+                    // valid
+                    return true;
+                } else if(smInt > emInt){
+                    // invalid
+                    return false;
+                }
+
+            } else if(eyInt > syInt) {
+                // valid, month doesn't matter since year differ.
+                return true;
+            }
+        }
+        return false;
     }
 
 
@@ -301,10 +341,10 @@ public class report extends AppCompatActivity {
 
         // check if two array length are matched
 
-
     }
     /* get a list of categories and corresponding expense from database */
     public HashMap<String, Double> getCategories(){
+
 
 
         return categList;
@@ -331,6 +371,8 @@ public class report extends AppCompatActivity {
 
     /* Get a pop-up window that shows a transaction history of selected period of time */
     public void onClick_viewTrans(View v){
+
+        // bring start & end month/year when open transaction
 
     }
 }
