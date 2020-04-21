@@ -78,4 +78,10 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    public void onClick_calc(View v){
+        Intent calc = new Intent(SettingActivity.this, calculator.class);
+        startActivity(calc);
+    }
 }
