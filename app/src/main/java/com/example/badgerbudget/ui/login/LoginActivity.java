@@ -35,7 +35,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String EXTRA_MESSAGE = "Test";
     private LoginViewModel loginViewModel;
-    Server server;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,13 +130,10 @@ public class LoginActivity extends AppCompatActivity {
                 //else, we say that there is no such account created in the database.
                 String u = usernameEditText.getText().toString();
                 String p = passwordEditText.getText().toString();
-
                 Client client = new Client(6868, "10.0.2.2");
-
                 if(client.sendMessage("login;"+ u + " "+p).equals("true")){
-                    switchToMainPage(v);
+                    switchToMainPage(v, u);
                 }
-
                 else{
                   //we have not found success with the login, so we are going to just return a failed login
                     String failedLogin = "This account does not exist";
@@ -162,8 +158,9 @@ public class LoginActivity extends AppCompatActivity {
         Intent returnIntent = getIntent();
     }
 
-    public void switchToMainPage(View view){
+    public void switchToMainPage(View view, String username){
         Intent intent = new Intent(this, MainPageActivity.class);
+        intent.putExtra("username", username);
         startActivity(intent);
     }
 }

@@ -18,7 +18,7 @@
         android:hint="amount"
         android:inputType="number"
         app:layout_constraintBaseline_toBaselineOf="@+id/noteText"
-        app:layout_constraintEnd_toStartOf="@+id/addButton"
+        app:layout_constraintEnd_toStartOf="@+id/addCategoryBtn"
         app:layout_constraintStart_toEndOf="@+id/noteText" />
 
     <Spinner
@@ -143,13 +143,13 @@
         android:ems="10"
         android:hint="note"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/addButton"
+        app:layout_constraintBottom_toTopOf="@+id/addCategoryBtn"
         app:layout_constraintEnd_toStartOf="@+id/amountText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/typeSpinner" />
 
     <Button
-        android:id="@+id/addButton"
+        android:id="@+id/addCategoryBtn"
         android:layout_width="0dp"
         android:layout_height="45dp"
         android:layout_marginTop="350dp"
@@ -173,7 +173,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addButton" />
+        app:layout_constraintTop_toBottomOf="@+id/addCategoryBtn" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
