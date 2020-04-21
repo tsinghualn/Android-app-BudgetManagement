@@ -132,8 +132,11 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/s1QuestionText"
             android:layout_width="228dp"
+            android:layout_height="wrap_content"
+            android:editable="false"
+            android:hint="Security Question 1"
+            android:text="What is your favorite color?" />
             android:layout_height="wrap_content" />
-
     </com.google.android.material.textfield.TextInputLayout>
 
     <EditText
@@ -160,7 +163,9 @@
             android:id="@+id/s2QuestionText"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:hint="Security Question 2" />
+            android:editable="false"
+            android:hint="Security Question 2"
+            android:text="What is your mom's name?" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -174,7 +179,9 @@
             android:id="@+id/s3QuestionText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Security Question 3" />
+            android:editable="false"
+            android:hint="Security Question 3"
+            android:text="Best friend's birth month?" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <EditText

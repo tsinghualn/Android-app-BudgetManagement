@@ -3,6 +3,11 @@ package com.example.badgerbudget;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
+import android.util.Log;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +19,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.badgerbudget.data.model.Client;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -26,12 +32,18 @@ import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.view.LineChartView;
 
 public class MainPageActivity extends AppCompatActivity {
-
+    Client client = new Client(6868, "10.0.2.2");
+    String passable;
+    String transCat;
+    String transType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
-
+        Bundle un = getIntent().getExtras();
+        String username = un.getString("username");
+        passable = username;
+        System.out.println("passable in main: " + passable);
         TextView currentBalanceText = (TextView) findViewById(R.id.currentBalanceText);
         TextView currentExpenseText = (TextView) findViewById(R.id.currentExpenseText);
         TextView targetExpenseText = (TextView) findViewById(R.id.targetExpenseText);
@@ -41,7 +53,25 @@ public class MainPageActivity extends AppCompatActivity {
         final EditText amountText = (EditText) findViewById(R.id.amountText);
         Button addButton = (Button) findViewById(R.id.addCategoryBtn);
 
+        String totalAmount = "";
+        String response = client.sendMessage("gettransactions;" + username);
+        System.out.println("response in Main: " + response + "for user: " + username);
+        if (!response.equals("")) {
+            String[] transactions = response.split(";");
+            String[][] transAmount = new String[transactions.length][5];
+            for (int i = 0; i < transactions.length; i++) {
+                transAmount[i] = transactions[i].split(" ");
+            }
 
+            int total = 0;
+            for (int i = 0; i < transactions.length; i++) {
+                int trans = Integer.parseInt(transAmount[i][2]);
+                total += trans;
+            }
+            totalAmount = String.valueOf(total);
+        } else {
+            totalAmount = "0";
+        }
 
         // current balance
         TextView currentBalance = new TextView(getApplicationContext());
@@ -57,7 +87,7 @@ public class MainPageActivity extends AppCompatActivity {
 
         // current expense
         TextView currentExpense = new TextView(getApplicationContext());
-        String currentExpenseString = "5252";
+        String currentExpenseString = totalAmount;
         /*
         select sum(Amount) from Transaction
         where Type = 'expense' AND month(Datetime) = 3 And year(Datetime) = 2020 AND
@@ -67,7 +97,13 @@ public class MainPageActivity extends AppCompatActivity {
 
         // target expense
         TextView targetExpense = new TextView(getApplicationContext());
-        String targetExpenseString = "5252";
+        int expense = Integer.parseInt(totalAmount);
+
+
+        int cbalance = Integer.parseInt(currentBalanceString);
+        int texpense = cbalance - expense;
+        String targetExpenseString = String.valueOf(texpense);
+
         /*
         select * from Goal;
         select Amount from Goal
@@ -80,7 +116,7 @@ public class MainPageActivity extends AppCompatActivity {
         String note = noteText.getText().toString();
 
         // amount
-        String amount = amountText.getText().toString();
+        final String amount = amountText.getText().toString();
 
 
 
@@ -88,9 +124,26 @@ public class MainPageActivity extends AppCompatActivity {
 
         // super.onCreate(savedInstanceState);
        //  setContentView(R.layout.activity_main_page);
-        String[] arrayCategorySpinner = new String[] {
-                "food", "groceries", "clothes", "4", "5", "6", "7"
-        };
+
+        String category = client.sendMessage("getcategories;" + passable);
+        String[] categories = category.split(";");
+        String[] arrayCategorySpinner = new String[categories.length + 3];
+//                "Food", "Groceries", "Clothes"
+        for (int i = 0; i < categories.length+3; i++) {
+            if (i ==0) {
+                arrayCategorySpinner[i] = "Food";
+            }
+            if (i == 1) {
+                arrayCategorySpinner[i] = "Groceries";
+            }
+            if (i == 2) {
+                arrayCategorySpinner[i] = "Clothes";
+            }
+            if (i > 2) {
+                arrayCategorySpinner[i] = categories[i - 3];
+            }
+        }
+
         /*
         select * from Category;
          */
@@ -98,6 +151,20 @@ public class MainPageActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, arrayCategorySpinner);
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(categoryAdapter);
+
+        categorySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+              @Override
+              public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                  Object item = adapterView.getItemAtPosition(position);
+                  String type = item.toString();
+                  transCat = type;
+                  System.out.println("Category Selected: " + transCat);
+              }
+                @Override
+                public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+          });
 
 
         // get type
@@ -114,8 +181,19 @@ public class MainPageActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, arrayTypeSpinner);
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         typeSpinner.setAdapter(typeAdapter);
-
-
+        typeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                Object item = adapterView.getItemAtPosition(position);
+                String type = item.toString();
+                transType = type;
+                System.out.println("Type Selected: " + transType);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
 
         // ok button
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -130,15 +208,26 @@ public class MainPageActivity extends AppCompatActivity {
                 }
                 else{
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainPageActivity.this);
-                    builder.setMessage("successfully added")
-                            .setPositiveButton("okay", null)
+                    builder.setMessage("Transaction Successfully Added.")
+                            .setPositiveButton("okay", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+                                    startActivity(getIntent());
+                                }
+                            })
                             .create()
                             .show();
-                    // todo: add to data base
+//                    System.out.println("Amount: " + amountText.getText().toString());
+//                    System.out.println("Category: " + transCat);
+//                    System.out.println("Type: " + transType);
+//                    System.out.println("Username: " + passable);
 
+
+                        client.sendMessage("inserttransaction;" + passable + " " + transType + " " + amountText.getText().toString() + " " + transCat + " April");
                     // refresh
-                   // Intent addIntent = new Intent(MainPageActivity.this, MainPageActivity.class);
-                   // MainPageActivity.this.startActivity(addIntent);
+
+
+
                 }
             }
         });
@@ -188,18 +277,24 @@ public class MainPageActivity extends AppCompatActivity {
                         break;
                     case R.id.nav_report:
                         Intent a = new Intent(MainPageActivity.this, report.class);
+                        a.putExtra("username", passable);
                         startActivity(a);
                         break;
                     case R.id.nav_setting:
                         Intent b = new Intent(MainPageActivity.this,SettingActivity.class);
+                        b.putExtra("username", passable);
+
                         startActivity(b);
                         break;
                     case R.id.nav_goal:
                         // Intent c = new Intent(MainPageActivity.this, GoalsActivity.class);
+                        // c.putExtra("username", username);
+
                         // startActivity(c)
                         break;
                     case R.id.nav_category:
                         Intent d = new Intent(MainPageActivity.this, CategoryPageActivity.class);
+                        d.putExtra("username", passable);
                         startActivity(d);
                         break;
                 }

@@ -37,6 +37,7 @@ import java.util.Map;
 
 public class report extends AppCompatActivity {
 
+
     String[] categories = {"categ1", "categ2", "categ3"};
     double[] catExpense={300,200,600};
 
@@ -86,12 +87,16 @@ public class report extends AppCompatActivity {
     // Display total income on report
     double totalIncome = 0;
 
+    String passable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
-
+        Bundle un = getIntent().getExtras();
+        String username = un.getString("username");
+        passable = username;
         // show&use navigation
         // navigation bar
         navigation();
@@ -126,6 +131,7 @@ public class report extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
                         Intent a = new Intent(report.this, MainPageActivity.class);
+                        a.putExtra("username", passable);
                         startActivity(a);
                         break;
                     case R.id.nav_report:
@@ -134,14 +140,17 @@ public class report extends AppCompatActivity {
                         break;
                     case R.id.nav_setting:
                         Intent c = new Intent(report.this,SettingActivity.class);
+                        c.putExtra("username", passable);
                         startActivity(c);
                         break;
                     case R.id.nav_goal:
                         // Intent d = new Intent(report.this, GoalsActivity.class);
+                        //d.putExtra("username", username);
                         // startActivity(d)
                         break;
                     case R.id.nav_category:
                         Intent e = new Intent(report.this, CategoryPageActivity.class);
+                        e.putExtra("username", passable);
                         startActivity(e);
                         break;
                 }

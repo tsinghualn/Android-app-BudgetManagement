@@ -12,14 +12,15 @@ import android.widget.Button;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class SettingActivity extends AppCompatActivity {
+    String passable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-
-
-
+        Bundle un = getIntent().getExtras();
+        String username = un.getString("username");
+        passable = username;
         navigation();
 
 
@@ -50,10 +51,13 @@ public class SettingActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
                         Intent a = new Intent(SettingActivity.this, MainPageActivity.class);
+                        a.putExtra("username", passable);
+
                         startActivity(a);
                         break;
                     case R.id.nav_report:
                         Intent b = new Intent(SettingActivity.this, report.class);
+                        b.putExtra("username", passable);
                         startActivity(b);
                         break;
                     case R.id.nav_setting:
@@ -66,6 +70,7 @@ public class SettingActivity extends AppCompatActivity {
                         break;
                     case R.id.nav_category:
                         Intent e = new Intent(SettingActivity.this, CategoryPageActivity.class);
+                        e.putExtra("username", passable);
                         startActivity(e);
                         break;
                 }
