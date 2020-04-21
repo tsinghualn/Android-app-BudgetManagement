@@ -88,7 +88,7 @@
         android:layout_marginStart="46dp"
         android:layout_marginTop="42dp"
         android:layout_marginBottom="41dp"
-        android:text="title_activity_settings"
+        android:text="Setting"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         app:layout_constraintBottom_toTopOf="@+id/profileButton"
         app:layout_constraintStart_toStartOf="parent"
