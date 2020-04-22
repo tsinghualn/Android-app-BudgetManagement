@@ -80,34 +80,15 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/FirstCategory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Category 1    " />
-
-            <TextView
                 android:id="@+id/FirstCategoryBudget"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Category 1 Budget " />
+                android:text=" " />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/SecondCategory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Category 2" />
-
-            <TextView
-                android:id="@+id/SecondCategoryBudget"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Category 2 Budget " />
-        </TableRow>
+            android:layout_height="match_parent"/>
 
         <TableRow
             android:layout_width="match_parent"

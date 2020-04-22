@@ -245,18 +245,14 @@ public class CategoryPageActivity extends AppCompatActivity {
                     case R.id.nav_setting:
                         Intent c = new Intent(CategoryPageActivity.this,SettingActivity.class);
                         c.putExtra("username", passable);
-
                         startActivity(c);
                         break;
                     case R.id.nav_goal:
-                        // Intent d = new Intent(MainPageActivity.this, GoalsActivity.class);
-                        //d.putExtra("username", username);
-
-                        // startActivity(d)
+                        Intent d = new Intent(CategoryPageActivity.this, GoalActivity.class);
+                        d.putExtra("username", passable);
+                        startActivity(d);
                         break;
                     case R.id.nav_category:
-                        //Intent e = new Intent(CategoryPageActivity.this, CategoryPageActivity.class);
-                        //startActivity(e);
                         break;
                 }
                 return false;

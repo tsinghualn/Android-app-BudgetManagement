@@ -145,9 +145,10 @@ public class Report extends AppCompatActivity {
                         startActivity(c);
                         break;
                     case R.id.nav_goal:
-                        // Intent d = new Intent(Report.this, GoalsActivity.class);
-                        //d.putExtra("username", username);
-                        // startActivity(d)
+                         Intent d = new Intent(Report.this, GoalActivity.class);
+                        d.putExtra("username", passable);
+                         startActivity(d);
+
                         break;
                     case R.id.nav_category:
                         Intent e = new Intent(Report.this, CategoryPageActivity.class);

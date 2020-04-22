@@ -24,6 +24,7 @@ public class ProfileSettingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Bundle un = getIntent().getExtras();
+        System.out.println("Bundle that shouldn't be null: " + un);
         String username = un.getString("username");
         passable = username;
         super.onCreate(savedInstanceState);
@@ -106,8 +107,8 @@ public class ProfileSettingActivity extends AppCompatActivity {
                                         startActivity(getIntent());
                                     }
                                 })
-                                .create()
-                                .show();
+                                .create();
+//                                .show();
                         String response = client.sendMessage("changepassword;" + passable + " " + newPasswordText.getText().toString());
                         if (response.equals("Password Changed Successfully")) {
                             finish();
@@ -116,8 +117,8 @@ public class ProfileSettingActivity extends AppCompatActivity {
                     }
                     // if all security answers match
                     else if (a1Text.getText().toString().equals(securityquestion1)
-                    && a2Text.getText().toString().equals(securityquestion2)
-                    && a3Text.getText().toString().equals(securityquestion3)){
+                            && a2Text.getText().toString().equals(securityquestion2)
+                            && a3Text.getText().toString().equals(securityquestion3)){
                         AlertDialog.Builder builder = new AlertDialog.Builder(ProfileSettingActivity.this);
                         builder.setMessage("updated")
                                 .setPositiveButton("okay", new DialogInterface.OnClickListener() {
