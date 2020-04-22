@@ -24,12 +24,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.badgerbudget.data.model.Client;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
+
+import org.w3c.dom.Text;
 
 public class CategoryPageActivity extends AppCompatActivity {
     TableLayout categoryTable;
     TextView salary;
-    TextView category1;
-    TextView cat1Budget;
     Button addCategory;
     Button deleteCategory;
     String passable;
@@ -45,20 +46,85 @@ public class CategoryPageActivity extends AppCompatActivity {
         passable = username;
         salary = findViewById(R.id.curSalaryTextView);
         categoryTable = findViewById(R.id.categoryTable);
-        category1 = findViewById(R.id.FirstCategory);
-        cat1Budget = findViewById(R.id.FirstCategoryBudget);
         addCategory = findViewById(R.id.addCategoryBtn);
         deleteCategory = findViewById(R.id.deleteCateogryBtn);
 
         navigation();
+        //Make everything show up in the categories table
+        //2 rows in the table
+        categoryTable.setColumnStretchable(0, true);
+        categoryTable.setColumnStretchable(1, true);
+        TableRow defaults = new TableRow(this);
+        TextView catName = new TextView(this);
+        catName.setText("Category Name");
+        TextView catBudget = new TextView(this);
+        catBudget.setText("Category Budget");
+        defaults.addView(catName);
+        defaults.addView(catBudget);
+        categoryTable.addView(defaults);
 
-        //Make new client instance to get the user categories from the database
-        //String result = client.sendMessage("getcategories;" + username);
-        //System.out.println("Categories: " +result);
-        //String[] parsed = result.split(";");
+        TableRow foodRow = new TableRow(this);
+        TextView food = new TextView(this);
+        food.setText("Food");
+        TextView foodBudget = new TextView(this);
+        foodBudget.setText("100");
+        foodRow.addView(food);
+        foodRow.addView(foodBudget);
+        categoryTable.addView(foodRow);
+
+        TableRow groceriesRow = new TableRow(this);
+        TextView groceries = new TextView(this);
+        groceries.setText("Groceries");
+        TextView groceriesBudget = new TextView(this);
+        groceriesBudget.setText("100");
+        groceriesRow.addView(groceries);
+        groceriesRow.addView(groceriesBudget);
+        categoryTable.addView(groceriesRow);
+
+        TableRow clothesRow = new TableRow(this);
+        TextView clothes = new TextView(this);
+        clothes.setText("Clothes");
+        TextView clothesBudget = new TextView(this);
+        clothesBudget.setText("50");
+        clothesRow.addView(clothes);
+        clothesRow.addView(clothesBudget);
+        categoryTable.addView(clothesRow);
+
+
+        String category = client.sendMessage("getcategories;" + passable);
+
+        if (!category.equals("")) {
+            String[] parsed = category.split(" ");
+            categoryTable.setColumnStretchable(0, true);
+            categoryTable.setColumnStretchable(1, true);
+            String[] categoriesMessage = category.split(";");
+            String[][] categories = new String[categoriesMessage.length][2];
+            for (int i = 0; i < categoriesMessage.length; i++) {
+                if (categoriesMessage.length != 0) {
+                    categories[i] = categoriesMessage[i].split(" ");
+                    TableRow tr = new TableRow(this);
+                    TextView catname = new TextView(this);
+                    if (!categories[i].equals(null)) {
+                        catname.setText(categories[i][0]);
+                        TextView budget = new TextView(this);
+                        budget.setText(categories[i][1]);
+                        tr.addView(catname);
+                        tr.addView(budget);
+                        categoryTable.addView(tr);
+                    } else {
+                        System.out.println("categories[i] is null");
+                        break;
+                    }
+                } else {
+                    System.out.println("categoriesMessage.length is 0");
+                    break;
+                }
+            }
+        }
+
+
         salary.setText("$10000000");
-        //category1.setText(parsed[1]);
-        //cat1Budget.setText(parsed[2]);
+
         addCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,6 +146,8 @@ public class CategoryPageActivity extends AppCompatActivity {
                         if (!input.getText().toString().equals("") && !budget.getText().toString().equals("")) {
                             client.sendMessage("insertcategories;" + passable + " " + input.getText().toString() + " " + budget.getText().toString());
                             toastMessage("Category Successfully Added.");
+                            finish();
+                            startActivity(getIntent());
                         } else {
                             toastMessage("Please Insert a Category and Set a Budget ");
                         }
@@ -87,7 +155,6 @@ public class CategoryPageActivity extends AppCompatActivity {
                 });
                 AlertDialog dialog = addCat.create();
                 dialog.show();
-
             }
         });
 
@@ -98,7 +165,7 @@ public class CategoryPageActivity extends AppCompatActivity {
                 Context context =  getApplicationContext();
                 LinearLayout layout = new LinearLayout(context);
                 layout.setOrientation(LinearLayout.VERTICAL);
-                String category = client.sendMessage("getcategories;andy_boho");
+                String category = client.sendMessage("getcategories;" + passable);
                 System.out.println("response from client: " + category);
 
                 String[] categoriesMessage = category.split(";");
@@ -114,12 +181,13 @@ public class CategoryPageActivity extends AppCompatActivity {
                 AlertDialog.Builder deleteCat = new AlertDialog.Builder(CategoryPageActivity.this);
                 deleteCat.setTitle("Delete Category");
                 final Spinner categorySpinner = new Spinner(CategoryPageActivity.this);
-                ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>( CategoryPageActivity.this,
+                final ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>( CategoryPageActivity.this,
                         android.R.layout.simple_spinner_item, arrayCategorySpinner);
                 categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 categorySpinner.setAdapter(categoryAdapter);
                 layout.addView(categorySpinner);
                 deleteCat.setView(layout);
+
                 categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
@@ -137,8 +205,11 @@ public class CategoryPageActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String response = client.sendMessage("deletecategories;" + passable + " " + cat);
+                        System.out.println(response);
                         if (response.equals("Category Successfully Deleted")) {
                             toastMessage("Category Successfully Deleted");
+                            finish();
+                            startActivity(getIntent());
                         } else {
                             toastMessage("Unable to Delete Category");
                         }

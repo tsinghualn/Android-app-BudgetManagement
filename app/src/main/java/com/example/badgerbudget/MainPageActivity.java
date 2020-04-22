@@ -38,6 +38,7 @@ public class MainPageActivity extends AppCompatActivity {
     String transType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
         Bundle un = getIntent().getExtras();
@@ -58,6 +59,7 @@ public class MainPageActivity extends AppCompatActivity {
         System.out.println("response in Main: " + response + "for user: " + username);
         if (!response.equals("")) {
             String[] transactions = response.split(";");
+
             String[][] transAmount = new String[transactions.length][5];
             for (int i = 0; i < transactions.length; i++) {
                 transAmount[i] = transactions[i].split(" ");
@@ -123,13 +125,15 @@ public class MainPageActivity extends AppCompatActivity {
         // get categories
 
         // super.onCreate(savedInstanceState);
-       //  setContentView(R.layout.activity_main_page);
+        //  setContentView(R.layout.activity_main_page);
 
         String category = client.sendMessage("getcategories;" + passable);
-        String[] categories = category.split(";");
+        System.out.println("Categories: " + category);
+        String[] categoriesMessage = category.split(";");
+        String[][] categories = new String[categoriesMessage.length][2];
+
         String[] arrayCategorySpinner = new String[categories.length + 3];
-//                "Food", "Groceries", "Clothes"
-        for (int i = 0; i < categories.length+3; i++) {
+        for (int i = 0; i < categoriesMessage.length+3; i++) {
             if (i ==0) {
                 arrayCategorySpinner[i] = "Food";
             }
@@ -140,7 +144,8 @@ public class MainPageActivity extends AppCompatActivity {
                 arrayCategorySpinner[i] = "Clothes";
             }
             if (i > 2) {
-                arrayCategorySpinner[i] = categories[i - 3];
+                categories[i - 3] = categoriesMessage[i - 3].split(" ");
+                arrayCategorySpinner[i] = categories[i - 3][0];
             }
         }
 
@@ -153,24 +158,24 @@ public class MainPageActivity extends AppCompatActivity {
         categorySpinner.setAdapter(categoryAdapter);
 
         categorySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-              @Override
-              public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                  Object item = adapterView.getItemAtPosition(position);
-                  String type = item.toString();
-                  transCat = type;
-                  System.out.println("Category Selected: " + transCat);
-              }
-                @Override
-                public void onNothingSelected(AdapterView<?> arg0) {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                Object item = adapterView.getItemAtPosition(position);
+                String type = item.toString();
+                transCat = type;
+                System.out.println("Category Selected: " + transCat);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
                 // TODO Auto-generated method stub
             }
-          });
+        });
 
 
         // get type
 
         //super.onCreate(savedInstanceState);
-       // setContentView(R.layout.activity_main_page);
+        // setContentView(R.layout.activity_main_page);
         String[] arrayTypeSpinner = new String[] {
                 "Expense", "Income"
         };
@@ -217,17 +222,17 @@ public class MainPageActivity extends AppCompatActivity {
                             })
                             .create()
                             .show();
-//                    System.out.println("Amount: " + amountText.getText().toString());
-//                    System.out.println("Category: " + transCat);
-//                    System.out.println("Type: " + transType);
-//                    System.out.println("Username: " + passable);
 
+                    String transAmount = amountText.getText().toString();
+                    if (transType.equals("Expense")) {
+                        client.sendMessage("inserttransaction;" + passable + " " + transType + " " + transAmount + " " + transCat + " April");
+                        System.out.print("Type: " + transType + " Amount: " + transAmount+ "\n");
+                    } else if (transType.equals("Income")) {
+                        transAmount = "-" + transAmount;
+                        client.sendMessage("inserttransaction;" + passable + " " + transType + " " + transAmount + " " + transCat + " April");
+                        System.out.print("Type: " + transType + " Amount: " + transAmount + "\n");
 
-                        client.sendMessage("inserttransaction;" + passable + " " + transType + " " + amountText.getText().toString() + " " + transCat + " April");
-                    // refresh
-
-
-
+                    }
                 }
             }
         });

@@ -10,16 +10,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.badgerbudget.data.model.Client;
+
 import static com.example.badgerbudget.R.*;
 
 public class ProfileSettingActivity extends AppCompatActivity {
-
+    String passable;
     String name, birthday, password, securityquestion1, securityquestion2, securityquestion3;
     EditText nameText, birthdayText, a1Text, a2Text, a3Text, currentPasswordText, newPasswordText;
     Button saveButton;
+    Client client = new Client(6868, "10.0.2.2");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Bundle un = getIntent().getExtras();
+        String username = un.getString("username");
+        passable = username;
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_profile_setting);
 
@@ -49,7 +55,14 @@ public class ProfileSettingActivity extends AppCompatActivity {
         newPasswordText = (EditText) findViewById(id.newpasswordText);
 
         saveButton = (Button) findViewById(id.saveButton);
-
+        String response = client.sendMessage("getuserinfo;" + passable);
+        String[] userInfo = response.split(" ");
+        nameText.setText(userInfo[5]);
+        birthdayText.setText(userInfo[6]);
+        a1Text.setText(userInfo[2]);
+        a2Text.setText(userInfo[3]);
+        a3Text.setText(userInfo[4]);
+        currentPasswordText.setText(userInfo[1]);
         // save button
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +70,7 @@ public class ProfileSettingActivity extends AppCompatActivity {
                 // if new password is not entered
                 if (newPasswordText.getText().toString().equals("")){
                     // if both new name and birthday is not entered
-                    if(nameText.getText().toString().equals("") && birthdayText.getText().toString().equals("")){
+                    if(nameText.getText().toString().equals(name) && birthdayText.getText().toString().equals(birthday)){
                         AlertDialog.Builder builder = new AlertDialog.Builder(ProfileSettingActivity.this);
                         builder.setMessage("Nothing to update")
                                 .setPositiveButton("okay", null)
@@ -71,13 +84,20 @@ public class ProfileSettingActivity extends AppCompatActivity {
                                 .setPositiveButton("okay", null)
                                 .create()
                                 .show();
-                        // todo: update name and birthday on DB
+                        String response = client.sendMessage("changeuserinfo;" + passable + " " +
+                                nameText.getText() + " " + a1Text.getText() + " " +
+                                a2Text.getText() + " " + a3Text.getText() + " " +
+                                birthdayText.getText());
+                        if (response != null) {
+                            finish();
+                            startActivity(getIntent());
+                        }
                     }
 
                 }
                 else{
                     // if password entered match
-                    if (currentPasswordText.getText().toString().equals(password)){
+                    if (!newPasswordText.getText().toString().equals("")){
                         AlertDialog.Builder builder = new AlertDialog.Builder(ProfileSettingActivity.this);
                         builder.setMessage("updated")
                                 .setPositiveButton("okay", new DialogInterface.OnClickListener() {
@@ -88,7 +108,11 @@ public class ProfileSettingActivity extends AppCompatActivity {
                                 })
                                 .create()
                                 .show();
-                        // todo: update data
+                        String response = client.sendMessage("changepassword;" + passable + " " + newPasswordText.getText().toString());
+                        if (response.equals("Password Changed Successfully")) {
+                            finish();
+                            startActivity(getIntent());
+                        }
                     }
                     // if all security answers match
                     else if (a1Text.getText().toString().equals(securityquestion1)

@@ -34,6 +34,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent profileIntent = new Intent(SettingActivity.this, ProfileSettingActivity.class);
+                profileIntent.putExtra("username", passable);
                 SettingActivity.this.startActivity(profileIntent);
             }
         });
