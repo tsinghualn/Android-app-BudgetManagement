@@ -31,15 +31,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 public class Report extends AppCompatActivity {
 
 
-    String[] categories = {"categ1", "categ2", "categ3"};
+    /*String[] categories = {"categ1", "categ2", "categ3"};
     double[] catExpense={300,200,600};
 
-    String[] months={"January","February","March"};
+    String[] months={"January","February","March"};*/
     double[] monExpense={1000,600,1500};
     double[] monIncome={2000,2400,3000};
 
@@ -58,8 +59,12 @@ public class Report extends AppCompatActivity {
 
     // A list of pairs of category with corresponding expense in dollar
     // A list of pairs of month with corresponding expense in dollar
-    HashMap<String, Double> categList, expenseByMonth;
+    /*HashMap<String, Double> categList = new HashMap<>();
+    HashMap<String, Double> expenseByMonth = new HashMap<>();*/
 
+    String[] transList;
+    HashMap<String, Double> categList;
+    HashMap<String, Double> expenseByMonth,incomeByMonth;
     // map of month in string - month in integer
     private static final Map<String, Integer> MONTHMAP = new HashMap<String, Integer>() {
         {
@@ -98,7 +103,7 @@ public class Report extends AppCompatActivity {
         passable = username;
 
         transaction = new Transaction(passable);
-        transaction.setTransaction();
+
 
         // show&use navigation
         // navigation bar
@@ -107,20 +112,13 @@ public class Report extends AppCompatActivity {
         // drop down menu (spinner)
         createDropDownMenu();
         addListenerOnButton();
+/*
 
         viewCategPieChart();
 
         viewExpenseBarChart();
+*/
 
-        // get total expense
-        TextView textView_totSpDisp = (TextView) findViewById(R.id.TotSpendDisp);
-        totalSpend = getTotalValue(monExpense);
-        textView_totSpDisp.setText("$" + totalSpend);
-
-        // get total income
-        TextView textView_totIncDisp = (TextView) findViewById(R.id.TotIncDisp);
-        totalIncome = getTotalValue(monIncome);
-        textView_totIncDisp.setText("$" + totalIncome);
 
     }
 
@@ -171,7 +169,26 @@ public class Report extends AppCompatActivity {
 
         barChartView=findViewById(R.id.bar_chart_view);
 
-        addExpense(months, monExpense);
+        Set<String> monthSet = expenseByMonth.keySet();
+/*        String[] months = new String[monthSet.size()];
+        double[] monExpense = new double[monthSet.size()];
+
+        int i = 0;
+        for(String month: monthSet){
+            months[i] = month;
+            monExpense[i] = expenseByMonth.get(month);
+            i++;
+        }*/
+
+        barDataEntries = new ArrayList<>();
+/*        // use hashmap!
+        for(int i=0;i<months.length;i++){
+            barDataEntries.add(new ValueDataEntry(months[i],monExpense[i]));
+        }*/
+
+        for(String month: monthSet){
+            barDataEntries.add(new ValueDataEntry(month, expenseByMonth.get(month)));
+        }
 
         Cartesian bar = AnyChart.column();
 
@@ -181,18 +198,6 @@ public class Report extends AppCompatActivity {
     }
 
 
-
-    public void addExpense(String[] months, double[] monExpense){
-
-        barDataEntries = new ArrayList<>();
-
-        // use hashmap! 
-        
-        for(int i=0;i<months.length;i++){
-            barDataEntries.add(new ValueDataEntry(months[i],monExpense[i]));
-        }
-
-    }
 
 
     /*
@@ -238,10 +243,19 @@ public class Report extends AppCompatActivity {
 
         yValues = new ArrayList<PieEntry>();
 
-        for(int i=0; i < categories.length; i++){
+        Set<String> cat = categList.keySet();
+
+        for(String category: cat){
+            double tempAmount = categList.get(category).doubleValue();
+            float amount = (float) tempAmount;
+            yValues.add(new PieEntry(amount, category));
+        }
+
+
+/*        for(int i=0; i < categories.length; i++){
             float a = (float) catExpense[i];
             yValues.add(new PieEntry(a,categories[i]));
-        }
+        }*/
 
     }
 
@@ -299,8 +313,28 @@ public class Report extends AppCompatActivity {
                 if(isValidRange(sMonth, sYear, eMonth, eYear)){
                     // valid
                     // call transaction query here (if month/year are valid)
-                    transaction.setTransactionInRange(sMonth, sYear, eMonth, eYear);
+                    ArrayList<String[]> expenseInRange =  (ArrayList<String[]>)
+                            (transaction.setTransactionInRange(sMonth, sYear, eMonth, eYear).clone());
 
+                    ArrayList<String[]> incomeInRange = (ArrayList<String[]>)
+                            (transaction.setIncomeInRange(sMonth, sYear, eMonth, eYear).clone());
+
+                    categList = new HashMap<String, Double> (transaction.getCategList(expenseInRange));
+                    expenseByMonth = new HashMap<String, Double> (transaction.getExpenseByMonth(expenseInRange));
+                    incomeByMonth = new HashMap<String, Double> (transaction.getIncomeByMonth(incomeInRange));
+
+                    viewCategPieChart();
+                    viewExpenseBarChart();
+
+                    // get total expense
+                    TextView textView_totSpDisp = (TextView) findViewById(R.id.TotSpendDisp);
+                    totalSpend = getTotalValue(expenseByMonth);
+                    textView_totSpDisp.setText("$" + totalSpend);
+
+                    // get total income
+                    TextView textView_totIncDisp = (TextView) findViewById(R.id.TotIncDisp);
+                    totalIncome = getTotalValue(incomeByMonth);
+                    textView_totIncDisp.setText("$" + totalIncome);
 
 
                 } else {
@@ -380,14 +414,15 @@ public class Report extends AppCompatActivity {
     }
 
     /* Calculate total spending for a specified period of time by adding all the monthly spending in expenseByMonth. */
-    public double getTotalValue(double[] amount){
+    public double getTotalValue(HashMap<String, Double> map){
 
         // get Expense for each month from hashmap 
         // sum up for each month, for each transaction
 
         totalAmount = 0;
-        for (int i=0 ; i < amount.length; i++) {
-            totalAmount += amount[i];
+        Set<String> keys = map.keySet();
+        for(String key: keys){
+            totalAmount += map.get(key);
         }
 
         return totalAmount;
