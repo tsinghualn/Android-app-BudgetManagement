@@ -11,8 +11,8 @@
 
     <EditText
         android:id="@+id/amountText"
-        android:layout_width="106dp"
-        android:layout_height="49dp"
+        android:layout_width="105dp"
+        android:layout_height="56dp"
         android:layout_marginEnd="32dp"
         android:ems="10"
         android:hint="amount"
@@ -35,8 +35,8 @@
 
     <TextView
         android:id="@+id/targetExpenseText"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="145dp"
+        android:layout_height="42dp"
         android:layout_marginEnd="34dp"
         android:layout_marginBottom="24dp"
         android:text="$0"
@@ -48,10 +48,9 @@
 
     <TextView
         android:id="@+id/currentExpenseText"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="143dp"
+        android:layout_height="37dp"
         android:layout_marginEnd="35dp"
-        android:layout_marginRight="35dp"
         android:layout_marginBottom="9dp"
         android:text="$0"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
@@ -104,11 +103,10 @@
 
     <TextView
         android:id="@+id/currentBalanceText"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="143dp"
+        android:layout_height="48dp"
         android:layout_marginTop="46dp"
         android:layout_marginEnd="34dp"
-        android:layout_marginRight="34dp"
         android:layout_marginBottom="9dp"
         android:text="$0"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
@@ -119,12 +117,10 @@
 
     <Spinner
         android:id="@+id/typeSpinner"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="162dp"
+        android:layout_height="49dp"
         android:layout_marginStart="37dp"
-        android:layout_marginLeft="37dp"
         android:layout_marginEnd="14dp"
-        android:layout_marginRight="14dp"
         android:layout_marginBottom="18dp"
         android:spinnerMode="dropdown"
         app:layout_constraintBottom_toTopOf="@+id/noteText"
@@ -134,33 +130,19 @@
 
     <EditText
         android:id="@+id/noteText"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="122dp"
+        android:layout_height="51dp"
         android:layout_marginStart="36dp"
-        android:layout_marginLeft="36dp"
         android:layout_marginEnd="18dp"
-        android:layout_marginRight="18dp"
         android:ems="10"
         android:hint="note"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/addCategoryBtn"
+        app:layout_constraintBottom_toBottomOf="@+id/addCategoryBtn"
         app:layout_constraintEnd_toStartOf="@+id/amountText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/typeSpinner" />
 
-    <Button
-        android:id="@+id/addCategoryBtn"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="350dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="13dp"
-        android:text="@android:string/ok"
-        app:layout_constraintBottom_toTopOf="@+id/chart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+    <!--
     <lecho.lib.hellocharts.view.LineChartView
         android:id="@+id/chart"
         android:layout_width="351dp"
@@ -174,6 +156,33 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addCategoryBtn" />
+-->
+
+
+    <Button
+        android:id="@+id/addCategoryBtn"
+        android:layout_width="71dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="308dp"
+        android:layout_marginEnd="24dp"
+        android:text="@android:string/ok"
+        app:layout_constraintBottom_toTopOf="@+id/bar_chart_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.anychart.AnyChartView
+        android:id="@+id/bar_chart_view"
+        android:layout_width="384dp"
+        android:layout_height="141dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="88dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"></com.anychart.AnyChartView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
