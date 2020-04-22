@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.MonthDisplayHelper;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -19,7 +18,6 @@ import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
-import com.anychart.charts.Pie;
 import com.anychart.charts.Cartesian;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -28,14 +26,14 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import java.lang.Object.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
-public class report extends AppCompatActivity {
+public class Report extends AppCompatActivity {
 
 
     String[] categories = {"categ1", "categ2", "categ3"};
@@ -82,12 +80,13 @@ public class report extends AppCompatActivity {
 
     String str_startMonth, str_endMonth, str_startYear, str_endYear;
 
-    // Display total spend on report and use for calculating expense proportion of each category
+    // Display total spend on Report and use for calculating expense proportion of each category
     double totalSpend = 0;
-    // Display total income on report
+    // Display total income on Report
     double totalIncome = 0;
 
     String passable;
+    Transaction transaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +96,10 @@ public class report extends AppCompatActivity {
         Bundle un = getIntent().getExtras();
         String username = un.getString("username");
         passable = username;
+
+        transaction = new Transaction(passable);
+        transaction.setTransaction();
+
         // show&use navigation
         // navigation bar
         navigation();
@@ -130,26 +133,26 @@ public class report extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
-                        Intent a = new Intent(report.this, MainPageActivity.class);
+                        Intent a = new Intent(Report.this, MainPageActivity.class);
                         a.putExtra("username", passable);
                         startActivity(a);
                         break;
                     case R.id.nav_report:
-                        // Intent b = new Intent(report.this, report.class);
+                        // Intent b = new Intent(Report.this, Report.class);
                         // startActivity(b);
                         break;
                     case R.id.nav_setting:
-                        Intent c = new Intent(report.this,SettingActivity.class);
+                        Intent c = new Intent(Report.this,SettingActivity.class);
                         c.putExtra("username", passable);
                         startActivity(c);
                         break;
                     case R.id.nav_goal:
-                        // Intent d = new Intent(report.this, GoalsActivity.class);
+                        // Intent d = new Intent(Report.this, GoalsActivity.class);
                         //d.putExtra("username", username);
                         // startActivity(d)
                         break;
                     case R.id.nav_category:
-                        Intent e = new Intent(report.this, CategoryPageActivity.class);
+                        Intent e = new Intent(Report.this, CategoryPageActivity.class);
                         e.putExtra("username", passable);
                         startActivity(e);
                         break;
@@ -245,7 +248,7 @@ public class report extends AppCompatActivity {
     public void createDropDownMenu(){
         // dropdown menu: startMonth
         startMonth = (Spinner) findViewById(R.id.sMonth);
-        ArrayAdapter<String> sMonthAdapter = new ArrayAdapter<String>(report.this,
+        ArrayAdapter<String> sMonthAdapter = new ArrayAdapter<String>(Report.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.Month));
         sMonthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // show adapter in the spinner
@@ -253,7 +256,7 @@ public class report extends AppCompatActivity {
 
         // dropdown menu: startMonth
         endMonth = (Spinner) findViewById(R.id.eMonth);
-        ArrayAdapter<String> eMonthAdapter = new ArrayAdapter<String>(report.this,
+        ArrayAdapter<String> eMonthAdapter = new ArrayAdapter<String>(Report.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.Month));
         eMonthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // show adapter in the spinner
@@ -261,7 +264,7 @@ public class report extends AppCompatActivity {
 
         // dropdown menu: end Year
         startYear = (Spinner) findViewById(R.id.sYear);
-        ArrayAdapter<String> sYearAdapter = new ArrayAdapter<String>(report.this,
+        ArrayAdapter<String> sYearAdapter = new ArrayAdapter<String>(Report.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.Year));
         sYearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // show adapter in the spinner
@@ -269,7 +272,7 @@ public class report extends AppCompatActivity {
 
         // dropdown menu: end Year
         endYear = (Spinner) findViewById(R.id.eYear);
-        ArrayAdapter<String> eYearAdapter = new ArrayAdapter<String>(report.this,
+        ArrayAdapter<String> eYearAdapter = new ArrayAdapter<String>(Report.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.Year));
         eYearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // show adapter in the spinner
@@ -296,15 +299,18 @@ public class report extends AppCompatActivity {
                 if(isValidRange(sMonth, sYear, eMonth, eYear)){
                     // valid
                     // call transaction query here (if month/year are valid)
+                    transaction.setTransactionInRange(sMonth, sYear, eMonth, eYear);
+
+
 
                 } else {
-                    Toast.makeText(report.this,
+                    Toast.makeText(Report.this,
                             "OnClickListener: " +
                                     "Please select a valid range of months",
                             Toast.LENGTH_SHORT).show();
                 }
 
-                Toast.makeText(report.this,
+                Toast.makeText(Report.this,
                         "OnClickListener: " +
                         "\nstartMonth : " + sMonth +
                                 " startYear: " + sYear +

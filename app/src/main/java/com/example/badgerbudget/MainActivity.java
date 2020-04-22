@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_home:
                         break;
                     case R.id.nav_report:
-                        Intent a = new Intent(MainActivity.this, report.class);
+                        Intent a = new Intent(MainActivity.this, Report.class);
                         startActivity(a);
                         break;
                     case R.id.nav_setting:

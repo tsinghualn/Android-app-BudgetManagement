@@ -56,7 +56,7 @@ public class SettingActivity extends AppCompatActivity {
                         startActivity(a);
                         break;
                     case R.id.nav_report:
-                        Intent b = new Intent(SettingActivity.this, report.class);
+                        Intent b = new Intent(SettingActivity.this, Report.class);
                         b.putExtra("username", passable);
                         startActivity(b);
                         break;
@@ -81,7 +81,7 @@ public class SettingActivity extends AppCompatActivity {
 
 
     public void onClick_calc(View v){
-        Intent calc = new Intent(SettingActivity.this, calculator.class);
+        Intent calc = new Intent(SettingActivity.this, Calculator.class);
         startActivity(calc);
     }
 }

@@ -10,7 +10,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
 
-    <!-- report spinners -->
+    <!-- Report spinners -->
     <string-array name="Month">
         <item>January</item>
         <item>February</item>

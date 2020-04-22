@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
-import android.util.Log;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
@@ -276,7 +275,7 @@ public class MainPageActivity extends AppCompatActivity {
                     case R.id.nav_home:
                         break;
                     case R.id.nav_report:
-                        Intent a = new Intent(MainPageActivity.this, report.class);
+                        Intent a = new Intent(MainPageActivity.this, Report.class);
                         a.putExtra("username", passable);
                         startActivity(a);
                         break;
