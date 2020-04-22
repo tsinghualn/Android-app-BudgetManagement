@@ -34,8 +34,23 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent profileIntent = new Intent(SettingActivity.this, ProfileSettingActivity.class);
-                profileIntent.putExtra("username", passable);
                 SettingActivity.this.startActivity(profileIntent);
+            }
+        });
+
+        userGuideButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent guideIntent = new Intent(SettingActivity.this, GuideActivity.class);
+                SettingActivity.this.startActivity(guideIntent);
+            }
+        });
+
+        appInfoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent appInfoIntent = new Intent(SettingActivity.this, AppInfoActivity.class);
+                SettingActivity.this.startActivity(appInfoIntent);
             }
         });
 
