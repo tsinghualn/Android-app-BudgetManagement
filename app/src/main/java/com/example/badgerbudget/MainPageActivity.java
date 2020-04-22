@@ -19,10 +19,19 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.anychart.AnyChart;
+import com.anychart.AnyChartView;
+import com.anychart.chart.common.dataentry.DataEntry;
+import com.anychart.chart.common.dataentry.ValueDataEntry;
+import com.anychart.charts.Cartesian;
 import com.example.badgerbudget.data.model.Client;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import lecho.lib.hellocharts.model.AxisValue;
@@ -36,6 +45,11 @@ public class MainPageActivity extends AppCompatActivity {
     String passable;
     String transCat;
     String transType;
+
+    AnyChartView barChartView;
+    List<DataEntry> barDataEntries;
+
+    double totalAmount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -225,13 +239,12 @@ public class MainPageActivity extends AppCompatActivity {
 
                     String transAmount = amountText.getText().toString();
                     if (transType.equals("Expense")) {
-                        client.sendMessage("inserttransaction;" + passable + " " + transType + " " + transAmount + " " + transCat + " April");
+                        client.sendMessage("inserttransaction;" + passable + " " + transType + " " + transAmount + " 4/22/20 April 2020 " + transCat);
                         System.out.print("Type: " + transType + " Amount: " + transAmount+ "\n");
                     } else if (transType.equals("Income")) {
                         transAmount = "-" + transAmount;
-                        client.sendMessage("inserttransaction;" + passable + " " + transType + " " + transAmount + " " + transCat + " April");
+                        client.sendMessage("inserttransaction;" + passable + " " + transType + " " + transAmount + " 4/22/20 April 2020 " + transCat);
                         System.out.print("Type: " + transType + " Amount: " + transAmount + "\n");
-
                     }
                 }
             }
@@ -245,7 +258,7 @@ public class MainPageActivity extends AppCompatActivity {
         select day(DateTime) as Day, sum(Amount) as Expense from Transaction
         where Type = 'expense' AND month(Datetime) = 3 And year(Datetime) = 2020 AND
 	    UserName = 'test1' Group by day(DateTime);
-         */
+
         LineChartView lineChartView = findViewById(R.id.chart);
         String[] axisData = {"4.02", "4.03", "4.04", "4.05", "4.06", "4.07", "4.08", "4.09", "4.10",
                 "4.11", "4.12", "4.13"};
@@ -265,11 +278,73 @@ public class MainPageActivity extends AppCompatActivity {
         LineChartData data = new LineChartData();
         data.setLines(lines);
         lineChartView.setLineChartData(data);
+        */
 
+        // bar graph
+        viewExpenseBarChart();
 
         navigation();
     }
 
+    public void viewExpenseBarChart(){
+        barChartView=findViewById(R.id.bar_chart_view);
+
+        String today = getDateString(0);
+        String today1 = getDateString(1);
+        String today2 = getDateString(2);
+        String today3 = getDateString(3);
+        String today4 = getDateString(4);
+        String today5 = getDateString(5);
+        String today6 = getDateString(6);
+
+        // todo: get daily expense
+        /*
+        double todayExpense =;
+        double today1Expense =;
+        double today2Expense =;
+        double today3Expense =;
+        double today4Expense =;
+        double today5Expense =;
+        double today6Expense =;
+        */
+
+        // add data to chart
+        /*
+        barDataEntries.add(new ValueDataEntry(today,todayExpense);
+        barDataEntries.add(new ValueDataEntry(today,todayExpense);
+        barDataEntries.add(new ValueDataEntry(today,todayExpense);
+        barDataEntries.add(new ValueDataEntry(today,todayExpense);
+        barDataEntries.add(new ValueDataEntry(today,todayExpense);
+        barDataEntries.add(new ValueDataEntry(today,todayExpense);
+        barDataEntries.add(new ValueDataEntry(today,todayExpense);
+        barDataEntries.add(new ValueDataEntry(today,todayExpense);
+        */
+
+        Cartesian bar = AnyChart.column();
+
+        bar.data(barDataEntries);
+        bar.title("Daily expense trend");
+        barChartView.setChart(bar);
+    }
+    private String getDateString(int i) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -i);
+        return dateFormat.format(cal.getTime());
+    }
+/*
+    public void addExpense(String[] months, double[] monExpense){
+
+        barDataEntries = new ArrayList<>();
+
+        // use hashmap!
+
+        for(int i=0;i<months.length;i++){
+            barDataEntries.add(new ValueDataEntry(months[i],monExpense[i]));
+        }
+
+    }
+*/
     private void navigation() {
 
         // navigation bar
