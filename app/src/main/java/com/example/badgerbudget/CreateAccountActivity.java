@@ -44,10 +44,6 @@ public class CreateAccountActivity extends AppCompatActivity {
         s2a = (EditText) findViewById(R.id.s2answerTest);
         s3a = (EditText) findViewById(R.id.s3AnswerText);
 
-        s1q.setText("What is your mother's maiden name?");
-        s2q.setText("What is your favorite color?");
-        s3q.setText("What was the name of your best friend in 1st grade?");
-        //harddcode the theree security questions, only want to store the answers.
     }
 
     public void createAccount(View view) throws UnknownHostException {
