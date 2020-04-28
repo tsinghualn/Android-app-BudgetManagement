@@ -3,7 +3,7 @@
     package="com.example.badgerbudget">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -12,13 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".ForgotPassword"></activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".Calculator" />
         <activity android:name=".Report" />
-
-        <activity android:name=".GoalActivity"></activity>
-
+        <activity android:name=".GoalActivity" />
         <activity android:name=".CategoryPageActivity" />
         <activity android:name=".CreateAccountActivity">
             <meta-data

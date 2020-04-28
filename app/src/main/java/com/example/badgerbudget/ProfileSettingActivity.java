@@ -4,13 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.badgerbudget.data.model.Client;
+import com.example.badgerbudget.ui.login.LoginActivity;
 
 import static com.example.badgerbudget.R.*;
 
@@ -32,22 +35,16 @@ public class ProfileSettingActivity extends AppCompatActivity {
 
         nameText = (EditText) findViewById(id.nameText);
         birthdayText = (EditText) findViewById(id.birthdayText);
+        Button logout = findViewById(id.logoutButton);
 
-        // todo: get user data from db
+        logout.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  Intent intent = new Intent(ProfileSettingActivity.this, LoginActivity.class);
+                  startActivity(intent);
+              }
+        });
 
-        /*
-        Bundle un = getIntent().getExtras();
-        name = un.getString("name");
-        nameText.setText(name, TextView.BufferType.EDITABLE);
-
-        birthday = un.getString("birthday");
-        birthdayText.setText(birthday, TextView.BufferType.EDITABLE);
-
-        password = un.getString("password");
-        securityquestion1 = un.getString("securityquestion1");
-        securityquestion2 = un.getString("securityquestion2");
-        securityquestion3 = un.getString("securityquestion3");
-        */
 
         a1Text = (EditText) findViewById(id.a1Text);
         a2Text = (EditText) findViewById(id.a2Text);
@@ -57,13 +54,17 @@ public class ProfileSettingActivity extends AppCompatActivity {
 
         saveButton = (Button) findViewById(id.saveButton);
         String response = client.sendMessage("getuserinfo;" + passable);
+        System.out.println("Response: " + response);
         String[] userInfo = response.split(" ");
-        nameText.setText(userInfo[5]);
-        birthdayText.setText(userInfo[6]);
+        nameText.setText(userInfo[6]);
+        System.out.println("nameText: " + nameText.getText().toString());
+        birthdayText.setText(userInfo[5]);
+        System.out.println("birthday: " + birthdayText.getText().toString());
         a1Text.setText(userInfo[2]);
+        System.out.println("answer1: " + a1Text.getText().toString());
         a2Text.setText(userInfo[3]);
+        System.out.println("answer2: " + a2Text.getText().toString());
         a3Text.setText(userInfo[4]);
-        currentPasswordText.setText(userInfo[1]);
         // save button
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,8 +84,8 @@ public class ProfileSettingActivity extends AppCompatActivity {
                         AlertDialog.Builder builder = new AlertDialog.Builder(ProfileSettingActivity.this);
                         builder.setMessage("updated")
                                 .setPositiveButton("okay", null)
-                                .create()
-                                .show();
+                                .create();
+//                                .show();
                         String response = client.sendMessage("changeuserinfo;" + passable + " " +
                                 nameText.getText() + " " + a1Text.getText() + " " +
                                 a2Text.getText() + " " + a3Text.getText() + " " +
@@ -98,7 +99,8 @@ public class ProfileSettingActivity extends AppCompatActivity {
                 }
                 else{
                     // if password entered match
-                    if (!newPasswordText.getText().toString().equals("")){
+
+                    if (!newPasswordText.getText().toString().equals("") && !currentPasswordText.getText().toString().equals("")) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(ProfileSettingActivity.this);
                         builder.setMessage("updated")
                                 .setPositiveButton("okay", new DialogInterface.OnClickListener() {
@@ -109,10 +111,16 @@ public class ProfileSettingActivity extends AppCompatActivity {
                                 })
                                 .create();
 //                                .show();
-                        String response = client.sendMessage("changepassword;" + passable + " " + newPasswordText.getText().toString());
-                        if (response.equals("Password Changed Successfully")) {
-                            finish();
-                            startActivity(getIntent());
+                        String message = client.sendMessage("passwordcheck;" + passable + " " + currentPasswordText.getText().toString());
+                        if (message.equals("true")) {
+                            String response = client.sendMessage("changepassword;" + passable + " " + newPasswordText.getText().toString());
+                            if (response.equals("Password Changed Successfully")) {
+                                toastMessage("Password Has Been Changed");
+                                finish();
+                                startActivity(getIntent());
+                            }
+                        } else {
+                            toastMessage("Current Password Invalid");
                         }
                     }
                     // if all security answers match
@@ -141,5 +149,10 @@ public class ProfileSettingActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void toastMessage(String message) {
+        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+
     }
 }

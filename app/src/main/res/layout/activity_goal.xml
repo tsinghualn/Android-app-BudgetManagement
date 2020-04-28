@@ -42,7 +42,7 @@
         app:layout_constraintHorizontal_bias="0.727"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.218" />
+        app:layout_constraintVertical_bias="0.146" />
 
     <ProgressBar
         android:id="@+id/clothesProgressBar"
@@ -54,7 +54,7 @@
         app:layout_constraintHorizontal_bias="0.697"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.435" />
+        app:layout_constraintVertical_bias="0.375" />
 
     <ProgressBar
         android:id="@+id/cat3progressBar"
@@ -66,7 +66,7 @@
         app:layout_constraintHorizontal_bias="0.693"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.752" />
+        app:layout_constraintVertical_bias="0.733" />
 
     <TextView
         android:id="@+id/groceriesTextView"
@@ -78,7 +78,7 @@
         app:layout_constraintHorizontal_bias="0.071"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.436" />
+        app:layout_constraintVertical_bias="0.383" />
 
     <TextView
         android:id="@+id/cat1TextView"
@@ -89,8 +89,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.071"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.54" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
         android:id="@+id/groceryProgressBar"
@@ -102,7 +101,7 @@
         app:layout_constraintHorizontal_bias="0.717"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.32" />
+        app:layout_constraintVertical_bias="0.26" />
 
     <TextView
         android:id="@+id/clothesTextView"
@@ -114,7 +113,7 @@
         app:layout_constraintHorizontal_bias="0.071"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.324" />
+        app:layout_constraintVertical_bias="0.268" />
 
     <TextView
         android:id="@+id/cat2TextView"
@@ -126,7 +125,7 @@
         app:layout_constraintHorizontal_bias="0.071"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.641" />
+        app:layout_constraintVertical_bias="0.603" />
 
     <ProgressBar
         android:id="@+id/cat4ProgressBar"
@@ -138,7 +137,7 @@
         app:layout_constraintHorizontal_bias="0.707"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.855" />
+        app:layout_constraintVertical_bias="0.86" />
 
     <ProgressBar
         android:id="@+id/cat2progressBar"
@@ -150,7 +149,7 @@
         app:layout_constraintHorizontal_bias="0.662"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.648" />
+        app:layout_constraintVertical_bias="0.608" />
 
     <ProgressBar
         android:id="@+id/cat1ProgressBar"
@@ -162,7 +161,7 @@
         app:layout_constraintHorizontal_bias="0.684"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.543" />
+        app:layout_constraintVertical_bias="0.495" />
 
     <TextView
         android:id="@+id/cat3TextView"
@@ -174,7 +173,7 @@
         app:layout_constraintHorizontal_bias="0.071"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.744" />
+        app:layout_constraintVertical_bias="0.723" />
 
     <TextView
         android:id="@+id/cat4TextView"
@@ -186,7 +185,7 @@
         app:layout_constraintHorizontal_bias="0.071"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.839" />
+        app:layout_constraintVertical_bias="0.844" />
 
     <TextView
         android:id="@+id/foodTextView"
@@ -198,7 +197,77 @@
         app:layout_constraintHorizontal_bias="0.071"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.223" />
+        app:layout_constraintVertical_bias="0.155" />
+
+    <TextView
+        android:id="@+id/foodProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Food Progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.573"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/foodProgressBar" />
+
+    <TextView
+        android:id="@+id/clothesProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clothes Progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.565"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/groceryProgressBar" />
+
+    <TextView
+        android:id="@+id/groceriesProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Groceries Progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.591"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clothesProgressBar" />
+
+    <TextView
+        android:id="@+id/cat1Progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cat1 Progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.562"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cat1ProgressBar" />
+
+    <TextView
+        android:id="@+id/cat2Progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cat2 Progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.559"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cat2progressBar" />
+
+    <TextView
+        android:id="@+id/cat3progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cat3 Progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.545"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cat3progressBar" />
+
+    <TextView
+        android:id="@+id/cat4Progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cat4 Progress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.551"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cat4ProgressBar" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
