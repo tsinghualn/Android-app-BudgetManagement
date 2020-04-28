@@ -55,6 +55,7 @@ public class GoalActivity extends AppCompatActivity {
 
         for (int i = 0; i < categoriesMessage.length; i++) {
             categories[i] = categoriesMessage[i].split(" ");
+            System.out.println("Category's: " + categoriesMessage[i]);
         }
 
         //Set the default categories for the user
@@ -69,7 +70,8 @@ public class GoalActivity extends AppCompatActivity {
         groceriesBudget = Integer.parseInt(categories[2][1]);
 
 
-        if (!catResponse.equals("")) {
+        if (categoriesMessage.length > 3) {
+            System.out.println("Response: " + catResponse);
             cat1.setText(categories[3][0]);
             cat1Budget = Integer.parseInt(categories[3][1]);
 
