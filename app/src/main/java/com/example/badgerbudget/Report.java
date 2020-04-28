@@ -37,13 +37,6 @@ import java.util.Set;
 public class Report extends AppCompatActivity {
 
 
-    /*String[] categories = {"categ1", "categ2", "categ3"};
-    double[] catExpense={300,200,600};
-
-    String[] months={"January","February","March"};*/
-    double[] monExpense={1000,600,1500};
-    double[] monIncome={2000,2400,3000};
-
     String sMonth, sYear, eMonth, eYear;
     // new pie chart
     PieChart pieChart;
@@ -57,12 +50,9 @@ public class Report extends AppCompatActivity {
     Spinner startMonth, endMonth, startYear, endYear;
     Button btnSubmit;
 
+    //Button popTrans;
     // A list of pairs of category with corresponding expense in dollar
     // A list of pairs of month with corresponding expense in dollar
-    /*HashMap<String, Double> categList = new HashMap<>();
-    HashMap<String, Double> expenseByMonth = new HashMap<>();*/
-
-    String[] transList;
     HashMap<String, Double> categList;
     HashMap<String, Double> expenseByMonth,incomeByMonth;
     // map of month in string - month in integer
@@ -112,12 +102,6 @@ public class Report extends AppCompatActivity {
         // drop down menu (spinner)
         createDropDownMenu();
         addListenerOnButton();
-/*
-
-        viewCategPieChart();
-
-        viewExpenseBarChart();
-*/
 
 
     }
@@ -171,21 +155,8 @@ public class Report extends AppCompatActivity {
         barChartView=findViewById(R.id.bar_chart_view);
 
         Set<String> monthSet = expenseByMonth.keySet();
-/*        String[] months = new String[monthSet.size()];
-        double[] monExpense = new double[monthSet.size()];
-
-        int i = 0;
-        for(String month: monthSet){
-            months[i] = month;
-            monExpense[i] = expenseByMonth.get(month);
-            i++;
-        }*/
 
         barDataEntries = new ArrayList<>();
-/*        // use hashmap!
-        for(int i=0;i<months.length;i++){
-            barDataEntries.add(new ValueDataEntry(months[i],monExpense[i]));
-        }*/
 
         for(String month: monthSet){
             barDataEntries.add(new ValueDataEntry(month, expenseByMonth.get(month)));
@@ -252,11 +223,6 @@ public class Report extends AppCompatActivity {
             yValues.add(new PieEntry(amount, category));
         }
 
-
-/*        for(int i=0; i < categories.length; i++){
-            float a = (float) catExpense[i];
-            yValues.add(new PieEntry(a,categories[i]));
-        }*/
 
     }
 
@@ -390,30 +356,6 @@ public class Report extends AppCompatActivity {
         return false;
     }
 
-
-    public void setData(String startMonth, String endMonth, String startYear, String endYear){
-
-        // get data from database with args
-
-        // for loop iterate through and put data into array
-
-        // check if two array length are matched
-
-    }
-    /* get a list of categories and corresponding expense from database */
-    public void setCategories(){
-
-
-
-    }
-
-    /* Get a list of months (from starting month to end month) and corresponding expense from database */
-    public void setExpense() {
-
-        //expenseByMonth.put("January", 3000.5);
-
-    }
-
     /* Calculate total spending for a specified period of time by adding all the monthly spending in expenseByMonth. */
     public double getTotalValue(HashMap<String, Double> map){
 
@@ -432,6 +374,7 @@ public class Report extends AppCompatActivity {
     /* Get a pop-up window that shows a transaction history of selected period of time */
     public void onClick_viewTrans(View v){
 
+        startActivity(new Intent(Report.this, PopupTransaction.class));
         // bring start & end month/year when open transaction
 
     }

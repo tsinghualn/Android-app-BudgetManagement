@@ -171,7 +171,7 @@ public class GoalActivity extends AppCompatActivity {
                         startActivity(a);
                         break;
                     case R.id.nav_report:
-                        Intent b = new Intent(GoalActivity.this, report.class);
+                        Intent b = new Intent(GoalActivity.this, Report.class);
                         b.putExtra("username", passable);
                         startActivity(b);
                         break;
