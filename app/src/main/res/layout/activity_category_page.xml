@@ -21,20 +21,18 @@
 
     <Button
         android:id="@+id/addCategoryBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="92dp"
+        android:layout_width="108dp"
+        android:layout_height="58dp"
+        android:layout_marginStart="68dp"
         android:text="Add Category"
-        app:layout_constraintEnd_toStartOf="@+id/deleteCateogryBtn"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/categoryTable" />
 
     <Button
         android:id="@+id/deleteCateogryBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="26dp"
-        android:layout_marginRight="26dp"
+        android:layout_width="104dp"
+        android:layout_height="57dp"
+        android:layout_marginEnd="68dp"
         android:text="Delete Category"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/categoryTable" />
@@ -66,6 +64,7 @@
         android:layout_marginTop="12dp"
         android:text="Salary Goes Here"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/salaryTextView"
         app:layout_constraintTop_toBottomOf="@+id/headingView" />
 
     <TableLayout

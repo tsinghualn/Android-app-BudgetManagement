@@ -37,9 +37,8 @@
         android:id="@+id/signUpButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="160dp"
-        android:layout_marginRight="160dp"
         android:onClick="createAccount"
         android:text="Sign Up!"
         app:layout_constraintEnd_toEndOf="parent"
@@ -170,8 +169,8 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout6"
-        android:layout_width="228dp"
-        android:layout_height="58dp"
+        android:layout_width="223dp"
+        android:layout_height="76dp"
         app:layout_constraintEnd_toStartOf="@+id/s3AnswerText"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
 
@@ -180,17 +179,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:editable="false"
-            android:hint="Security Question 3"
-            android:text="Best friend's birth month?" />
+            android:hint="Monthly Income"
+            android:text="Enter Your Monthly Income:" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <EditText
         android:id="@+id/s3AnswerText"
         android:layout_width="185dp"
         android:layout_height="43dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="32dp"
         android:ems="10"
-        android:hint="Answer"
+        android:hint="Monthly Income"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout5" />

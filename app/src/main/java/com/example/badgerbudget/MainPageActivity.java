@@ -48,6 +48,7 @@ public class MainPageActivity extends AppCompatActivity {
     AnyChartView barChartView;
     List<DataEntry> barDataEntries;
 
+
     double totalAmount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +64,7 @@ public class MainPageActivity extends AppCompatActivity {
             TextView targetExpenseText = (TextView) findViewById(R.id.targetExpenseText);
             Spinner typeSpinner = (Spinner) findViewById(R.id.typeSpinner);
             Spinner categorySpinner = (Spinner) findViewById(R.id.categorySpinner);
-            EditText noteText = (EditText) findViewById(R.id.noteText);
+            final EditText noteText = (EditText) findViewById(R.id.noteText);
             final EditText amountText = (EditText) findViewById(R.id.amountText);
             Button addButton = (Button) findViewById(R.id.addCategoryBtn);
 
@@ -73,24 +74,31 @@ public class MainPageActivity extends AppCompatActivity {
             if (!response.equals("")) {
                 String[] transactions = response.split(";");
 
-                String[][] transAmount = new String[transactions.length][5];
+                String[][] transAmount = new String[transactions.length][7];
                 for (int i = 0; i < transactions.length; i++) {
                     transAmount[i] = transactions[i].split(" ");
                 }
 
+                for (int i = 0; i < transactions.length; i++) {
+                    System.out.println("TransAmount: " + transAmount[i][2]);
+                }
                 int total = 0;
                 for (int i = 0; i < transactions.length; i++) {
                     int trans = Integer.parseInt(transAmount[i][2]);
                     total += trans;
+                    System.out.println("Total: " + total);
+
                 }
                 totalAmount = String.valueOf(total);
             } else {
                 totalAmount = "0";
             }
 
+            String salary = client.sendMessage("getsalary;" + passable);
+
             // current balance
             TextView currentBalance = new TextView(getApplicationContext());
-            String currentBalanceString = "5252";
+            String currentBalanceString = salary;
         /*
         select Balance from Transaction
         where Datetime = (select Max(Datetime) from Transaction) AND UserName = 'test1';
@@ -102,6 +110,7 @@ public class MainPageActivity extends AppCompatActivity {
             // current expense
             TextView currentExpense = new TextView(getApplicationContext());
             String currentExpenseString = totalAmount;
+            System.out.println("TotalAmount: " + totalAmount);
         /*
         select sum(Amount) from Transaction
         where Type = 'expense' AND month(Datetime) = 3 And year(Datetime) = 2020 AND
@@ -139,25 +148,13 @@ public class MainPageActivity extends AppCompatActivity {
             //  setContentView(R.layout.activity_main_page);
 
             String category = client.sendMessage("getcategories;" + passable);
-            System.out.println("Categories: " + category);
             String[] categoriesMessage = category.split(";");
             String[][] categories = new String[categoriesMessage.length][2];
 
-            String[] arrayCategorySpinner = new String[categories.length + 3];
-            for (int i = 0; i < categoriesMessage.length + 3; i++) {
-                if (i == 0) {
-                    arrayCategorySpinner[i] = "Food";
-                }
-                if (i == 1) {
-                    arrayCategorySpinner[i] = "Groceries";
-                }
-                if (i == 2) {
-                    arrayCategorySpinner[i] = "Clothes";
-                }
-                if (i > 2) {
-                    categories[i - 3] = categoriesMessage[i - 3].split(" ");
-                    arrayCategorySpinner[i] = categories[i - 3][0];
-                }
+            String[] arrayCategorySpinner = new String[categories.length ];
+            for (int i = 0; i < categoriesMessage.length; i++) {
+                    categories[i] = categoriesMessage[i].split(" ");
+                    arrayCategorySpinner[i] = categories[i][0];
             }
 
         /*
@@ -174,7 +171,6 @@ public class MainPageActivity extends AppCompatActivity {
                     Object item = adapterView.getItemAtPosition(position);
                     String type = item.toString();
                     transCat = type;
-                    System.out.println("Category Selected: " + transCat);
                 }
 
                 @Override
@@ -235,13 +231,25 @@ public class MainPageActivity extends AppCompatActivity {
                                 .create()
                                 .show();
 
+                        String date = getDate();
+                        String year = getYear();
+                        String month = getMonth();
                         String transAmount = amountText.getText().toString();
+                        String note;
+                        if (noteText.getText().toString().equals("")) {
+                            note = "NULL";
+                        } else {
+                            note = noteText.getText().toString();
+
+                        }
                         if (transType.equals("Expense")) {
-                            client.sendMessage("inserttransaction;" + passable + " " + transType + " " + transAmount + " 4/22/20 April 2020 " + transCat);
+                            client.sendMessage("inserttransaction;" + passable + " " + transType + " " + transAmount + " "
+                                    + date +  " " + month + " " + year + " " + transCat + " " + note);
                             System.out.print("Type: " + transType + " Amount: " + transAmount + "\n");
                         } else if (transType.equals("Income")) {
                             transAmount = "-" + transAmount;
-                            client.sendMessage("inserttransaction;" + passable + " " + transType + " " + transAmount + " 4/22/20 April 2020 " + transCat);
+                            client.sendMessage("inserttransaction;" + passable + " " + transType + " " + transAmount + " "
+                                    + date + " " + month + " " + year + " "  + transCat + " " + note);
                             System.out.print("Type: " + transType + " Amount: " + transAmount + "\n");
 
                         }
@@ -342,6 +350,79 @@ public class MainPageActivity extends AppCompatActivity {
 
     }
 */
+
+    /**
+     * Get full date to be used in the report page
+     * @return
+     */
+    private String getDate() {
+        //Gets the date for later
+        DateFormat df = new SimpleDateFormat("MM/dd/yy");
+        Date date = new Date();
+        String dateString = df.format(date);
+        System.out.println("Hoopefully right date: " + dateString);
+        return dateString;
+    }
+
+    /**
+     * Get year as a string to be used in the report page
+     * @return
+     */
+    private String getYear() {
+        Date today = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(today);
+
+        int year = cal.get(Calendar.YEAR);
+        String yearString = String.valueOf(year);
+        return yearString;
+    }
+
+    /**
+     * Get months as a string to be used in the report page
+     * @return
+     */
+    private String getMonth(){
+        String[] months = new String[]{"January", "February", "March", "April",
+                "May", "June", "July", "August", "September", "October",
+                "November", "December"};
+        String monthString;
+        Date today = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(today);
+
+        int month = cal.get(Calendar.MONTH);
+        if (month == 0) {
+            monthString = months[0];
+        } else if (month == 1) {
+            monthString = months[1];
+        } else if (month == 2) {
+            monthString = months[2];
+        } else if (month == 3) {
+            monthString = months[3];
+        } else if (month == 4) {
+            monthString = months[4];
+        } else if (month == 5) {
+            monthString = months[5];
+        } else if (month == 6) {
+            monthString = months[6];
+        } else if (month == 7) {
+            monthString = months[7];
+        } else if (month == 8) {
+            monthString = months[8];
+        } else if (month == 9) {
+            monthString = months[9];
+        } else if (month == 10) {
+            monthString = months[10];
+        } else if (month == 11) {
+            monthString = months[11];
+        } else {
+            return "Unable to retrieve month";
+        }
+
+        return monthString;
+    }
+
     private void navigation() {
 
         // navigation bar
