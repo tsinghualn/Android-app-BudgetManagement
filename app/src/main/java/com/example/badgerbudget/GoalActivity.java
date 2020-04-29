@@ -55,13 +55,11 @@ public class GoalActivity extends AppCompatActivity {
 
         for (int i = 0; i < categoriesMessage.length; i++) {
             categories[i] = categoriesMessage[i].split(" ");
-            System.out.println("Category's: " + categoriesMessage[i]);
         }
 
         //Set the default categories for the user
         food.setText(categories[1][0]);
         foodBudget = Integer.parseInt(categories[1][1]);
-        System.out.println("foodBudget: " + foodBudget);
 
         clothes.setText(categories[0][0]);
         clothesBudget = Integer.parseInt(categories[0][1]);
@@ -71,7 +69,6 @@ public class GoalActivity extends AppCompatActivity {
 
 
         if (categoriesMessage.length > 3) {
-            System.out.println("Response: " + catResponse);
             cat1.setText(categories[3][0]);
             cat1Budget = Integer.parseInt(categories[3][1]);
 
