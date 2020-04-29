@@ -297,6 +297,13 @@ public class Report extends AppCompatActivity {
 
                     transaction = new Transaction(passable);
 
+                    if (transaction.wholeTransaction == null && transaction.typeExpense == null && transaction.typeIncome == null){
+                        Toast.makeText(Report.this,
+                                "There is no transaction to be displayed in the range.",
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                     // call transaction query here (if month/year are valid)
                     expenseInRange =  (ArrayList<String[]>)
                             (transaction.setListInRange(sMonth, sYear, eMonth, eYear, "expense").clone());

@@ -118,7 +118,7 @@ public class Transaction  extends Report{
     public void setTransaction(String wholeTrans){
         String[] transList;
 
-        if (!wholeTrans.equals("")){
+        if (wholeTrans != null && !wholeTrans.isEmpty()){
 
             transList = wholeTrans.split(";");
 
@@ -146,7 +146,8 @@ public class Transaction  extends Report{
 
         } else {
             // there is no transaction for this user
-            transList = null;
+
+            // transList = null;
             wholeTransaction = null;
             typeExpense = null;
             typeIncome = null;

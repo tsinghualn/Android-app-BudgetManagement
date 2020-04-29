@@ -12,10 +12,10 @@ public class TransactionTest {
     String username = "testing0421";
 
     // when testing it, comment out setTransaction on the constructor!! 
-    Transaction transaction = new Transaction(username);
+    //Transaction transaction = new Transaction(username);
     @Test
     public void setTransaction() {
-
+        Transaction transaction = new Transaction(username);
         String wholeTrans = "1 Expense 50 4/22/20 April 2020 Food;2 Expense 50 4/22/20 April 2020 book;1 Income 100 4/22/20 April 2020 Food;";
         transaction.setTransaction(wholeTrans);
 
@@ -36,7 +36,7 @@ public class TransactionTest {
     @Test
     public void setTransactionInRange() {
 
-
+        Transaction transaction = new Transaction(username);
         String wholeTrans = "1 Expense 50 4/22/20 April 2020 Food;2 Expense 50 4/22/20 April 2020 book;1 Income 100 4/22/20 April 2020 Food;";
         transaction.setTransaction(wholeTrans);
 
@@ -61,7 +61,7 @@ public class TransactionTest {
 
     @Test
     public void getExpenseByMonth() {
-
+        Transaction transaction = new Transaction(username);
         String wholeTrans = "1 Expense 50 4/22/20 April 2020 Food;2 Expense 50 4/22/20 April 2020 book;1 Income 100 4/22/20 April 2020 Food;";
         transaction.setTransaction(wholeTrans);
         ArrayList<String[]> testList = transaction.setTransactionInRange("April", "2020", "April", "2020");
@@ -80,7 +80,7 @@ public class TransactionTest {
     @Test
     public void getCategList() {
 
-
+        Transaction transaction = new Transaction(username);
         String wholeTrans = "1 Expense 50 4/22/20 April 2020 Food;2 Expense 50 4/22/20 April 2020 book;1 Income 100 4/22/20 April 2020 Food;";
         transaction.setTransaction(wholeTrans);
         ArrayList<String[]> testList = transaction.setTransactionInRange("April", "2020", "April", "2020");
