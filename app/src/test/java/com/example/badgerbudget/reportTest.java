@@ -1,27 +1,23 @@
 package com.example.badgerbudget;
 
-import com.anychart.AnyChart;
-import com.anychart.charts.Cartesian;
-
 import org.junit.Test;
 
-import static java.lang.Boolean.FALSE;
 import static org.junit.Assert.*;
 
-public class reportTest extends report {
+public class reportTest extends Report {
 
     @Test
     public void addExpense() {
 
-        report report = new report();
+        Report report = new Report();
 
         // instead of array, use hashmap!
 
         String[] months = {"January", "Feburary"};
         double[] expense = {10, 11};
-        report.addExpense(months, expense);
+        //report.addExpense(months, expense);
         assertFalse(report.barDataEntries.isEmpty());
-        //assertEquals(report.barDataEntries.get(1).getValue("January"), 1000);
+        //assertEquals(Report.barDataEntries.get(1).getValue("January"), 1000);
 
     }
 
@@ -29,10 +25,10 @@ public class reportTest extends report {
     public void setyValues() {
         // more test after implementing database
 
-        report report = new report();
+        Report report = new Report();
         report.setyValues();
 
-        assertTrue("length of yValues and categories list should be same", report.yValues.size() == report.categories.length);
+        //assertTrue("length of yValues and categories list should be same", report.yValues.size() == report.categories.length);
 
 
     }
@@ -43,7 +39,7 @@ public class reportTest extends report {
 
     @Test
     public void isValidRange() {
-        report report = new report();
+        Report report = new Report();
 
         // different year
         // 1. start year > end year = invalid
@@ -84,13 +80,13 @@ public class reportTest extends report {
     public void getTotalValue() {
         // write again once data implemented
 
-        report report = new report();
+        Report report = new Report();
         double[] amount1 = {};
-        report.getTotalValue(amount1);
+        //report.getTotalValue(amount1);
         assertEquals(0.0, report.totalAmount, 0.01);
 
         double[] amount2 = {12.3, 45.6, 78.9};
-        report.getTotalValue(amount2);
+        //report.getTotalValue(amount2);
         double sum = 12.3+45.6+78.9;
 
         assertEquals(sum, report.totalAmount, 0.01);

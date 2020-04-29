@@ -100,11 +100,11 @@ activity#com.example.badgerbudget.MainActivity
 ADDED from C:\Users\anna9\AndroidStudioProjects\BudgetManagementApplication\app\src\main\AndroidManifest.xml:14:9-59
 	android:name
 		ADDED from C:\Users\anna9\AndroidStudioProjects\BudgetManagementApplication\app\src\main\AndroidManifest.xml:14:19-47
-activity#com.example.badgerbudget.calculator
+activity#com.example.badgerbudget.Calculator
 ADDED from C:\Users\anna9\AndroidStudioProjects\BudgetManagementApplication\app\src\main\AndroidManifest.xml:15:9-48
 	android:name
 		ADDED from C:\Users\anna9\AndroidStudioProjects\BudgetManagementApplication\app\src\main\AndroidManifest.xml:15:19-45
-activity#com.example.badgerbudget.report
+activity#com.example.badgerbudget.Report
 ADDED from C:\Users\anna9\AndroidStudioProjects\BudgetManagementApplication\app\src\main\AndroidManifest.xml:16:9-44
 	android:name
 		ADDED from C:\Users\anna9\AndroidStudioProjects\BudgetManagementApplication\app\src\main\AndroidManifest.xml:16:19-41

@@ -61,15 +61,12 @@ public class Client extends AsyncTask<String,Void,String> {
 			android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
 
 			try {
-				System.out.println(this.hostname);
-				System.out.println(this.port);
 				InetAddress serverAddr = InetAddress.getByName(this.hostname);
 				socket = new Socket(serverAddr, this.port);
 				out = new PrintWriter(new BufferedWriter(
 						new OutputStreamWriter(socket.getOutputStream())),
 						true);
 				in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-				System.out.println(serverAddr);
 				out.println(message);
 				try {
 					String response = "";

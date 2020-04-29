@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
-import android.util.Log;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
@@ -49,210 +48,205 @@ public class MainPageActivity extends AppCompatActivity {
     AnyChartView barChartView;
     List<DataEntry> barDataEntries;
 
+
     double totalAmount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_page);
-        Bundle un = getIntent().getExtras();
-        String username = un.getString("username");
-        passable = username;
-        System.out.println("passable in main: " + passable);
-        TextView currentBalanceText = (TextView) findViewById(R.id.currentBalanceText);
-        TextView currentExpenseText = (TextView) findViewById(R.id.currentExpenseText);
-        TextView targetExpenseText = (TextView) findViewById(R.id.targetExpenseText);
-        Spinner typeSpinner = (Spinner) findViewById(R.id.typeSpinner);
-        Spinner categorySpinner = (Spinner) findViewById(R.id.categorySpinner);
-        EditText noteText = (EditText) findViewById(R.id.noteText);
-        final EditText amountText = (EditText) findViewById(R.id.amountText);
-        Button addButton = (Button) findViewById(R.id.addCategoryBtn);
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main_page);
+            Bundle un = getIntent().getExtras();
+            String username = un.getString("username");
+            passable = username;
+            TextView currentBalanceText = (TextView) findViewById(R.id.currentBalanceText);
+            TextView currentExpenseText = (TextView) findViewById(R.id.currentExpenseText);
+            TextView targetExpenseText = (TextView) findViewById(R.id.targetExpenseText);
+            Spinner typeSpinner = (Spinner) findViewById(R.id.typeSpinner);
+            Spinner categorySpinner = (Spinner) findViewById(R.id.categorySpinner);
+            final EditText noteText = (EditText) findViewById(R.id.noteText);
+            final EditText amountText = (EditText) findViewById(R.id.amountText);
+            Button addButton = (Button) findViewById(R.id.addCategoryBtn);
 
-        String totalAmount = "";
-        String response = client.sendMessage("gettransactions;" + username);
-        System.out.println("response in Main: " + response + "for user: " + username);
-        if (!response.equals("")) {
-            String[] transactions = response.split(";");
+            String totalAmount = "";
+            String response = client.sendMessage("gettransactions;" + username);
+            if (!response.equals("")) {
+                String[] transactions = response.split(";");
 
-            String[][] transAmount = new String[transactions.length][5];
-            for (int i = 0; i < transactions.length; i++) {
-                transAmount[i] = transactions[i].split(" ");
+                String[][] transAmount = new String[transactions.length][7];
+                for (int i = 0; i < transactions.length; i++) {
+                    transAmount[i] = transactions[i].split(" ");
+                }
+
+                int total = 0;
+                for (int i = 0; i < transactions.length; i++) {
+                    int trans = Integer.parseInt(transAmount[i][2]);
+                    total += trans;
+
+                }
+                totalAmount = String.valueOf(total);
+            } else {
+                totalAmount = "0";
             }
 
-            int total = 0;
-            for (int i = 0; i < transactions.length; i++) {
-                int trans = Integer.parseInt(transAmount[i][2]);
-                total += trans;
-            }
-            totalAmount = String.valueOf(total);
-        } else {
-            totalAmount = "0";
-        }
+            String salary = client.sendMessage("getsalary;" + passable);
 
-        // current balance
-        TextView currentBalance = new TextView(getApplicationContext());
-        String currentBalanceString = "5252";
+            // current balance
+            TextView currentBalance = new TextView(getApplicationContext());
+            String currentBalanceString = salary;
         /*
         select Balance from Transaction
         where Datetime = (select Max(Datetime) from Transaction) AND UserName = 'test1';
          */
-        // setCurrentBalance(currentBalanceString);
-        currentBalanceText.setText(currentBalanceString);
+            // setCurrentBalance(currentBalanceString);
+            currentBalanceText.setText(currentBalanceString);
 
 
-
-        // current expense
-        TextView currentExpense = new TextView(getApplicationContext());
-        String currentExpenseString = totalAmount;
+            // current expense
+            TextView currentExpense = new TextView(getApplicationContext());
+            String currentExpenseString = totalAmount;
         /*
         select sum(Amount) from Transaction
         where Type = 'expense' AND month(Datetime) = 3 And year(Datetime) = 2020 AND
         UserName = 'test1';
          */
-        currentExpenseText.setText(currentExpenseString);
+            currentExpenseText.setText(currentExpenseString);
 
-        // target expense
-        TextView targetExpense = new TextView(getApplicationContext());
-        int expense = Integer.parseInt(totalAmount);
+            // target expense
+            TextView targetExpense = new TextView(getApplicationContext());
+            int expense = Integer.parseInt(totalAmount);
 
 
-        int cbalance = Integer.parseInt(currentBalanceString);
-        int texpense = cbalance - expense;
-        String targetExpenseString = String.valueOf(texpense);
+            int cbalance = Integer.parseInt(currentBalanceString);
+            int texpense = cbalance - expense;
+            String targetExpenseString = String.valueOf(texpense);
 
         /*
         select * from Goal;
         select Amount from Goal
         where month(YearMonth) = 3 And year(YearMonth) = 2020 AND UserName = 'test1';
          */
-        targetExpenseText.setText(targetExpenseString);
+            targetExpenseText.setText(targetExpenseString);
 
 
-        // note
-        String note = noteText.getText().toString();
+            // note
+            String note = noteText.getText().toString();
 
-        // amount
-        final String amount = amountText.getText().toString();
+            // amount
+            final String amount = amountText.getText().toString();
 
 
+            // get categories
 
-        // get categories
+            // super.onCreate(savedInstanceState);
+            //  setContentView(R.layout.activity_main_page);
 
-        // super.onCreate(savedInstanceState);
-        //  setContentView(R.layout.activity_main_page);
+            String category = client.sendMessage("getcategories;" + passable);
+            String[] categoriesMessage = category.split(";");
+            String[][] categories = new String[categoriesMessage.length][2];
 
-        String category = client.sendMessage("getcategories;" + passable);
-        System.out.println("Categories: " + category);
-        String[] categoriesMessage = category.split(";");
-        String[][] categories = new String[categoriesMessage.length][2];
-
-        String[] arrayCategorySpinner = new String[categories.length + 3];
-        for (int i = 0; i < categoriesMessage.length+3; i++) {
-            if (i ==0) {
-                arrayCategorySpinner[i] = "Food";
+            String[] arrayCategorySpinner = new String[categories.length ];
+            for (int i = 0; i < categoriesMessage.length; i++) {
+                    categories[i] = categoriesMessage[i].split(" ");
+                    arrayCategorySpinner[i] = categories[i][0];
             }
-            if (i == 1) {
-                arrayCategorySpinner[i] = "Groceries";
-            }
-            if (i == 2) {
-                arrayCategorySpinner[i] = "Clothes";
-            }
-            if (i > 2) {
-                categories[i - 3] = categoriesMessage[i - 3].split(" ");
-                arrayCategorySpinner[i] = categories[i - 3][0];
-            }
-        }
 
         /*
         select * from Category;
          */
-        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>( MainPageActivity.this,
-                android.R.layout.simple_spinner_item, arrayCategorySpinner);
-        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        categorySpinner.setAdapter(categoryAdapter);
+            ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(MainPageActivity.this,
+                    android.R.layout.simple_spinner_item, arrayCategorySpinner);
+            categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            categorySpinner.setAdapter(categoryAdapter);
 
-        categorySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                Object item = adapterView.getItemAtPosition(position);
-                String type = item.toString();
-                transCat = type;
-                System.out.println("Category Selected: " + transCat);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
-            }
-        });
+            categorySpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                    Object item = adapterView.getItemAtPosition(position);
+                    String type = item.toString();
+                    transCat = type;
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> arg0) {
+                }
+            });
 
 
-        // get type
+            // get type
 
-        //super.onCreate(savedInstanceState);
-        // setContentView(R.layout.activity_main_page);
-        String[] arrayTypeSpinner = new String[] {
-                "Expense", "Income"
-        };
+            //super.onCreate(savedInstanceState);
+            // setContentView(R.layout.activity_main_page);
+            String[] arrayTypeSpinner = new String[]{
+                    "Expense", "Income"
+            };
         /*
         select Type from Transaction
          */
-        final ArrayAdapter<String> typeAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, arrayTypeSpinner);
-        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        typeSpinner.setAdapter(typeAdapter);
-        typeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                Object item = adapterView.getItemAtPosition(position);
-                String type = item.toString();
-                transType = type;
-                System.out.println("Type Selected: " + transType);
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                // TODO Auto-generated method stub
-            }
-        });
-
-        // ok button
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(amountText.getText().toString().equals("")){
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainPageActivity.this);
-                    builder.setMessage("Failed. Check categories, type, and amount.")
-                            .setPositiveButton("okay", null)
-                            .create()
-                            .show();
+            final ArrayAdapter<String> typeAdapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item, arrayTypeSpinner);
+            typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            typeSpinner.setAdapter(typeAdapter);
+            typeSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                    Object item = adapterView.getItemAtPosition(position);
+                    String type = item.toString();
+                    transType = type;
                 }
-                else{
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainPageActivity.this);
-                    builder.setMessage("Transaction Successfully Added.")
-                            .setPositiveButton("okay", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    finish();
-                                    startActivity(getIntent());
-                                }
-                            })
-                            .create()
-                            .show();
 
-                    String transAmount = amountText.getText().toString();
-                    if (transType.equals("Expense")) {
-                        client.sendMessage("inserttransaction;" + passable + " " + transType + " " + transAmount + " 4/22/20 April 2020 " + transCat);
-                        System.out.print("Type: " + transType + " Amount: " + transAmount+ "\n");
-                    } else if (transType.equals("Income")) {
-                        transAmount = "-" + transAmount;
-                        client.sendMessage("inserttransaction;" + passable + " " + transType + " " + transAmount + " 4/22/20 April 2020 " + transCat);
-                        System.out.print("Type: " + transType + " Amount: " + transAmount + "\n");
+                @Override
+                public void onNothingSelected(AdapterView<?> arg0) {
+                    // TODO Auto-generated method stub
+                }
+            });
+
+            // ok button
+            addButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (amountText.getText().toString().equals("")) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainPageActivity.this);
+                        builder.setMessage("Failed. Check categories, type, and amount.")
+                                .setPositiveButton("okay", null)
+                                .create()
+                                .show();
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainPageActivity.this);
+                        builder.setMessage("Transaction Successfully Added.")
+                                .setPositiveButton("okay", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        finish();
+                                        startActivity(getIntent());
+                                    }
+                                })
+                                .create()
+                                .show();
+
+                        String date = getDate();
+                        String year = getYear();
+                        String month = getMonth();
+                        String transAmount = amountText.getText().toString();
+                        String note;
+                        if (noteText.getText().toString().equals("")) {
+                            note = "NULL";
+                        } else {
+                            note = noteText.getText().toString();
+
+                        }
+                        if (transType.equals("Expense")) {
+                            client.sendMessage("inserttransaction;" + passable + " " + transType + " " + transAmount + " "
+                                    + date +  " " + month + " " + year + " " + transCat + " " + note);
+                        } else if (transType.equals("Income")) {
+                            transAmount = "-" + transAmount;
+                            client.sendMessage("inserttransaction;" + passable + " " + transType + " " + transAmount + " "
+                                    + date + " " + month + " " + year + " "  + transCat + " " + note);
+
+                        }
                     }
                 }
-            }
-        });
+            });
 
-
-
-        // graph
+            // graph
 
         /*
         select day(DateTime) as Day, sum(Amount) as Expense from Transaction
@@ -280,11 +274,11 @@ public class MainPageActivity extends AppCompatActivity {
         lineChartView.setLineChartData(data);
         */
 
-        // bar graph
-        viewExpenseBarChart();
+            // bar graph
+            viewExpenseBarChart();
 
-        navigation();
-    }
+            navigation();
+        }
 
     public void viewExpenseBarChart(){
         barChartView=findViewById(R.id.bar_chart_view);
@@ -345,6 +339,78 @@ public class MainPageActivity extends AppCompatActivity {
 
     }
 */
+
+    /**
+     * Get full date to be used in the report page
+     * @return
+     */
+    private String getDate() {
+        //Gets the date for later
+        DateFormat df = new SimpleDateFormat("MM/dd/yy");
+        Date date = new Date();
+        String dateString = df.format(date);
+        return dateString;
+    }
+
+    /**
+     * Get year as a string to be used in the report page
+     * @return
+     */
+    private String getYear() {
+        Date today = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(today);
+
+        int year = cal.get(Calendar.YEAR);
+        String yearString = String.valueOf(year);
+        return yearString;
+    }
+
+    /**
+     * Get months as a string to be used in the report page
+     * @return
+     */
+    private String getMonth(){
+        String[] months = new String[]{"January", "February", "March", "April",
+                "May", "June", "July", "August", "September", "October",
+                "November", "December"};
+        String monthString;
+        Date today = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(today);
+
+        int month = cal.get(Calendar.MONTH);
+        if (month == 0) {
+            monthString = months[0];
+        } else if (month == 1) {
+            monthString = months[1];
+        } else if (month == 2) {
+            monthString = months[2];
+        } else if (month == 3) {
+            monthString = months[3];
+        } else if (month == 4) {
+            monthString = months[4];
+        } else if (month == 5) {
+            monthString = months[5];
+        } else if (month == 6) {
+            monthString = months[6];
+        } else if (month == 7) {
+            monthString = months[7];
+        } else if (month == 8) {
+            monthString = months[8];
+        } else if (month == 9) {
+            monthString = months[9];
+        } else if (month == 10) {
+            monthString = months[10];
+        } else if (month == 11) {
+            monthString = months[11];
+        } else {
+            return "Unable to retrieve month";
+        }
+
+        return monthString;
+    }
+
     private void navigation() {
 
         // navigation bar
@@ -356,7 +422,7 @@ public class MainPageActivity extends AppCompatActivity {
                     case R.id.nav_home:
                         break;
                     case R.id.nav_report:
-                        Intent a = new Intent(MainPageActivity.this, report.class);
+                        Intent a = new Intent(MainPageActivity.this, Report.class);
                         a.putExtra("username", passable);
                         startActivity(a);
                         break;
@@ -367,10 +433,9 @@ public class MainPageActivity extends AppCompatActivity {
                         startActivity(b);
                         break;
                     case R.id.nav_goal:
-                        // Intent c = new Intent(MainPageActivity.this, GoalsActivity.class);
-                        // c.putExtra("username", username);
-
-                        // startActivity(c)
+                         Intent c = new Intent(MainPageActivity.this, GoalActivity.class);
+                         c.putExtra("username", passable);
+                         startActivity(c);
                         break;
                     case R.id.nav_category:
                         Intent d = new Intent(MainPageActivity.this, CategoryPageActivity.class);

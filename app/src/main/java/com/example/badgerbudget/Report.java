@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.MonthDisplayHelper;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -19,7 +18,6 @@ import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
-import com.anychart.charts.Pie;
 import com.anychart.charts.Cartesian;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -28,20 +26,21 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import java.lang.Object.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
-public class report extends AppCompatActivity {
+public class Report extends AppCompatActivity {
 
 
-    String[] categories = {"categ1", "categ2", "categ3"};
+    /*String[] categories = {"categ1", "categ2", "categ3"};
     double[] catExpense={300,200,600};
 
-    String[] months={"January","February","March"};
+    String[] months={"January","February","March"};*/
     double[] monExpense={1000,600,1500};
     double[] monIncome={2000,2400,3000};
 
@@ -60,8 +59,12 @@ public class report extends AppCompatActivity {
 
     // A list of pairs of category with corresponding expense in dollar
     // A list of pairs of month with corresponding expense in dollar
-    HashMap<String, Double> categList, expenseByMonth;
+    /*HashMap<String, Double> categList = new HashMap<>();
+    HashMap<String, Double> expenseByMonth = new HashMap<>();*/
 
+    String[] transList;
+    HashMap<String, Double> categList;
+    HashMap<String, Double> expenseByMonth,incomeByMonth;
     // map of month in string - month in integer
     private static final Map<String, Integer> MONTHMAP = new HashMap<String, Integer>() {
         {
@@ -82,12 +85,13 @@ public class report extends AppCompatActivity {
 
     String str_startMonth, str_endMonth, str_startYear, str_endYear;
 
-    // Display total spend on report and use for calculating expense proportion of each category
+    // Display total spend on Report and use for calculating expense proportion of each category
     double totalSpend = 0;
-    // Display total income on report
+    // Display total income on Report
     double totalIncome = 0;
 
     String passable;
+    Transaction transaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +101,10 @@ public class report extends AppCompatActivity {
         Bundle un = getIntent().getExtras();
         String username = un.getString("username");
         passable = username;
+
+        transaction = new Transaction(passable);
+
+
         // show&use navigation
         // navigation bar
         navigation();
@@ -104,20 +112,13 @@ public class report extends AppCompatActivity {
         // drop down menu (spinner)
         createDropDownMenu();
         addListenerOnButton();
+/*
 
         viewCategPieChart();
 
         viewExpenseBarChart();
+*/
 
-        // get total expense
-        TextView textView_totSpDisp = (TextView) findViewById(R.id.TotSpendDisp);
-        totalSpend = getTotalValue(monExpense);
-        textView_totSpDisp.setText("$" + totalSpend);
-
-        // get total income
-        TextView textView_totIncDisp = (TextView) findViewById(R.id.TotIncDisp);
-        totalIncome = getTotalValue(monIncome);
-        textView_totIncDisp.setText("$" + totalIncome);
 
     }
 
@@ -130,26 +131,27 @@ public class report extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
-                        Intent a = new Intent(report.this, MainPageActivity.class);
+                        Intent a = new Intent(Report.this, MainPageActivity.class);
                         a.putExtra("username", passable);
                         startActivity(a);
                         break;
                     case R.id.nav_report:
-                        // Intent b = new Intent(report.this, report.class);
+                        // Intent b = new Intent(Report.this, Report.class);
                         // startActivity(b);
                         break;
                     case R.id.nav_setting:
-                        Intent c = new Intent(report.this,SettingActivity.class);
+                        Intent c = new Intent(Report.this,SettingActivity.class);
                         c.putExtra("username", passable);
                         startActivity(c);
                         break;
                     case R.id.nav_goal:
-                        // Intent d = new Intent(report.this, GoalsActivity.class);
-                        //d.putExtra("username", username);
-                        // startActivity(d)
+                         Intent d = new Intent(Report.this, GoalActivity.class);
+                        d.putExtra("username", passable);
+                         startActivity(d);
+
                         break;
                     case R.id.nav_category:
-                        Intent e = new Intent(report.this, CategoryPageActivity.class);
+                        Intent e = new Intent(Report.this, CategoryPageActivity.class);
                         e.putExtra("username", passable);
                         startActivity(e);
                         break;
@@ -168,7 +170,26 @@ public class report extends AppCompatActivity {
 
         barChartView=findViewById(R.id.bar_chart_view);
 
-        addExpense(months, monExpense);
+        Set<String> monthSet = expenseByMonth.keySet();
+/*        String[] months = new String[monthSet.size()];
+        double[] monExpense = new double[monthSet.size()];
+
+        int i = 0;
+        for(String month: monthSet){
+            months[i] = month;
+            monExpense[i] = expenseByMonth.get(month);
+            i++;
+        }*/
+
+        barDataEntries = new ArrayList<>();
+/*        // use hashmap!
+        for(int i=0;i<months.length;i++){
+            barDataEntries.add(new ValueDataEntry(months[i],monExpense[i]));
+        }*/
+
+        for(String month: monthSet){
+            barDataEntries.add(new ValueDataEntry(month, expenseByMonth.get(month)));
+        }
 
         Cartesian bar = AnyChart.column();
 
@@ -178,18 +199,6 @@ public class report extends AppCompatActivity {
     }
 
 
-
-    public void addExpense(String[] months, double[] monExpense){
-
-        barDataEntries = new ArrayList<>();
-
-        // use hashmap! 
-        
-        for(int i=0;i<months.length;i++){
-            barDataEntries.add(new ValueDataEntry(months[i],monExpense[i]));
-        }
-
-    }
 
 
     /*
@@ -235,17 +244,26 @@ public class report extends AppCompatActivity {
 
         yValues = new ArrayList<PieEntry>();
 
-        for(int i=0; i < categories.length; i++){
+        Set<String> cat = categList.keySet();
+
+        for(String category: cat){
+            double tempAmount = categList.get(category).doubleValue();
+            float amount = (float) tempAmount;
+            yValues.add(new PieEntry(amount, category));
+        }
+
+
+/*        for(int i=0; i < categories.length; i++){
             float a = (float) catExpense[i];
             yValues.add(new PieEntry(a,categories[i]));
-        }
+        }*/
 
     }
 
     public void createDropDownMenu(){
         // dropdown menu: startMonth
         startMonth = (Spinner) findViewById(R.id.sMonth);
-        ArrayAdapter<String> sMonthAdapter = new ArrayAdapter<String>(report.this,
+        ArrayAdapter<String> sMonthAdapter = new ArrayAdapter<String>(Report.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.Month));
         sMonthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // show adapter in the spinner
@@ -253,7 +271,7 @@ public class report extends AppCompatActivity {
 
         // dropdown menu: startMonth
         endMonth = (Spinner) findViewById(R.id.eMonth);
-        ArrayAdapter<String> eMonthAdapter = new ArrayAdapter<String>(report.this,
+        ArrayAdapter<String> eMonthAdapter = new ArrayAdapter<String>(Report.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.Month));
         eMonthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // show adapter in the spinner
@@ -261,7 +279,7 @@ public class report extends AppCompatActivity {
 
         // dropdown menu: end Year
         startYear = (Spinner) findViewById(R.id.sYear);
-        ArrayAdapter<String> sYearAdapter = new ArrayAdapter<String>(report.this,
+        ArrayAdapter<String> sYearAdapter = new ArrayAdapter<String>(Report.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.Year));
         sYearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // show adapter in the spinner
@@ -269,7 +287,7 @@ public class report extends AppCompatActivity {
 
         // dropdown menu: end Year
         endYear = (Spinner) findViewById(R.id.eYear);
-        ArrayAdapter<String> eYearAdapter = new ArrayAdapter<String>(report.this,
+        ArrayAdapter<String> eYearAdapter = new ArrayAdapter<String>(Report.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.Year));
         eYearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // show adapter in the spinner
@@ -296,15 +314,38 @@ public class report extends AppCompatActivity {
                 if(isValidRange(sMonth, sYear, eMonth, eYear)){
                     // valid
                     // call transaction query here (if month/year are valid)
+                    ArrayList<String[]> expenseInRange =  (ArrayList<String[]>)
+                            (transaction.setTransactionInRange(sMonth, sYear, eMonth, eYear).clone());
+
+                    ArrayList<String[]> incomeInRange = (ArrayList<String[]>)
+                            (transaction.setIncomeInRange(sMonth, sYear, eMonth, eYear).clone());
+
+                    categList = new HashMap<String, Double> (transaction.getCategList(expenseInRange));
+                    expenseByMonth = new HashMap<String, Double> (transaction.getExpenseByMonth(expenseInRange));
+                    incomeByMonth = new HashMap<String, Double> (transaction.getIncomeByMonth(incomeInRange));
+
+                    viewCategPieChart();
+                    viewExpenseBarChart();
+
+                    // get total expense
+                    TextView textView_totSpDisp = (TextView) findViewById(R.id.TotSpendDisp);
+                    totalSpend = getTotalValue(expenseByMonth);
+                    textView_totSpDisp.setText("$" + totalSpend);
+
+                    // get total income
+                    TextView textView_totIncDisp = (TextView) findViewById(R.id.TotIncDisp);
+                    totalIncome = getTotalValue(incomeByMonth);
+                    textView_totIncDisp.setText("$" + totalIncome);
+
 
                 } else {
-                    Toast.makeText(report.this,
+                    Toast.makeText(Report.this,
                             "OnClickListener: " +
                                     "Please select a valid range of months",
                             Toast.LENGTH_SHORT).show();
                 }
 
-                Toast.makeText(report.this,
+                Toast.makeText(Report.this,
                         "OnClickListener: " +
                         "\nstartMonth : " + sMonth +
                                 " startYear: " + sYear +
@@ -374,14 +415,15 @@ public class report extends AppCompatActivity {
     }
 
     /* Calculate total spending for a specified period of time by adding all the monthly spending in expenseByMonth. */
-    public double getTotalValue(double[] amount){
+    public double getTotalValue(HashMap<String, Double> map){
 
         // get Expense for each month from hashmap 
         // sum up for each month, for each transaction
 
         totalAmount = 0;
-        for (int i=0 ; i < amount.length; i++) {
-            totalAmount += amount[i];
+        Set<String> keys = map.keySet();
+        for(String key: keys){
+            totalAmount += map.get(key);
         }
 
         return totalAmount;

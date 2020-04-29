@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.badgerbudget.CreateAccountActivity;
+import com.example.badgerbudget.ForgotPassword;
 import com.example.badgerbudget.data.model.*;
 import com.example.badgerbudget.MainPageActivity;
 import com.example.badgerbudget.R;
@@ -33,20 +34,17 @@ import com.example.badgerbudget.ui.login.LoginViewModelFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static final String EXTRA_MESSAGE = "Test";
     private LoginViewModel loginViewModel;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        //StrictMode.setThreadPolicy(policy);
-        //server = new Server(8000);
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
+        final Button forgotPassword = findViewById(R.id.forgotPwButton);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
@@ -131,14 +129,23 @@ public class LoginActivity extends AppCompatActivity {
                 String u = usernameEditText.getText().toString();
                 String p = passwordEditText.getText().toString();
                 Client client = new Client(6868, "10.0.2.2");
-                if(client.sendMessage("login;"+ u + " "+p).equals("true")){
+                String loginAttempt = client.sendMessage("login;"+ u + " "+p);
+                if(loginAttempt.equals("true")){
                     switchToMainPage(v, u);
                 }
                 else{
                   //we have not found success with the login, so we are going to just return a failed login
-                    String failedLogin = "This account does not exist";
+                    String failedLogin = "Invalid Username/Password";
                     Toast.makeText(getApplicationContext(),failedLogin,Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String username = usernameEditText.getText().toString();
+                forgotPassword(v,username);
             }
         });
     }
@@ -161,6 +168,10 @@ public class LoginActivity extends AppCompatActivity {
     public void switchToMainPage(View view, String username){
         Intent intent = new Intent(this, MainPageActivity.class);
         intent.putExtra("username", username);
+        startActivity(intent);
+    }
+    public void forgotPassword(View view, String username){
+        Intent intent = new Intent(this, ForgotPassword.class);
         startActivity(intent);
     }
 }

@@ -7,11 +7,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -28,15 +26,21 @@ import com.google.android.material.tabs.TabLayout;
 
 import org.w3c.dom.Text;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class CategoryPageActivity extends AppCompatActivity {
     TableLayout categoryTable;
     TextView salary;
     Button addCategory;
     Button deleteCategory;
+
     String passable;
     Client client = new Client(6868, "10.0.2.2");
     String cat = "";
-
+    String[] categoriesMessage;
+    String[][] categories;
+    int index;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,32 +67,6 @@ public class CategoryPageActivity extends AppCompatActivity {
         defaults.addView(catBudget);
         categoryTable.addView(defaults);
 
-        TableRow foodRow = new TableRow(this);
-        TextView food = new TextView(this);
-        food.setText("Food");
-        TextView foodBudget = new TextView(this);
-        foodBudget.setText("100");
-        foodRow.addView(food);
-        foodRow.addView(foodBudget);
-        categoryTable.addView(foodRow);
-
-        TableRow groceriesRow = new TableRow(this);
-        TextView groceries = new TextView(this);
-        groceries.setText("Groceries");
-        TextView groceriesBudget = new TextView(this);
-        groceriesBudget.setText("100");
-        groceriesRow.addView(groceries);
-        groceriesRow.addView(groceriesBudget);
-        categoryTable.addView(groceriesRow);
-
-        TableRow clothesRow = new TableRow(this);
-        TextView clothes = new TextView(this);
-        clothes.setText("Clothes");
-        TextView clothesBudget = new TextView(this);
-        clothesBudget.setText("50");
-        clothesRow.addView(clothes);
-        clothesRow.addView(clothesBudget);
-        categoryTable.addView(clothesRow);
 
 
         String category = client.sendMessage("getcategories;" + passable);
@@ -97,12 +75,14 @@ public class CategoryPageActivity extends AppCompatActivity {
             String[] parsed = category.split(" ");
             categoryTable.setColumnStretchable(0, true);
             categoryTable.setColumnStretchable(1, true);
-            String[] categoriesMessage = category.split(";");
-            String[][] categories = new String[categoriesMessage.length][2];
+            categoriesMessage = category.split(";");
+            System.out.println("categoriesMessage.length: " + categoriesMessage.length);
+            categories = new String[categoriesMessage.length][2];
             for (int i = 0; i < categoriesMessage.length; i++) {
                 if (categoriesMessage.length != 0) {
                     categories[i] = categoriesMessage[i].split(" ");
                     TableRow tr = new TableRow(this);
+                    tr.setClickable(true);
                     TextView catname = new TextView(this);
                     if (!categories[i].equals(null)) {
                         catname.setText(categories[i][0]);
@@ -110,6 +90,47 @@ public class CategoryPageActivity extends AppCompatActivity {
                         budget.setText(categories[i][1]);
                         tr.addView(catname);
                         tr.addView(budget);
+                        tr.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                TableRow tr = (TableRow) v;
+
+                                TextView cat = (TextView) tr.getChildAt(0);
+                                TextView bud = (TextView) tr.getChildAt(1);
+
+                                final String catResult = cat.getText().toString();
+                                String budResult = bud.getText().toString();
+
+                                Context context =  getApplicationContext();
+                                LinearLayout layout = new LinearLayout(context);
+                                layout.setOrientation(LinearLayout.VERTICAL);
+                                AlertDialog.Builder editCat = new AlertDialog.Builder(CategoryPageActivity.this);
+                                editCat.setTitle("Edit Category");
+                                final EditText input = new EditText(context);
+                                layout.addView(input);
+                                input.setText(catResult);
+                                final EditText budget = new EditText(context);
+                                budget.setText(budResult);
+                                layout.addView(budget);
+                                editCat.setView(layout);
+                                editCat.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if (!input.getText().toString().equals("") && !budget.getText().toString().equals("")) {
+                                            client.sendMessage("updatecategory;" + passable + " " + input.getText().toString() + " " + budget.getText().toString() + " " + catResult);
+                                            toastMessage("Category Successfully Changed.");
+                                            finish();
+                                            startActivity(getIntent());
+                                        } else {
+                                            toastMessage("Please Insert a Category and Set a Budget ");
+                                        }
+                                    }
+                                });
+                                editCat.setNegativeButton("Cancel", null);
+                                AlertDialog dialog = editCat.create();
+                                dialog.show();
+                            }
+                        });
                         categoryTable.addView(tr);
                     } else {
                         System.out.println("categories[i] is null");
@@ -123,8 +144,30 @@ public class CategoryPageActivity extends AppCompatActivity {
         }
 
 
-        salary.setText("$10000000");
+        String response = client.sendMessage("getsalary;" + passable);
+        salary.setText("$"+response);
 
+        Integer total = 0;
+        for (int i = 0; i < categories.length; i++) {
+            total += Integer.parseInt(categories[i][1]);
+        }
+        Integer salaryInt = Integer.parseInt(response);
+        if (total > salaryInt ) {
+            //Warns the user that their category budgets are higher than their monthly salary
+            Context context =  getApplicationContext();
+            LinearLayout layout = new LinearLayout(context);
+            layout.setOrientation(LinearLayout.VERTICAL);
+            AlertDialog.Builder warning = new AlertDialog.Builder(CategoryPageActivity.this);
+            warning.setTitle("Warning!");
+            TextView warningMessage = new TextView(this);
+            warningMessage.setText("WARNING: Your category budgets exceed your monthly income. Please Consider Reducing Some Category Budgets");
+            warningMessage.setGravity(Gravity.CENTER);
+            layout.addView(warningMessage);
+            warning.setPositiveButton("Ok", null);
+            warning.setView(layout);
+            AlertDialog dialog = warning.create();
+            dialog.show();
+        }
         addCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,28 +179,42 @@ public class CategoryPageActivity extends AppCompatActivity {
                 final EditText input = new EditText(context);
                 layout.addView(input);
                 input.setHint("Category Name");
+                input.setGravity(Gravity.CENTER);
                 final EditText budget = new EditText(context);
                 budget.setHint("Category Budget");
+                budget.setGravity(Gravity.CENTER);
                 layout.addView(budget);
                 addCat.setView(layout);
+
                 addCat.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (!input.getText().toString().equals("") && !budget.getText().toString().equals("")) {
-                            client.sendMessage("insertcategories;" + passable + " " + input.getText().toString() + " " + budget.getText().toString());
-                            toastMessage("Category Successfully Added.");
-                            finish();
-                            startActivity(getIntent());
+                        String month = getMonth();
+                        String year = getYear();
+
+                        if (categoriesMessage.length <= 6) {
+                            if (!input.getText().toString().equals("") && !budget.getText().toString().equals("")) {
+                                String response = client.sendMessage("insertcategories;" + passable + " " + input.getText().toString() + " " + budget.getText().toString() + " " + month + " " + year);
+                                if (response.equals("Category Successfully Added")) {
+                                    toastMessage("Category Successfully Added.");
+                                    finish();
+                                    startActivity(getIntent());
+                                } else {
+                                    toastMessage("Category Already Exists. Choose A Different Name");
+                                }
+                            } else {
+                                toastMessage("Make Sure a Category Name and Budget is Entered! ");
+                            }
                         } else {
-                            toastMessage("Please Insert a Category and Set a Budget ");
+                            toastMessage("Unable to Insert Category. Maximum Number of Categories Reached");
                         }
                     }
                 });
+                addCat.setNegativeButton("Cancel", null);
                 AlertDialog dialog = addCat.create();
                 dialog.show();
             }
         });
-
 
         deleteCategory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,8 +222,12 @@ public class CategoryPageActivity extends AppCompatActivity {
                 Context context =  getApplicationContext();
                 LinearLayout layout = new LinearLayout(context);
                 layout.setOrientation(LinearLayout.VERTICAL);
+                TextView warning = new TextView(CategoryPageActivity.this);
+                warning.setText("Warning: Deleting a Category will also delete any Transactions associated with that Category");
+                warning.setGravity(Gravity.CENTER);
                 String category = client.sendMessage("getcategories;" + passable);
                 System.out.println("response from client: " + category);
+                layout.addView(warning);
 
                 String[] categoriesMessage = category.split(";");
                 String[][] categories = new String[categoriesMessage.length][2];
@@ -185,6 +246,7 @@ public class CategoryPageActivity extends AppCompatActivity {
                         android.R.layout.simple_spinner_item, arrayCategorySpinner);
                 categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 categorySpinner.setAdapter(categoryAdapter);
+                categorySpinner.setGravity(Gravity.CENTER);
                 layout.addView(categorySpinner);
                 deleteCat.setView(layout);
 
@@ -204,17 +266,22 @@ public class CategoryPageActivity extends AppCompatActivity {
                 deleteCat.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String response = client.sendMessage("deletecategories;" + passable + " " + cat);
-                        System.out.println(response);
-                        if (response.equals("Category Successfully Deleted")) {
-                            toastMessage("Category Successfully Deleted");
-                            finish();
-                            startActivity(getIntent());
+                        if (!cat.equals("Food") && !cat.equals("Clothes") && !cat.equals("Groceries")) {
+                            String response = client.sendMessage("deletecategories;" + passable + " " + cat);
+                            System.out.println(response);
+                            if (response.equals("Category Successfully Deleted")) {
+                                toastMessage("Category Successfully Deleted");
+                                finish();
+                                startActivity(getIntent());
+                            } else {
+                                toastMessage("Unable to Delete Category");
+                            }
                         } else {
-                            toastMessage("Unable to Delete Category");
+                            toastMessage("Unable to Delete Default Category!");
                         }
                     }
                 });
+                deleteCat.setNegativeButton("Cancel", null);
 
                 AlertDialog dialog = deleteCat.create();
                 dialog.show();
@@ -225,6 +292,65 @@ public class CategoryPageActivity extends AppCompatActivity {
     private void toastMessage(String message) {
         Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
 
+    }
+
+    /**
+     * Get year as a string to be used in the report page
+     * @return
+     */
+    private String getYear() {
+        Date today = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(today);
+
+        int year = cal.get(Calendar.YEAR);
+        String yearString = String.valueOf(year);
+        return yearString;
+    }
+
+    /**
+     * Get months as a string to be used in the report page
+     * @return
+     */
+    private String getMonth(){
+        String[] months = new String[]{"January", "February", "March", "April",
+                "May", "June", "July", "August", "September", "October",
+                "November", "December"};
+        String monthString;
+        Date today = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(today);
+
+        int month = cal.get(Calendar.MONTH);
+        if (month == 0) {
+            monthString = months[0];
+        } else if (month == 1) {
+            monthString = months[1];
+        } else if (month == 2) {
+            monthString = months[2];
+        } else if (month == 3) {
+            monthString = months[3];
+        } else if (month == 4) {
+            monthString = months[4];
+        } else if (month == 5) {
+            monthString = months[5];
+        } else if (month == 6) {
+            monthString = months[6];
+        } else if (month == 7) {
+            monthString = months[7];
+        } else if (month == 8) {
+            monthString = months[8];
+        } else if (month == 9) {
+            monthString = months[9];
+        } else if (month == 10) {
+            monthString = months[10];
+        } else if (month == 11) {
+            monthString = months[11];
+        } else {
+            return "Unable to retrieve month";
+        }
+
+        return monthString;
     }
 
     private void navigation() {
@@ -241,25 +367,21 @@ public class CategoryPageActivity extends AppCompatActivity {
                         startActivity(a);
                         break;
                     case R.id.nav_report:
-                        Intent b = new Intent(CategoryPageActivity.this, report.class);
+                        Intent b = new Intent(CategoryPageActivity.this, Report.class);
                         b.putExtra("username", passable);
                         startActivity(b);
                         break;
                     case R.id.nav_setting:
                         Intent c = new Intent(CategoryPageActivity.this,SettingActivity.class);
                         c.putExtra("username", passable);
-
                         startActivity(c);
                         break;
                     case R.id.nav_goal:
-                        // Intent d = new Intent(MainPageActivity.this, GoalsActivity.class);
-                        //d.putExtra("username", username);
-
-                        // startActivity(d)
+                        Intent d = new Intent(CategoryPageActivity.this, GoalActivity.class);
+                        d.putExtra("username", passable);
+                        startActivity(d);
                         break;
                     case R.id.nav_category:
-                        //Intent e = new Intent(CategoryPageActivity.this, CategoryPageActivity.class);
-                        //startActivity(e);
                         break;
                 }
                 return false;

@@ -34,6 +34,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent profileIntent = new Intent(SettingActivity.this, ProfileSettingActivity.class);
+                profileIntent.putExtra("username", passable);
                 SettingActivity.this.startActivity(profileIntent);
             }
         });
@@ -72,7 +73,7 @@ public class SettingActivity extends AppCompatActivity {
                         startActivity(a);
                         break;
                     case R.id.nav_report:
-                        Intent b = new Intent(SettingActivity.this, report.class);
+                        Intent b = new Intent(SettingActivity.this, Report.class);
                         b.putExtra("username", passable);
                         startActivity(b);
                         break;
@@ -81,8 +82,9 @@ public class SettingActivity extends AppCompatActivity {
                         //startActivity(c);
                         break;
                     case R.id.nav_goal:
-                        // Intent d = new Intent(SettingActivity.this, GoalsActivity.class);
-                        // startActivity(d)
+                         Intent d = new Intent(SettingActivity.this, GoalActivity.class);
+                         d.putExtra("username", passable);
+                         startActivity(d);
                         break;
                     case R.id.nav_category:
                         Intent e = new Intent(SettingActivity.this, CategoryPageActivity.class);
@@ -97,7 +99,7 @@ public class SettingActivity extends AppCompatActivity {
 
 
     public void onClick_calc(View v){
-        Intent calc = new Intent(SettingActivity.this, calculator.class);
+        Intent calc = new Intent(SettingActivity.this, Calculator.class);
         startActivity(calc);
     }
 }

@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.Set;
 
 
-public class calculator extends AppCompatActivity {
+public class Calculator extends AppCompatActivity {
 
     double userPrice;
     double tipPerc, taxPerc;
@@ -94,7 +94,7 @@ public class calculator extends AppCompatActivity {
 
         // tip dropdown
         tip = (Spinner) findViewById(R.id.tipDropDown);
-        ArrayAdapter<String> tipAdapter = new ArrayAdapter<String>(calculator.this,
+        ArrayAdapter<String> tipAdapter = new ArrayAdapter<String>(Calculator.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.Tip));
         tipAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // show adapter in the spinner
@@ -102,7 +102,7 @@ public class calculator extends AppCompatActivity {
 
         // tax dropdown
         tax = (Spinner) findViewById(R.id.taxDropDown);
-        ArrayAdapter<String> taxAdapter = new ArrayAdapter<String>(calculator.this,
+        ArrayAdapter<String> taxAdapter = new ArrayAdapter<String>(Calculator.this,
                 android.R.layout.simple_list_item_1, statesList);
         taxAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // show adapter in the spinner

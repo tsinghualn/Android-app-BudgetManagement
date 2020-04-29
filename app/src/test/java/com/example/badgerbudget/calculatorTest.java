@@ -1,14 +1,8 @@
 package com.example.badgerbudget;
 
-import android.widget.EditText;
-
 import org.junit.Test;
 
-import java.util.Set;
-
-import static org.junit.Assert.*;
-
-public class calculatorTest extends calculator {
+public class calculatorTest extends Calculator {
 
 /*
     @Test
@@ -38,11 +32,11 @@ public class calculatorTest extends calculator {
 
 /*    @Test
     public void findTaxPerc() {
-        calculator calculator = new calculator();
-        calculator.setStateTax();
+        Calculator Calculator = new Calculator();
+        Calculator.setStateTax();
         String state = "Wisconsin";
-        Set<String> keys = calculator.stateTaxList.keySet();
-        double test = calculator.findTaxPerc(state, keys);
+        Set<String> keys = Calculator.stateTaxList.keySet();
+        double test = Calculator.findTaxPerc(state, keys);
 
         assertEquals( "5.000", test);
 
