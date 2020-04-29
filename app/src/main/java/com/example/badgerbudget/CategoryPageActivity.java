@@ -203,7 +203,7 @@ public class CategoryPageActivity extends AppCompatActivity {
                                     toastMessage("Category Already Exists. Choose A Different Name");
                                 }
                             } else {
-                                toastMessage("Please Insert a Category and Set a Budget ");
+                                toastMessage("Make Sure a Category Name and Budget is Entered! ");
                             }
                         } else {
                             toastMessage("Unable to Insert Category. Maximum Number of Categories Reached");
@@ -266,7 +266,7 @@ public class CategoryPageActivity extends AppCompatActivity {
                 deleteCat.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (cat.equals("Food") && cat.equals("Clothes") && cat.equals("Groceries")) {
+                        if (!cat.equals("Food") && !cat.equals("Clothes") && !cat.equals("Groceries")) {
                             String response = client.sendMessage("deletecategories;" + passable + " " + cat);
                             System.out.println(response);
                             if (response.equals("Category Successfully Deleted")) {
