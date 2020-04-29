@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -222,7 +223,8 @@ public class MainPageActivity extends AppCompatActivity {
                                 .create()
                                 .show();
 
-                        String date = getDate();
+                       // String date = getDate();
+                        String date = getDateString(0);
                         String year = getYear();
                         String month = getMonth();
                         String transAmount = amountText.getText().toString();
@@ -291,37 +293,64 @@ public class MainPageActivity extends AppCompatActivity {
         String today5 = getDateString(5);
         String today6 = getDateString(6);
 
+        double todayExpense = 0;
+        double today1Expense = 0;
+        double today2Expense = 0;
+        double today3Expense = 0;
+        double today4Expense = 0;
+        double today5Expense = 0;
+        double today6Expense = 0;
         // todo: get daily expense
-        /*
-        double todayExpense =;
-        double today1Expense =;
-        double today2Expense =;
-        double today3Expense =;
-        double today4Expense =;
-        double today5Expense =;
-        double today6Expense =;
-        */
+        String transaction = client.sendMessage("gettransactions;" + passable);
+        String[] transactionsMessage = transaction.split(";");
+        String[][] transactions = new String[transactionsMessage.length][8];
+        if (!transaction.equals("")) {
+            for (int i = 0; i < transactionsMessage.length; i++) {
+                transactions[i] = transactionsMessage[i].split(" ");
+
+                if (transactions[i][1].equals("Expense")) {
+                    if (transactions[i][3].equals(today)) {
+                        todayExpense += Double.valueOf(transactions[i][2]);
+                    } else if (transactions[i][3].equals(today1)) {
+                        today1Expense += Double.valueOf(transactions[i][2]);
+                    } else if (transactions[i][3].equals(today2)) {
+                        today2Expense += Double.valueOf(transactions[i][2]);
+                    } else if (transactions[i][3].equals(today3)) {
+                        today3Expense += Double.valueOf(transactions[i][2]);
+                    } else if (transactions[i][3].equals(today4)) {
+                        today4Expense += Double.valueOf(transactions[i][2]);
+                    } else if (transactions[i][3].equals(today5)) {
+                        today5Expense += Double.valueOf(transactions[i][2]);
+                    } else if (transactions[i][3].equals(today6)) {
+                        today6Expense += Double.valueOf(transactions[i][2]);
+                    }
+                }
+            }
+        } else {
+            toastMessage("No Transaction Data Available");
+        }
 
         // add data to chart
-        /*
-        barDataEntries.add(new ValueDataEntry(today,todayExpense);
-        barDataEntries.add(new ValueDataEntry(today,todayExpense);
-        barDataEntries.add(new ValueDataEntry(today,todayExpense);
-        barDataEntries.add(new ValueDataEntry(today,todayExpense);
-        barDataEntries.add(new ValueDataEntry(today,todayExpense);
-        barDataEntries.add(new ValueDataEntry(today,todayExpense);
-        barDataEntries.add(new ValueDataEntry(today,todayExpense);
-        barDataEntries.add(new ValueDataEntry(today,todayExpense);
-        */
 
         Cartesian bar = AnyChart.column();
 
-        bar.data(barDataEntries);
+        List<DataEntry> data = new ArrayList<>();
+        data.add(new ValueDataEntry(today6, today6Expense));
+        data.add(new ValueDataEntry(today5, today5Expense));
+        data.add(new ValueDataEntry(today4, today4Expense));
+        data.add(new ValueDataEntry(today3, today3Expense));
+        data.add(new ValueDataEntry(today2, today2Expense));
+        data.add(new ValueDataEntry(today1, today1Expense));
+        data.add(new ValueDataEntry(today, todayExpense));
+        //data.add(new ValueDataEntry(transactions[1][1], todayExpense));
+
+        bar.data(data);
         bar.title("Daily expense trend");
         barChartView.setChart(bar);
     }
+
     private String getDateString(int i) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yy");
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -i);
         return dateFormat.format(cal.getTime());
@@ -409,6 +438,11 @@ public class MainPageActivity extends AppCompatActivity {
         }
 
         return monthString;
+    }
+
+    private void toastMessage(String message) {
+        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+
     }
 
     private void navigation() {

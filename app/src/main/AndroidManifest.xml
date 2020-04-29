@@ -23,9 +23,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.login.LoginActivity" />
         </activity>
-        <activity android:name=".SettingActivity" />
-        <activity android:name=".ProfileSettingActivity" />
-        <activity android:name=".MainPageActivity" />
+
+        <activity android:name=".SettingActivity"></activity>
+        <activity android:name=".ProfileSettingActivity"></activity>
+        <activity android:name=".MainPageActivity"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
         <activity android:name=".GuideActivity" />
         <activity android:name=".AppInfoActivity" />
 
