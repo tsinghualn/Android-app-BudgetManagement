@@ -36,6 +36,7 @@ import java.util.Set;
 
 public class Report extends AppCompatActivity {
 
+    boolean valid = false;
 
     String sMonth, sYear, eMonth, eYear;
     // new pie chart
@@ -43,12 +44,15 @@ public class Report extends AppCompatActivity {
     ArrayList<PieEntry> yValues;
 
     // A bar chart that shows trend of overall spending/expense
-    AnyChartView barChartView;
-    List<DataEntry> barDataEntries;
+
+
     double totalAmount;
 
     Spinner startMonth, endMonth, startYear, endYear;
     Button btnSubmit;
+    Button btnViewTrans;
+    ArrayList<String[]> expenseInRange;
+    ArrayList<String[]> incomeInRange;
 
     //Button popTrans;
     // A list of pairs of category with corresponding expense in dollar
@@ -92,7 +96,10 @@ public class Report extends AppCompatActivity {
         String username = un.getString("username");
         passable = username;
 
-        transaction = new Transaction(passable);
+
+        pieChart = (PieChart)findViewById(R.id.piechart);
+
+        //transaction = new Transaction(passable);
 
 
         // show&use navigation
@@ -150,23 +157,29 @@ public class Report extends AppCompatActivity {
     and Y-axis shows the amount of expense in dollars.
     This method uses expenseByMonth to get data.
      */
-    public void viewExpenseBarChart(){
+    public void viewExpenseBarChart(HashMap<String, Double> expByMonth){
 
-        barChartView=findViewById(R.id.bar_chart_view);
+        AnyChartView barChartView=findViewById(R.id.bar_chart_view);
 
-        Set<String> monthSet = expenseByMonth.keySet();
+        Set<String> monthSet = expByMonth.keySet();
 
-        barDataEntries = new ArrayList<>();
+        List<DataEntry> barDataEntries = new ArrayList<>();
 
         for(String month: monthSet){
-            barDataEntries.add(new ValueDataEntry(month, expenseByMonth.get(month)));
+            barDataEntries.add(new ValueDataEntry(month, expByMonth.get(month)));
         }
 
         Cartesian bar = AnyChart.column();
 
-        bar.data(barDataEntries);
-        bar.title("Monthly expense trend");
-        barChartView.setChart(bar);
+        if(barDataEntries.isEmpty()){
+
+        } else {
+            bar.data(barDataEntries);
+            bar.title("Monthly expense trend");
+            barChartView.setChart(bar);
+
+        }
+
     }
 
 
@@ -178,8 +191,6 @@ public class Report extends AppCompatActivity {
      */
 
     public void viewCategPieChart(){
-
-        pieChart = (PieChart)findViewById(R.id.piechart);
 
         pieChart.setUsePercentValues(true);
         pieChart.getDescription().setEnabled(false);
@@ -208,6 +219,7 @@ public class Report extends AppCompatActivity {
         data.setValueTextColor(Color.BLACK);
 
         pieChart.setData(data);
+
 
     }
 
@@ -277,13 +289,19 @@ public class Report extends AppCompatActivity {
                 eMonth = String.valueOf(endMonth.getSelectedItem());
                 eYear = String.valueOf(endYear.getSelectedItem());
 
+                btnViewTrans = (Button) findViewById(R.id.viewTransBtn);
+
                 if(isValidRange(sMonth, sYear, eMonth, eYear)){
                     // valid
+                    valid = true;
+
+                    transaction = new Transaction(passable);
+
                     // call transaction query here (if month/year are valid)
-                    ArrayList<String[]> expenseInRange =  (ArrayList<String[]>)
+                    expenseInRange =  (ArrayList<String[]>)
                             (transaction.setTransactionInRange(sMonth, sYear, eMonth, eYear).clone());
 
-                    ArrayList<String[]> incomeInRange = (ArrayList<String[]>)
+                    incomeInRange = (ArrayList<String[]>)
                             (transaction.setIncomeInRange(sMonth, sYear, eMonth, eYear).clone());
 
                     categList = new HashMap<String, Double> (transaction.getCategList(expenseInRange));
@@ -291,7 +309,7 @@ public class Report extends AppCompatActivity {
                     incomeByMonth = new HashMap<String, Double> (transaction.getIncomeByMonth(incomeInRange));
 
                     viewCategPieChart();
-                    viewExpenseBarChart();
+                    viewExpenseBarChart(expenseByMonth);
 
                     // get total expense
                     TextView textView_totSpDisp = (TextView) findViewById(R.id.TotSpendDisp);
@@ -303,21 +321,21 @@ public class Report extends AppCompatActivity {
                     totalIncome = getTotalValue(incomeByMonth);
                     textView_totIncDisp.setText("$" + totalIncome);
 
-
                 } else {
                     Toast.makeText(Report.this,
                             "OnClickListener: " +
                                     "Please select a valid range of months",
                             Toast.LENGTH_SHORT).show();
+                    valid = false;
                 }
 
-                Toast.makeText(Report.this,
+                /*Toast.makeText(Report.this,
                         "OnClickListener: " +
                         "\nstartMonth : " + sMonth +
                                 " startYear: " + sYear +
                         "\nendMoth : " + eMonth +
                         " endYear: " + eYear,
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT).show();*/
             }
         });
     }
@@ -374,9 +392,32 @@ public class Report extends AppCompatActivity {
     /* Get a pop-up window that shows a transaction history of selected period of time */
     public void onClick_viewTrans(View v){
 
-        startActivity(new Intent(Report.this, PopupTransaction.class));
-        // bring start & end month/year when open transaction
+        System.out.println(valid);
+        if (valid){
 
+            Intent intent = new Intent(Report.this, PopupTransaction.class);
+            intent.putExtra("startMonth", sMonth);
+            intent.putExtra("startYear", sYear);
+            intent.putExtra("endMonth", eMonth);
+            intent.putExtra("endYear", eYear);
+            intent.putExtra("userID", passable);
+            intent.putExtra("expInRange", expenseInRange);
+            intent.putExtra("inInRange", incomeInRange);
+
+
+            startActivity(intent);
+
+            // bring start & end month/year when open transaction
+
+        } else {
+            Toast.makeText(Report.this,
+                    "OnClickListener: " +
+                            "\nstartMonth : " + sMonth +
+                            " startYear: " + sYear +
+                            "\nendMoth : " + eMonth +
+                            " endYear: " + eYear,
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 }
 

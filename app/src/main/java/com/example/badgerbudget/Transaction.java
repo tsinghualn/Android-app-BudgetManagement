@@ -14,6 +14,7 @@ public class Transaction  extends Report{
 
     ArrayList<String[]> typeExpense = new ArrayList<>();
     ArrayList<String[]> typeIncome = new ArrayList<>();
+    ArrayList<String[]> wholeTransaction = new ArrayList<>();
 
 
     Double totalIncome;
@@ -68,6 +69,7 @@ public class Transaction  extends Report{
                 // month [4]
                 // year [5]
                 // category [6]
+                wholeTransaction.add(oneTrans);
 
                 String type = oneTrans[1];
                 if(type.equals("Expense")){
@@ -81,11 +83,68 @@ public class Transaction  extends Report{
         } else {
             // there is no transaction for this user
             transList = null;
+            wholeTransaction = null;
             typeExpense = null;
             typeIncome = null;
             // later, properly handle it by returning false or something..
         }
 
+    }
+
+    public ArrayList<String[]> setwholeInRange(String sMonth, String sYear, String eMonth, String eYear) {
+
+        ArrayList<String[]> wholeTransInRange = new ArrayList<>();
+        Integer sMonthInt = MONTHMAP.get(sMonth);
+        Integer eMonthInt = MONTHMAP.get(eMonth);
+        Integer sYearInt = Integer.parseInt(sYear.trim());
+        Integer eYearInt = Integer.parseInt(eYear.trim());
+
+        for(String[] each: wholeTransaction){
+
+            // orderID [0]
+            // type [1]
+            // amount[2]
+            // date [3]
+            // month [4]
+            // year [5]
+            // category [6]
+
+            int month = MONTHMAP.get(each[4]);
+
+            int year = Integer.parseInt(each[5].trim());
+
+
+            // year of transaction is in the range
+            if(sYearInt.intValue() <= year && year <= eYearInt.intValue()){
+
+                // the range is for same year (sYear = eYear = year)
+                if(sYearInt.intValue() == year && eYearInt.intValue() == year) {
+                    if(sMonthInt.intValue() <= month && month <= eMonthInt.intValue()){
+                        wholeTransInRange.add(each);
+                    }
+                } else {
+                    // year of transaction = start year
+                    if(sYearInt.intValue() == year) {
+                        if (sMonthInt.intValue() <= month && month <= 12) {
+                            // month of transaction is after start month of the range
+                            wholeTransInRange.add(each);
+                        }
+                        // year of transaction is not same with sYear or eYear, but in the range
+                    } else if(sYearInt.intValue() < year && year < eYearInt.intValue()){
+                        if (1 <= month && month <= 12){
+                            // valid month
+                            wholeTransInRange.add(each);
+                        }
+                    } else if(eYearInt.equals(year)){
+                        if(eMonthInt.intValue() >= month && month >= 1){
+                            // less than endMonth
+                            wholeTransInRange.add(each);
+                        }
+                    }
+                }
+            }
+        }
+        return wholeTransInRange;
     }
 
 
