@@ -33,6 +33,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static java.lang.Double.sum;
+
 
 public class Report extends AppCompatActivity {
 
@@ -344,9 +346,15 @@ public class Report extends AppCompatActivity {
 
                     // get total income
                     TextView textView_totIncDisp = (TextView) findViewById(R.id.TotIncDisp);
-                    //totalIncome = getTotalValue(incomeByMonth);
-                    totalIncome = transaction.setSalaryInRange(sMonth, sYear, eMonth, eYear);
-                    textView_totIncDisp.setText("$" + totalIncome);
+                    double salary = transaction.setSalaryInRange(sMonth, sYear, eMonth, eYear);
+                    //double salary = transaction.getSalary();
+                    totalIncome = getTotalValue(incomeByMonth);
+
+                    // total income as negative value
+                    // salary - (- totalIncome)
+                    double totalIncomeDisp = (double) (salary - totalIncome);
+
+                    textView_totIncDisp.setText("$" + totalIncomeDisp);
 
                 } else {
                     Toast.makeText(Report.this,
