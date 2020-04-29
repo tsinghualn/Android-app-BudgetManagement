@@ -58,7 +58,6 @@ public class MainPageActivity extends AppCompatActivity {
             Bundle un = getIntent().getExtras();
             String username = un.getString("username");
             passable = username;
-            System.out.println("passable in main: " + passable);
             TextView currentBalanceText = (TextView) findViewById(R.id.currentBalanceText);
             TextView currentExpenseText = (TextView) findViewById(R.id.currentExpenseText);
             TextView targetExpenseText = (TextView) findViewById(R.id.targetExpenseText);
@@ -70,7 +69,6 @@ public class MainPageActivity extends AppCompatActivity {
 
             String totalAmount = "";
             String response = client.sendMessage("gettransactions;" + username);
-            System.out.println("response in Main: " + response + "for user: " + username);
             if (!response.equals("")) {
                 String[] transactions = response.split(";");
 
@@ -79,14 +77,10 @@ public class MainPageActivity extends AppCompatActivity {
                     transAmount[i] = transactions[i].split(" ");
                 }
 
-                for (int i = 0; i < transactions.length; i++) {
-                    System.out.println("TransAmount: " + transAmount[i][2]);
-                }
                 int total = 0;
                 for (int i = 0; i < transactions.length; i++) {
                     int trans = Integer.parseInt(transAmount[i][2]);
                     total += trans;
-                    System.out.println("Total: " + total);
 
                 }
                 totalAmount = String.valueOf(total);
@@ -110,7 +104,6 @@ public class MainPageActivity extends AppCompatActivity {
             // current expense
             TextView currentExpense = new TextView(getApplicationContext());
             String currentExpenseString = totalAmount;
-            System.out.println("TotalAmount: " + totalAmount);
         /*
         select sum(Amount) from Transaction
         where Type = 'expense' AND month(Datetime) = 3 And year(Datetime) = 2020 AND
@@ -175,7 +168,6 @@ public class MainPageActivity extends AppCompatActivity {
 
                 @Override
                 public void onNothingSelected(AdapterView<?> arg0) {
-                    // TODO Auto-generated method stub
                 }
             });
 
@@ -200,7 +192,6 @@ public class MainPageActivity extends AppCompatActivity {
                     Object item = adapterView.getItemAtPosition(position);
                     String type = item.toString();
                     transType = type;
-                    System.out.println("Type Selected: " + transType);
                 }
 
                 @Override
@@ -245,12 +236,10 @@ public class MainPageActivity extends AppCompatActivity {
                         if (transType.equals("Expense")) {
                             client.sendMessage("inserttransaction;" + passable + " " + transType + " " + transAmount + " "
                                     + date +  " " + month + " " + year + " " + transCat + " " + note);
-                            System.out.print("Type: " + transType + " Amount: " + transAmount + "\n");
                         } else if (transType.equals("Income")) {
                             transAmount = "-" + transAmount;
                             client.sendMessage("inserttransaction;" + passable + " " + transType + " " + transAmount + " "
                                     + date + " " + month + " " + year + " "  + transCat + " " + note);
-                            System.out.print("Type: " + transType + " Amount: " + transAmount + "\n");
 
                         }
                     }
@@ -360,7 +349,6 @@ public class MainPageActivity extends AppCompatActivity {
         DateFormat df = new SimpleDateFormat("MM/dd/yy");
         Date date = new Date();
         String dateString = df.format(date);
-        System.out.println("Hoopefully right date: " + dateString);
         return dateString;
     }
 

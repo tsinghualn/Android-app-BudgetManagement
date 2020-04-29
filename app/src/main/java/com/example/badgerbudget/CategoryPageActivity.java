@@ -76,6 +76,7 @@ public class CategoryPageActivity extends AppCompatActivity {
             categoryTable.setColumnStretchable(0, true);
             categoryTable.setColumnStretchable(1, true);
             categoriesMessage = category.split(";");
+            System.out.println("categoriesMessage.length: " + categoriesMessage.length);
             categories = new String[categoriesMessage.length][2];
             for (int i = 0; i < categoriesMessage.length; i++) {
                 if (categoriesMessage.length != 0) {
@@ -190,18 +191,22 @@ public class CategoryPageActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         String month = getMonth();
                         String year = getYear();
-                        if (!input.getText().toString().equals("") && !budget.getText().toString().equals("")) {
-                            String response = client.sendMessage("insertcategories;" + passable + " " + input.getText().toString() + " " + budget.getText().toString() + " " + month + " " + year);
-                            if (response.equals("Category Successfully Added")) {
-                                toastMessage("Category Successfully Added.");
-                                finish();
-                                startActivity(getIntent());
+
+                        if (categoriesMessage.length <= 6) {
+                            if (!input.getText().toString().equals("") && !budget.getText().toString().equals("")) {
+                                String response = client.sendMessage("insertcategories;" + passable + " " + input.getText().toString() + " " + budget.getText().toString() + " " + month + " " + year);
+                                if (response.equals("Category Successfully Added")) {
+                                    toastMessage("Category Successfully Added.");
+                                    finish();
+                                    startActivity(getIntent());
+                                } else {
+                                    toastMessage("Category Already Exists. Choose A Different Name");
+                                }
                             } else {
-                                toastMessage("Category Already Exists. Choose A Different Name");
+                                toastMessage("Make Sure a Category Name and Budget is Entered! ");
                             }
-                        ;
                         } else {
-                            toastMessage("Please Insert a Category and Set a Budget ");
+                            toastMessage("Unable to Insert Category. Maximum Number of Categories Reached");
                         }
                     }
                 });
@@ -261,14 +266,18 @@ public class CategoryPageActivity extends AppCompatActivity {
                 deleteCat.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String response = client.sendMessage("deletecategories;" + passable + " " + cat);
-                        System.out.println(response);
-                        if (response.equals("Category Successfully Deleted")) {
-                            toastMessage("Category Successfully Deleted");
-                            finish();
-                            startActivity(getIntent());
+                        if (!cat.equals("Food") && !cat.equals("Clothes") && !cat.equals("Groceries")) {
+                            String response = client.sendMessage("deletecategories;" + passable + " " + cat);
+                            System.out.println(response);
+                            if (response.equals("Category Successfully Deleted")) {
+                                toastMessage("Category Successfully Deleted");
+                                finish();
+                                startActivity(getIntent());
+                            } else {
+                                toastMessage("Unable to Delete Category");
+                            }
                         } else {
-                            toastMessage("Unable to Delete Category");
+                            toastMessage("Unable to Delete Default Category!");
                         }
                     }
                 });

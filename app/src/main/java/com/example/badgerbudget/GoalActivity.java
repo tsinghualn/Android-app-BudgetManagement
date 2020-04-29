@@ -1,9 +1,11 @@
 package com.example.badgerbudget;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -40,7 +42,14 @@ public class GoalActivity extends AppCompatActivity {
         TextView clothes = findViewById(R.id.clothesTextView);
         TextView groceries = findViewById(R.id.groceriesTextView);
 
+        ProgressBar foodPB = findViewById(R.id.foodProgressBar);
+        ProgressBar groceriesPB = findViewById(R.id.clothesProgressBar);
+        ProgressBar clothesPB = findViewById(R.id.groceryProgressBar);
 
+        ProgressBar cat1PB = findViewById(R.id.cat1ProgressBar);
+        ProgressBar cat2PB = findViewById(R.id.cat2progressBar);
+        ProgressBar cat3PB = findViewById(R.id.cat3progressBar);
+        ProgressBar cat4PB = findViewById(R.id.cat4ProgressBar);
 
         //User Categories
         TextView cat1 = findViewById(R.id.cat1TextView);
@@ -48,9 +57,10 @@ public class GoalActivity extends AppCompatActivity {
         TextView cat3 = findViewById(R.id.cat3TextView);
         TextView cat4 = findViewById(R.id.cat4TextView);
 
+
         String catResponse = client.sendMessage("getcategories;" + passable);
         String[] categoriesMessage = catResponse.split(";");
-        System.out.println(categoriesMessage[0]);
+        System.out.println(categoriesMessage.length);
         String[][] categories = new String[categoriesMessage.length][2];
 
         for (int i = 0; i < categoriesMessage.length; i++) {
@@ -60,7 +70,6 @@ public class GoalActivity extends AppCompatActivity {
         //Set the default categories for the user
         food.setText(categories[1][0]);
         foodBudget = Integer.parseInt(categories[1][1]);
-        System.out.println("foodBudget: " + foodBudget);
 
         clothes.setText(categories[0][0]);
         clothesBudget = Integer.parseInt(categories[0][1]);
@@ -69,7 +78,8 @@ public class GoalActivity extends AppCompatActivity {
         groceriesBudget = Integer.parseInt(categories[2][1]);
 
 
-        if (!catResponse.equals("")) {
+        if (categoriesMessage.length > 3) {
+            cat1PB.setVisibility(View.VISIBLE);
             cat1.setText(categories[3][0]);
             cat1Budget = Integer.parseInt(categories[3][1]);
 
@@ -77,40 +87,43 @@ public class GoalActivity extends AppCompatActivity {
         } else {
             cat1.setText("");
             cat1Budget = 0;
-            cat1.setVisibility(View.INVISIBLE);
+            cat1PB.setVisibility(View.INVISIBLE);
 
 
         }
         if (categoriesMessage.length > 4) {
+            cat2PB.setVisibility(View.VISIBLE);
             cat2.setText(categories[4][0]);
             cat2Budget = Integer.parseInt(categories[4][1]);
 
         } else {
             cat2.setText("");
             cat2Budget = 0;
-            cat2.setVisibility(View.INVISIBLE);
+            cat2PB.setVisibility(View.INVISIBLE);
 
 
         }
         if (categoriesMessage.length > 5) {
+            cat3PB.setVisibility(View.VISIBLE);
             cat3.setText(categories[5][0]);
             cat3Budget = Integer.parseInt(categories[5][1]);
 
         } else {
             cat3.setText("");
             cat3Budget = 0;
-            cat3.setVisibility(View.INVISIBLE);
+            cat3PB.setVisibility(View.GONE);
 
 
         }
         if (categoriesMessage.length > 6) {
+            cat4PB.setVisibility(View.VISIBLE);
             cat4.setText(categories[6][0]);
             cat4Budget = Integer.parseInt(categories[6][1]);
 
         } else {
-            cat4.setText("Category");
+            cat4.setText("");
             cat4Budget = 0;
-            cat4.setVisibility(View.INVISIBLE);
+            cat4PB.setVisibility(View.GONE);
 
         }
         String response = client.sendMessage("gettransactions;" + passable);
@@ -160,60 +173,205 @@ public class GoalActivity extends AppCompatActivity {
             }
         }
 
-        ProgressBar foodPB = findViewById(R.id.foodProgressBar);
-        ProgressBar groceriesPB = findViewById(R.id.clothesProgressBar);
-        ProgressBar clothesPB = findViewById(R.id.groceryProgressBar);
+
 
         foodPB.setMax(100);
         float foodprogress = ((float) foodTotal / foodBudget ) * 100;
         foodPB.setProgress((int )foodprogress);
         TextView foodProg = findViewById(R.id.foodProgress);
-        foodProg.setText((String.valueOf((float) foodTotal) + "/" +String.valueOf((float)foodBudget)));
+        if (foodTotal >= 0) {
+            foodProg.setText((String.valueOf((float) foodTotal) + "/" + String.valueOf((float) foodBudget)));
+        } else {
+            foodProg.setText(("0.0 /" + String.valueOf((float) foodBudget)));
+        }
+        if (((float)foodTotal / ((float) foodBudget)) > 1) {
+            Context context =  getApplicationContext();
+            LinearLayout layout = new LinearLayout(context);
+            layout.setOrientation(LinearLayout.VERTICAL);
+            TextView warning = new TextView(GoalActivity.this);
+            warning.setText("Whoops. Looks Like You Overspent in Your Category: " + food.getText().toString() + ". Please Consider Changing Your Budgets Around!");
+            warning.setGravity(Gravity.CENTER);
+            AlertDialog.Builder warningView = new AlertDialog.Builder(GoalActivity.this);
+            warningView.setTitle("WARNING");
+            layout.addView(warning);
+            warningView.setView(layout);
+            warningView.setPositiveButton("Ok",null);
+            AlertDialog dialog = warningView.create();
+            dialog.show();
+        }
 
         clothesPB.setMax(100);
         float clothesprogress = ((float) clothesTotal / clothesBudget ) * 100;
         clothesPB.setProgress((int )clothesprogress);
         TextView clothesProg = findViewById(R.id.clothesProgress);
-        clothesProg.setText((String.valueOf((float) clothesTotal) + "/" +String.valueOf((float)clothesBudget)));
+        if (clothesTotal >= 0) {
+            clothesProg.setText((String.valueOf((float) clothesTotal) + "/" + String.valueOf((float) clothesBudget)));
+        } else {
+            clothesProg.setText(("0.0 /" + String.valueOf((float) clothesBudget)));
+        }
+        if (((float)clothesTotal / ((float) clothesBudget)) > 1) {
+            Context context =  getApplicationContext();
+            LinearLayout layout = new LinearLayout(context);
+            layout.setOrientation(LinearLayout.VERTICAL);
+            TextView warning = new TextView(GoalActivity.this);
+            warning.setText("Whoops. Looks Like You Overspent in Your Category: " + clothes.getText().toString() + ". Please Consider Changing Your Budgets Around!");
+            warning.setGravity(Gravity.CENTER);
+            AlertDialog.Builder warningView = new AlertDialog.Builder(GoalActivity.this);
+            warningView.setTitle("WARNING");
+            layout.addView(warning);
+            warningView.setView(layout);
+            warningView.setPositiveButton("Ok",null);
+            AlertDialog dialog = warningView.create();
+            dialog.show();
+        }
 
         groceriesPB.setMax(100);
         float groceriesprogress = ((float) groceriesTotal / groceriesBudget ) * 100;
         groceriesPB.setProgress((int )groceriesprogress);
         TextView groceriesProg = findViewById(R.id.groceriesProgress);
-        groceriesProg.setText((String.valueOf((float) groceriesTotal) + "/" +String.valueOf((float)groceriesBudget)));
+        if (groceriesTotal >= 0) {
+            groceriesProg.setText((String.valueOf((float) groceriesTotal) + "/" + String.valueOf((float) groceriesBudget)));
+        } else {
+            groceriesProg.setText(("0.0 /" + String.valueOf((float) groceriesBudget)));
+        }
+        if (((float)groceriesTotal / ((float) groceriesBudget)) > 1) {
+            Context context =  getApplicationContext();
+            LinearLayout layout = new LinearLayout(context);
+            layout.setOrientation(LinearLayout.VERTICAL);
+            TextView warning = new TextView(GoalActivity.this);
+            warning.setText("Whoops. Looks Like You Overspent in Your Category: " + groceries.getText().toString() + ". Please Consider Changing Your Budgets Around!");
+            warning.setGravity(Gravity.CENTER);
+            AlertDialog.Builder warningView = new AlertDialog.Builder(GoalActivity.this);
+            warningView.setTitle("WARNING");
+            layout.addView(warning);
+            warningView.setView(layout);
+            warningView.setPositiveButton("Ok",null);
+            AlertDialog dialog = warningView.create();
+            dialog.show();
+        }
 
 
-        ProgressBar cat1PB = findViewById(R.id.cat1ProgressBar);
-        cat1PB.setMax(100);
-        float cat1progress = ((float) cat1Total / cat1Budget ) * 100;
-        cat1PB.setProgress((int )cat1progress);
-        TextView cat1Prog = findViewById(R.id.cat1Progress);
-        cat1Prog.setText((String.valueOf((float) cat1Total) + "/" +String.valueOf((float)cat1Budget)));
+        if (cat1PB.getVisibility() == View.VISIBLE) {
+            cat1PB.setMax(100);
+            float cat1progress = ((float) cat1Total / cat1Budget) * 100;
+            cat1PB.setProgress((int) cat1progress);
+            TextView cat1Prog = findViewById(R.id.cat1Progress);
+            if (cat1Total >=0) {
+                cat1Prog.setText((String.valueOf((float) cat1Total) + "/" + String.valueOf((float) cat1Budget)));
+            } else {
+                cat1Prog.setText(("0.0 /" + String.valueOf((float) cat1Budget)));
+            }
+            if (((float)cat1Total / ((float) cat1Budget)) > 1) {
+                Context context =  getApplicationContext();
+                LinearLayout layout = new LinearLayout(context);
+                layout.setOrientation(LinearLayout.VERTICAL);
+                TextView warning = new TextView(GoalActivity.this);
+                warning.setText("Whoops. Looks Like You Overspent in Your Category: " + cat1.getText().toString() + ". Please Consider Changing Your Budgets Around!");
+                warning.setGravity(Gravity.CENTER);
+                String category = client.sendMessage("getcategories;" + passable);
+                AlertDialog.Builder warningView = new AlertDialog.Builder(GoalActivity.this);
+                warningView.setTitle("WARNING");
+                layout.addView(warning);
+                warningView.setView(layout);
+                warningView.setPositiveButton("Ok",null);
+                AlertDialog dialog = warningView.create();
+                dialog.show();
+            }
 
+        } else {
+            TextView cat1Prog = findViewById(R.id.cat1Progress);
+            cat1Prog.setText("");
+        }
+        if (cat2PB.getVisibility() == View.VISIBLE) {
+            cat2PB.setMax(100);
+            float cat2progress = ((float) cat2Total / cat2Budget) * 100;
+            cat2PB.setProgress((int) cat2progress);
+            TextView cat2Prog = findViewById(R.id.cat2Progress);
+            if (cat2Total >=0) {
+                cat2Prog.setText((String.valueOf((float) cat2Total) + "/" + String.valueOf((float) cat2Budget)));
+            } else {
+                cat2Prog.setText(("0.0 /" + String.valueOf((float) cat2Budget)));
+            }
+            if (((float)cat2Total / ((float) cat2Budget)) > 1) {
+                Context context =  getApplicationContext();
+                LinearLayout layout = new LinearLayout(context);
+                layout.setOrientation(LinearLayout.VERTICAL);
+                TextView warning = new TextView(GoalActivity.this);
+                warning.setText("Whoops. Looks Like You Overspent in Your Category: " + cat2.getText().toString() + ". Please Consider Changing Your Budgets Around!");
+                warning.setGravity(Gravity.CENTER);
+                AlertDialog.Builder warningView = new AlertDialog.Builder(GoalActivity.this);
+                warningView.setTitle("WARNING");
+                layout.addView(warning);
+                warningView.setView(layout);
+                warningView.setPositiveButton("Ok",null);
+                AlertDialog dialog = warningView.create();
+                dialog.show();
+            }
+        } else {
+            TextView cat2Prog = findViewById(R.id.cat2Progress);
+            cat2Prog.setText("");
+        }
 
-        ProgressBar cat2PB = findViewById(R.id.cat2progressBar);
-        cat2PB.setMax(100);
-        float cat2progress = ((float) cat2Total / cat2Budget ) * 100;
-        cat2PB.setProgress((int) cat2progress);
-        TextView cat2Prog = findViewById(R.id.cat2Progress);
-        cat2Prog.setText((String.valueOf((float) cat2Total) + "/" +String.valueOf((float)cat2Budget)));
+        if (cat3PB.getVisibility() == View.VISIBLE) {
+            cat3PB.setMax(100);
+            float cat3progress = ((float) cat3Total / cat3Budget) * 100;
+            cat3PB.setProgress((int) cat3progress);
+            TextView cat3Prog = findViewById(R.id.cat3progress);
+            if (cat3Total >=0) {
+                cat3Prog.setText((String.valueOf((float) cat3Total) + "/" + String.valueOf((float) cat3Budget)));
+            } else {
+                cat3Prog.setText(("0.0 /" + String.valueOf((float) cat3Budget)));
+            }
+            if (((float)cat3Total / ((float) cat3Budget)) > 1) {
+                Context context =  getApplicationContext();
+                LinearLayout layout = new LinearLayout(context);
+                layout.setOrientation(LinearLayout.VERTICAL);
+                TextView warning = new TextView(GoalActivity.this);
+                warning.setText("Whoops. Looks Like You Overspent in Your Category: " + cat3.getText().toString() + ". Please Consider Changing Your Budgets Around!");
+                warning.setGravity(Gravity.CENTER);
+                AlertDialog.Builder warningView = new AlertDialog.Builder(GoalActivity.this);
+                warningView.setTitle("WARNING");
+                layout.addView(warning);
+                warningView.setView(layout);
+                warningView.setPositiveButton("Ok",null);
+                AlertDialog dialog = warningView.create();
+                dialog.show();
+            }
+        } else {
+            TextView cat3Prog = findViewById(R.id.cat3progress);
+            cat3Prog.setText("");
+        }
 
+        if (cat4PB.getVisibility() == View.VISIBLE) {
+            cat4PB.setMax(100);
+            float cat4progress = ((float) cat4Total / cat4Budget) * 100;
+            cat4PB.setProgress((int) cat4progress);
+            TextView cat4Prog = findViewById(R.id.cat4Progress);
+            if (cat4Total >=0) {
+                cat4Prog.setText((String.valueOf((float) cat4Total) + "/" + String.valueOf((float) cat4Budget)));
+            } else {
+                cat4Prog.setText(("0.0 /" + String.valueOf((float) cat4Budget)));
 
-        ProgressBar cat3PB = findViewById(R.id.cat3progressBar);
-        cat3PB.setMax(100);
-        float cat3progress = ((float) cat3Total / cat3Budget ) * 100;
-        cat3PB.setProgress((int) cat3progress);
-        TextView cat3Prog = findViewById(R.id.cat3progress);
-        cat3Prog.setText((String.valueOf((float) cat3Total) + "/" +String.valueOf((float)cat3Budget)));
-
-
-        ProgressBar cat4PB = findViewById(R.id.cat4ProgressBar);
-        cat4PB.setMax(100);
-        float cat4progress = ((float) cat4Total / cat4Budget ) * 100;
-        cat4PB.setProgress((int) cat4progress);
-        TextView cat4Prog = findViewById(R.id.cat4Progress);
-        cat4Prog.setText((String.valueOf((float) cat4Total) + "/" +String.valueOf((float)cat4Budget)));
-
+            }
+            if (((float)cat4Total / ((float) cat4Budget)) > 1) {
+                Context context =  getApplicationContext();
+                LinearLayout layout = new LinearLayout(context);
+                layout.setOrientation(LinearLayout.VERTICAL);
+                TextView warning = new TextView(GoalActivity.this);
+                warning.setText("Whoops. Looks Like You Overspent in Your Category: " + cat4.getText().toString() + ". Please Consider Changing Your Budgets Around!");
+                warning.setGravity(Gravity.CENTER);
+                AlertDialog.Builder warningView = new AlertDialog.Builder(GoalActivity.this);
+                warningView.setTitle("WARNING");
+                layout.addView(warning);
+                warningView.setView(layout);
+                warningView.setPositiveButton("Ok",null);
+                AlertDialog dialog = warningView.create();
+                dialog.show();
+            }
+        } else {
+            TextView cat4Prog = findViewById(R.id.cat4Progress);
+            cat4Prog.setText("");
+        }
         navigation();
     }
 
