@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -292,7 +293,7 @@ public class MainPageActivity extends AppCompatActivity {
         String today5 = getDateString(5);
         String today6 = getDateString(6);
 
-        double todayExpense = 10;
+        double todayExpense = 0;
         double today1Expense = 0;
         double today2Expense = 0;
         double today3Expense = 0;
@@ -303,33 +304,30 @@ public class MainPageActivity extends AppCompatActivity {
         String transaction = client.sendMessage("gettransactions;" + passable);
         String[] transactionsMessage = transaction.split(";");
         String[][] transactions = new String[transactionsMessage.length][8];
+        if (!transaction.equals("")) {
+            for (int i = 0; i < transactionsMessage.length; i++) {
+                transactions[i] = transactionsMessage[i].split(" ");
 
-        for (int i = 0; i < transactionsMessage.length; i++) {
-            transactions[i] = transactionsMessage[i].split(" ");
-
-            if (transactions[i][1].equals("Expense")){
-                if(transactions[i][3].equals(today)){
-                    todayExpense += Double.valueOf(transactions[i][2]);
-                }
-                else if(transactions[i][3].equals(today1)){
-                    today1Expense += Double.valueOf(transactions[i][2]);
-                }
-                else if(transactions[i][3].equals(today2)){
-                    today2Expense += Double.valueOf(transactions[i][2]);
-                }
-                else if(transactions[i][3].equals(today3)){
-                    today3Expense += Double.valueOf(transactions[i][2]);
-                }
-                else if(transactions[i][3].equals(today4)){
-                    today4Expense += Double.valueOf(transactions[i][2]);
-                }
-                else if(transactions[i][3].equals(today5)){
-                    today5Expense += Double.valueOf(transactions[i][2]);
-                }
-                else if(transactions[i][3].equals(today6)){
-                    today6Expense += Double.valueOf(transactions[i][2]);
+                if (transactions[i][1].equals("Expense")) {
+                    if (transactions[i][3].equals(today)) {
+                        todayExpense += Double.valueOf(transactions[i][2]);
+                    } else if (transactions[i][3].equals(today1)) {
+                        today1Expense += Double.valueOf(transactions[i][2]);
+                    } else if (transactions[i][3].equals(today2)) {
+                        today2Expense += Double.valueOf(transactions[i][2]);
+                    } else if (transactions[i][3].equals(today3)) {
+                        today3Expense += Double.valueOf(transactions[i][2]);
+                    } else if (transactions[i][3].equals(today4)) {
+                        today4Expense += Double.valueOf(transactions[i][2]);
+                    } else if (transactions[i][3].equals(today5)) {
+                        today5Expense += Double.valueOf(transactions[i][2]);
+                    } else if (transactions[i][3].equals(today6)) {
+                        today6Expense += Double.valueOf(transactions[i][2]);
+                    }
                 }
             }
+        } else {
+            toastMessage("No Transaction Data Available");
         }
 
         // add data to chart
@@ -440,6 +438,11 @@ public class MainPageActivity extends AppCompatActivity {
         }
 
         return monthString;
+    }
+
+    private void toastMessage(String message) {
+        Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+
     }
 
     private void navigation() {
