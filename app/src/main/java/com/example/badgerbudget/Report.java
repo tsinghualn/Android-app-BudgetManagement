@@ -299,10 +299,10 @@ public class Report extends AppCompatActivity {
 
                     // call transaction query here (if month/year are valid)
                     expenseInRange =  (ArrayList<String[]>)
-                            (transaction.setTransactionInRange(sMonth, sYear, eMonth, eYear).clone());
+                            (transaction.setListInRange(sMonth, sYear, eMonth, eYear, "expense").clone());
 
                     incomeInRange = (ArrayList<String[]>)
-                            (transaction.setIncomeInRange(sMonth, sYear, eMonth, eYear).clone());
+                            (transaction.setListInRange(sMonth, sYear, eMonth, eYear, "income").clone());
 
                     categList = new HashMap<String, Double> (transaction.getCategList(expenseInRange));
                     expenseByMonth = new HashMap<String, Double> (transaction.getExpenseByMonth(expenseInRange));
@@ -318,7 +318,8 @@ public class Report extends AppCompatActivity {
 
                     // get total income
                     TextView textView_totIncDisp = (TextView) findViewById(R.id.TotIncDisp);
-                    totalIncome = getTotalValue(incomeByMonth);
+                    //totalIncome = getTotalValue(incomeByMonth);
+                    totalIncome = transaction.setSalaryInRange(sMonth, sYear, eMonth, eYear);
                     textView_totIncDisp.setText("$" + totalIncome);
 
                 } else {

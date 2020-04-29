@@ -46,7 +46,7 @@ public class PopupTransaction extends AppCompatActivity{
 
         // call transaction query here (if month/year are valid)
         transInRange =  (ArrayList<String[]>)
-                (transaction.setTransactionInRange(sMonth, sYear, eMonth, eYear).clone());
+                (transaction.setListInRange(sMonth, sYear, eMonth, eYear, "all").clone());
 
         ArrayList<Map<String, String>> transList = buildTrans();
 
