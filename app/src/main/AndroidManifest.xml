@@ -23,7 +23,8 @@
         <activity android:name=".SettingActivity"></activity>
         <activity android:name=".ProfileSettingActivity"></activity>
 
-        <activity android:name=".MainPageActivity"></activity>
+        <activity android:name=".MainPageActivity"
+            android:windowSoftInputMode="adjustPan"></activity>
 
         <activity
             android:name=".ui.login.LoginActivity"
