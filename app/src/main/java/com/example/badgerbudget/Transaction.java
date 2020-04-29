@@ -146,11 +146,13 @@ public class Transaction  extends Report{
 
         } else {
             // there is no transaction for this user
-
+            typeExpense = new ArrayList<>();
+            typeIncome = new ArrayList<>();
+            wholeTransaction = new ArrayList<>();
             // transList = null;
-            wholeTransaction = null;
+/*            wholeTransaction = null;
             typeExpense = null;
-            typeIncome = null;
+            typeIncome = null;*/
             // later, properly handle it by returning false or something..
         }
 

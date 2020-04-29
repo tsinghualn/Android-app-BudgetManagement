@@ -44,7 +44,7 @@ public class Report extends AppCompatActivity {
     ArrayList<PieEntry> yValues;
 
     // A bar chart that shows trend of overall spending/expense
-
+    AnyChartView barChartView;
 
     double totalAmount;
 
@@ -159,7 +159,7 @@ public class Report extends AppCompatActivity {
      */
     public void viewExpenseBarChart(HashMap<String, Double> expByMonth){
 
-        AnyChartView barChartView=findViewById(R.id.bar_chart_view);
+        barChartView=findViewById(R.id.bar_chart_view);
 
         Set<String> monthSet = expByMonth.keySet();
 
@@ -283,11 +283,23 @@ public class Report extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v){
+                pieChart.clear();
+                if(barChartView != null){
+                    barChartView.clear();
+                }
 
                 sMonth = String.valueOf(startMonth.getSelectedItem());
                 sYear =  String.valueOf(startYear.getSelectedItem());
                 eMonth = String.valueOf(endMonth.getSelectedItem());
                 eYear = String.valueOf(endYear.getSelectedItem());
+
+                if(sMonth == null && sYear == null && eMonth == null && eYear == null){
+                    // not selected
+                    sMonth = "January";
+                    sYear = "2018";
+                    eMonth = "January";
+                    eYear = "2018";
+                }
 
                 btnViewTrans = (Button) findViewById(R.id.viewTransBtn);
 
@@ -297,9 +309,9 @@ public class Report extends AppCompatActivity {
 
                     transaction = new Transaction(passable);
 
-                    if (transaction.wholeTransaction == null && transaction.typeExpense == null && transaction.typeIncome == null){
+                    if (transaction.wholeTransaction.isEmpty() && transaction.typeExpense.isEmpty() && transaction.typeIncome.isEmpty()){
                         Toast.makeText(Report.this,
-                                "There is no transaction to be displayed in the range.",
+                                "There is no transaction to be displayed.",
                                 Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -310,6 +322,13 @@ public class Report extends AppCompatActivity {
 
                     incomeInRange = (ArrayList<String[]>)
                             (transaction.setListInRange(sMonth, sYear, eMonth, eYear, "income").clone());
+
+                    if(expenseInRange.isEmpty() && incomeInRange.isEmpty()){
+                        Toast.makeText(Report.this,
+                                "There is no transaction to be displayed in the range.",
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
                     categList = new HashMap<String, Double> (transaction.getCategList(expenseInRange));
                     expenseByMonth = new HashMap<String, Double> (transaction.getExpenseByMonth(expenseInRange));
