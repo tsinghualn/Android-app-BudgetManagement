@@ -16,18 +16,22 @@ a) Select your OS from the dropdown bar: https://dev.mysql.com/downloads/workben
 
 a) https://dev.mysql.com/downloads/connector/j/5.1.html
 
-b) Select Platform Independent here as we’re putting it in Android Studio. 
+b) Select Platform Independent here as we’re putting it in Eclipse.
 
-4. Once the download is complete, the file we need to put into Android Studio is called: 
-Mysql-connector-java-5.1.48-bin.jar
+c) In addition, we'll need jbcrypt in Eclipse as well as we're hashing the passwords for a more secure login. 
+
+d) To download click the link: https://jar-download.com/artifacts/org.mindrot/jbcrypt/0.4/source-code
+
+4. Once the download is complete, the files we need to put into Eclipse are called: 
+Mysql-connector-java-5.1.48-bin.jar and jbcrypt-0.4.jar
 
 5. Afterwards, since we need to run the server separately from the Android Studio Project, we need to place the connector in a separate IDE, we used Eclipse, along with the Server and Connector classes. 
 
 a) Since we used Eclipse, here’s how to do it in Eclipse: 
 
-b) First, we need the server and connector classes from github. Grab those and make a new Eclipse project with them.
+b) First, we need the server and connector classes from Github. Grab those and make a new Eclipse project with them. The repo for the Server and Connector classes can be found here: https://github.com/AndySupreme/ServerClient
 
-c) After we have a project in Eclipse right click on your project go to ‘Build Path’ and click ‘Configure Build Path’. Click on ‘Classpath’ to highlight it and then click on ‘Add External JARS…’
+c) After we have a project in Eclipse right click on your project go to ‘Build Path’ and click ‘Configure Build Path’. Click on ‘Classpath’ to highlight it and then click on ‘Add External JARS…’ add both of the files specified above as References Libraries
 
 d) Just as a check before you start the server, make sure that the port is set to “6868” as that is what we used for the client in Android Studio. The client 10.0.2.2, which is the local emulator host for Android Studio. 
 
