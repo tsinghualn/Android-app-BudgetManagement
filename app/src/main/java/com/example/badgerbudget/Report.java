@@ -35,6 +35,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -66,10 +67,10 @@ public class Report extends AppCompatActivity {
     //Button popTrans;
     // A list of pairs of category with corresponding expense in dollar
     // A list of pairs of month with corresponding expense in dollar
-    HashMap<String, Double> categList;
-    HashMap<String, Double> expenseByMonth,incomeByMonth;
+    LinkedHashMap<String, Double> categList;
+    LinkedHashMap<String, Double> expenseByMonth,incomeByMonth;
     // map of month in string - month in integer
-    private static final Map<String, Integer> MONTHMAP = new HashMap<String, Integer>() {
+    private static final Map<String, Integer> MONTHMAP = new LinkedHashMap<String, Integer>() {
         {
             put("January", 1);
             put("February",2);
@@ -164,11 +165,10 @@ public class Report extends AppCompatActivity {
     and Y-axis shows the amount of expense in dollars.
     This method uses expenseByMonth to get data.
      */
-    public void viewExpenseBarChart(HashMap<String, Double> expByMonth){
+    public void viewExpenseBarChart(LinkedHashMap<String, Double> expByMonth){
 
         BarChart barChart = (BarChart) findViewById(R.id.bar_chart_view);
-
-        Set<String> monthSet = expByMonth.keySet();
+        String[] monthSet = expByMonth.keySet().toArray(new String[0]);
 
         ArrayList<BarEntry> entries = new ArrayList<>();
         ArrayList monthYear = new ArrayList();
@@ -321,9 +321,9 @@ public class Report extends AppCompatActivity {
                         return;
                     }
 
-                    categList = new HashMap<String, Double> (transaction.getCategList(expenseInRange));
-                    expenseByMonth = new HashMap<String, Double> (transaction.getExpenseByMonth(expenseInRange));
-                    incomeByMonth = new HashMap<String, Double> (transaction.getIncomeByMonth(incomeInRange));
+                    categList = new LinkedHashMap<String, Double> (transaction.getCategList(expenseInRange));
+                    expenseByMonth = new LinkedHashMap<String, Double> (transaction.getExpenseByMonth(expenseInRange,sMonth, sYear, eMonth, eYear));
+                    incomeByMonth = new LinkedHashMap<String, Double> (transaction.getIncomeByMonth(incomeInRange));
 
                     viewCategPieChart();
                     viewExpenseBarChart(expenseByMonth);
@@ -400,7 +400,7 @@ public class Report extends AppCompatActivity {
     }
 
     /* Calculate total spending for a specified period of time by adding all the monthly spending in expenseByMonth. */
-    public double getTotalValue(HashMap<String, Double> map){
+    public double getTotalValue(LinkedHashMap<String, Double> map){
 
         // get Expense for each month from hashmap 
         // sum up for each month, for each transaction
@@ -417,7 +417,6 @@ public class Report extends AppCompatActivity {
     /* Get a pop-up window that shows a transaction history of selected period of time */
     public void onClick_viewTrans(View v){
 
-        System.out.println(valid);
         if (valid){
 
             Intent intent = new Intent(Report.this, PopupTransaction.class);

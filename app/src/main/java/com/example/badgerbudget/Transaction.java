@@ -4,7 +4,9 @@ import com.example.badgerbudget.data.model.Client;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Transaction  extends Report{
 
@@ -37,10 +39,10 @@ public class Transaction  extends Report{
             put("December",12);
         }
     };
-    HashMap<String, Double> expenseByMonth = new HashMap<>();
-    HashMap<String, Double> incomeByMonth = new HashMap<>();
+    LinkedHashMap<String, Double> expenseByMonth = new LinkedHashMap<>();
+    LinkedHashMap<String, Double> incomeByMonth = new LinkedHashMap<>();
 
-    HashMap<String, Double> categList = new HashMap<>();
+    LinkedHashMap<String, Double> categList = new LinkedHashMap<>();
 
     // new constructor method to initialize
     public Transaction(String username){
@@ -337,19 +339,68 @@ public class Transaction  extends Report{
         return expenseInRange;
     }
 
-    public HashMap<String, Double> getExpenseByMonth(ArrayList<String[]> expenseInRange){
+
+
+    public LinkedHashMap<String, Double> getExpenseByMonth(ArrayList<String[]> expenseInRange, String sMonth, String sYear, String eMonth, String eYear){
+
+        Integer sMonthInt = MONTHMAP.get(sMonth);
+        Integer eMonthInt = MONTHMAP.get(eMonth);
+        Integer sYearInt = Integer.parseInt(sYear.trim());
+        Integer eYearInt = Integer.parseInt(eYear.trim());
+
+        Set<String> monthKeySet = MONTHMAP.keySet();
+
+        for(int y = sYearInt; y <= eYearInt; y++){
+
+            int sm = 0;
+            int em = 0;
+            // If y == sYear == eYear -> sMonth ~ eMonth
+            // if y == sYear && y < eYear -> sMonth ~ 12
+            // if y > sYear && y < eYear -> 1 ~ 12
+            // if y > sYear && y == eYear -> 1 ~ eMonth
+            if(y == sYearInt && y == eYearInt) {
+                sm = sMonthInt;
+                em = eMonthInt;
+            } else if (y == sYearInt && y < eYearInt) {
+                sm = sMonthInt;
+                em = 12;
+            } else if (y > sYearInt && y < eYearInt) {
+                sm = 1;
+                em = 12;
+            } else if (y > sYearInt && y == eYearInt) {
+                sm = 1;
+                em = eMonthInt;
+            }
+
+            // for each month
+            for(int m = sm; m <= em; m++){
+
+                // for each month, find matching month and put as a key
+                for(String monthKey:monthKeySet){
+                    if(m == MONTHMAP.get(monthKey)){
+                        String yearKey = Integer.toString(y);
+                        String monthYearPair = monthKey.concat(yearKey);
+                        expenseByMonth.put(monthYearPair, 0.0);
+                    }
+                }
+
+            }
+
+        }
 
 
         for(String[] eachExpense: expenseInRange){
 
             // get month-year pair to use as a key
+
             String m = eachExpense[4];
             String y = eachExpense[5];
             String monthYearPair = m.concat(y);
 
+
             // amount in the transaction
             Double amount = Double.parseDouble(eachExpense[2]);
-
+            /*
             if(expenseByMonth != null && expenseByMonth.containsKey(monthYearPair)){
                 // already exist in the hashmap
                 Double prevExpense = expenseByMonth.get(monthYearPair);
@@ -359,6 +410,10 @@ public class Transaction  extends Report{
                 // doesn't exist in the hashmap
                 expenseByMonth.put(monthYearPair, amount);
             }
+            */
+            Double prevExpense = expenseByMonth.get(monthYearPair);
+            Double currentExpense = prevExpense + amount;
+            expenseByMonth.put(monthYearPair, currentExpense);
         }
         return expenseByMonth;
     }
@@ -445,7 +500,7 @@ public class Transaction  extends Report{
     }
 
 
-    public HashMap<String, Double> getIncomeByMonth(ArrayList<String[]> incomeInRange){
+    public LinkedHashMap<String, Double> getIncomeByMonth(ArrayList<String[]> incomeInRange){
 
         for(String[] eachIncome: incomeInRange){
 
