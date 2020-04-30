@@ -25,13 +25,13 @@ import java.util.Date;
 public class GoalActivity extends AppCompatActivity {
     String passable;
     Client client = new Client(6868, "10.0.2.2");
-    int cat1Budget;
-    int cat2Budget;
-    int cat3Budget;
-    int cat4Budget;
-    int foodBudget;
-    int clothesBudget;
-    int groceriesBudget;
+    double cat1Budget;
+    double cat2Budget;
+    double cat3Budget;
+    double cat4Budget;
+    double foodBudget;
+    double clothesBudget;
+    double groceriesBudget;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,19 +73,19 @@ public class GoalActivity extends AppCompatActivity {
 
         //Set the default categories for the user
         food.setText(categories[1][0]);
-        foodBudget = Integer.parseInt(categories[1][1]);
+        foodBudget = Double.parseDouble(categories[1][1]);
 
         clothes.setText(categories[0][0]);
-        clothesBudget = Integer.parseInt(categories[0][1]);
+        clothesBudget = Double.parseDouble(categories[0][1]);
 
         groceries.setText(categories[2][0]);
-        groceriesBudget = Integer.parseInt(categories[2][1]);
+        groceriesBudget = Double.parseDouble(categories[2][1]);
 
 
         if (categoriesMessage.length > 3) {
             cat1PB.setVisibility(View.VISIBLE);
             cat1.setText(categories[3][0]);
-            cat1Budget = Integer.parseInt(categories[3][1]);
+            cat1Budget = Double.parseDouble(categories[3][1]);
 
 
         } else {
@@ -98,7 +98,7 @@ public class GoalActivity extends AppCompatActivity {
         if (categoriesMessage.length > 4) {
             cat2PB.setVisibility(View.VISIBLE);
             cat2.setText(categories[4][0]);
-            cat2Budget = Integer.parseInt(categories[4][1]);
+            cat2Budget = Double.parseDouble(categories[4][1]);
 
         } else {
             cat2.setText("");
@@ -110,7 +110,7 @@ public class GoalActivity extends AppCompatActivity {
         if (categoriesMessage.length > 5) {
             cat3PB.setVisibility(View.VISIBLE);
             cat3.setText(categories[5][0]);
-            cat3Budget = Integer.parseInt(categories[5][1]);
+            cat3Budget = Double.parseDouble(categories[5][1]);
 
         } else {
             cat3.setText("");
@@ -122,7 +122,7 @@ public class GoalActivity extends AppCompatActivity {
         if (categoriesMessage.length > 6) {
             cat4PB.setVisibility(View.VISIBLE);
             cat4.setText(categories[6][0]);
-            cat4Budget = Integer.parseInt(categories[6][1]);
+            cat4Budget = Double.parseDouble(categories[6][1]);
 
         } else {
             cat4.setText("");
@@ -148,43 +148,43 @@ public class GoalActivity extends AppCompatActivity {
             if (!response.equals("")) {
                 if (transAmount[i][6].equals(food.getText().toString())) {
                     if (transAmount[i][4].equals(getMonth()) && transAmount[i][5].equals(getYear())) {
-                        int trans = Integer.parseInt(transAmount[i][2]);
+                        double trans = Double.parseDouble(transAmount[i][2]);
                         foodTotal += trans;
                     }
                 }
                 if (transAmount[i][6].equals(clothes.getText().toString())) {
                     if (transAmount[i][4].equals(getMonth()) && transAmount[i][5].equals(getYear())) {
-                        int trans = Integer.parseInt(transAmount[i][2]);
+                        double trans = Double.parseDouble(transAmount[i][2]);
                         clothesTotal += trans;
                     }
                 }
                 if (transAmount[i][6].equals(groceries.getText().toString())) {
                     if (transAmount[i][4].equals(getMonth()) && transAmount[i][5].equals(getYear())) {
-                        int trans = Integer.parseInt(transAmount[i][2]);
+                        double trans = Double.parseDouble(transAmount[i][2]);
                         groceriesTotal += trans;
                     }
                 }
                 if (transAmount[i][6].equals(cat1.getText().toString())) {
                     if (transAmount[i][4].equals(getMonth()) && transAmount[i][5].equals(getYear())) {
-                        int trans = Integer.parseInt(transAmount[i][2]);
+                        double trans = Double.parseDouble(transAmount[i][2]);
                         cat1Total += trans;
                     }
                 }
                 if (transAmount[i][6].equals(cat2.getText().toString())) {
                     if (transAmount[i][4].equals(getMonth()) && transAmount[i][5].equals(getYear())) {
-                        int trans = Integer.parseInt(transAmount[i][2]);
+                        double trans = Double.parseDouble(transAmount[i][2]);
                         cat2Total += trans;
                     }
                 }
                 if (transAmount[i][6].equals(cat3.getText().toString())) {
                     if (transAmount[i][4].equals(getMonth()) && transAmount[i][5].equals(getYear())) {
-                        int trans = Integer.parseInt(transAmount[i][2]);
+                        double trans = Double.parseDouble(transAmount[i][2]);
                         cat3Total += trans;
                     }
                 }
                 if (transAmount[i][6].equals(cat4.getText().toString())) {
                     if (transAmount[i][4].equals(getMonth()) && transAmount[i][5].equals(getYear())) {
-                        int trans = Integer.parseInt(transAmount[i][2]);
+                        double trans = Double.parseDouble(transAmount[i][2]);
                         cat4Total += trans;
                     }
                 }
@@ -194,7 +194,7 @@ public class GoalActivity extends AppCompatActivity {
 
 
         foodPB.setMax(100);
-        float foodprogress = ((float) foodTotal / foodBudget ) * 100;
+        double foodprogress = ( foodTotal / foodBudget ) * 100;
         foodPB.setProgress((int )foodprogress);
         TextView foodProg = findViewById(R.id.foodProgress);
         if (foodTotal >= 0) {
@@ -219,7 +219,7 @@ public class GoalActivity extends AppCompatActivity {
         }
 
         clothesPB.setMax(100);
-        float clothesprogress = ((float) clothesTotal / clothesBudget ) * 100;
+        double clothesprogress = ((float) clothesTotal / clothesBudget ) * 100;
         clothesPB.setProgress((int )clothesprogress);
         TextView clothesProg = findViewById(R.id.clothesProgress);
         if (clothesTotal >= 0) {
@@ -244,7 +244,7 @@ public class GoalActivity extends AppCompatActivity {
         }
 
         groceriesPB.setMax(100);
-        float groceriesprogress = ((float) groceriesTotal / groceriesBudget ) * 100;
+        double groceriesprogress = ((float) groceriesTotal / groceriesBudget ) * 100;
         groceriesPB.setProgress((int )groceriesprogress);
         TextView groceriesProg = findViewById(R.id.groceriesProgress);
         if (groceriesTotal >= 0) {
@@ -271,7 +271,7 @@ public class GoalActivity extends AppCompatActivity {
 
         if (cat1PB.getVisibility() == View.VISIBLE) {
             cat1PB.setMax(100);
-            float cat1progress = ((float) cat1Total / cat1Budget) * 100;
+            double cat1progress = ((float) cat1Total / cat1Budget) * 100;
             cat1PB.setProgress((int) cat1progress);
             TextView cat1Prog = findViewById(R.id.cat1Progress);
             if (cat1Total >=0) {
@@ -302,7 +302,7 @@ public class GoalActivity extends AppCompatActivity {
         }
         if (cat2PB.getVisibility() == View.VISIBLE) {
             cat2PB.setMax(100);
-            float cat2progress = ((float) cat2Total / cat2Budget) * 100;
+            double cat2progress = ((float) cat2Total / cat2Budget) * 100;
             cat2PB.setProgress((int) cat2progress);
             TextView cat2Prog = findViewById(R.id.cat2Progress);
             if (cat2Total >=0) {
@@ -332,7 +332,7 @@ public class GoalActivity extends AppCompatActivity {
 
         if (cat3PB.getVisibility() == View.VISIBLE) {
             cat3PB.setMax(100);
-            float cat3progress = ((float) cat3Total / cat3Budget) * 100;
+            double cat3progress = ((float) cat3Total / cat3Budget) * 100;
             cat3PB.setProgress((int) cat3progress);
             TextView cat3Prog = findViewById(R.id.cat3progress);
             if (cat3Total >=0) {
@@ -362,7 +362,7 @@ public class GoalActivity extends AppCompatActivity {
 
         if (cat4PB.getVisibility() == View.VISIBLE) {
             cat4PB.setMax(100);
-            float cat4progress = ((float) cat4Total / cat4Budget) * 100;
+            double cat4progress = ((float) cat4Total / cat4Budget) * 100;
             cat4PB.setProgress((int) cat4progress);
             TextView cat4Prog = findViewById(R.id.cat4Progress);
             if (cat4Total >=0) {

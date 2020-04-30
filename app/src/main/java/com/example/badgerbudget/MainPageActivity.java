@@ -82,10 +82,11 @@ public class MainPageActivity extends AppCompatActivity {
                     transAmount[i] = transactions[i].split(" ");
                 }
 
-                int total = 0;
+                double total = 0.0;
                 for (int i = 0; i < transactions.length; i++) {
                     if (transAmount[i][4].equals(getMonth()) && transAmount[i][5].equals(getYear())) {
-                        int trans = Integer.parseInt(transAmount[i][2]);
+
+                        double trans = Double.parseDouble(transAmount[i][2]);
                         total += trans;
                     }
                 }
@@ -119,24 +120,24 @@ public class MainPageActivity extends AppCompatActivity {
 
             // target expense
             TextView targetExpense = new TextView(getApplicationContext());
-            int expense = Integer.parseInt(totalAmount);
+            double expense = Double.parseDouble(totalAmount);
 
 
-            int cbalance = Integer.parseInt(currentBalanceString);
+            double cbalance = Double.parseDouble(currentBalanceString);
 
             String category = client.sendMessage("getcategories;" + passable);
             String[] categoriesMessage = category.split(";");
             String[][] categories = new String[categoriesMessage.length][2];
-            int target = 0;
+            double target = 0.0;
 
             for (int i = 0; i < categoriesMessage.length; i++) {
                 categories[i] = categoriesMessage[i].split(" ");
-                target +=  Integer.parseInt(categories[i][1]);
+                target +=  Double.parseDouble(categories[i][1]);
             }
 
         //Should be all of the categories budgets added up.
 
-            int texpense = target;
+            double texpense = target;
             String targetExpenseString = String.valueOf(texpense);
 
         /*
@@ -307,7 +308,8 @@ public class MainPageActivity extends AppCompatActivity {
         String today4 = getDateString(4);
         String today5 = getDateString(5);
         String today6 = getDateString(6);
-        System.out.println("Today 1: " + today6);
+
+        //System.out.println("Today 1: " + today6);
         double todayExpense = 0;
         double today1Expense = 0;
         double today2Expense = 0;
@@ -324,8 +326,10 @@ public class MainPageActivity extends AppCompatActivity {
                 transactions[i] = transactionsMessage[i].split(" ");
 
                 if (transactions[i][1].equals("Expense")) {
+
                     if (transactions[i][3].equals(today)) {
                         todayExpense += Double.valueOf(transactions[i][2]);
+
                     } else if (transactions[i][3].equals(today1)) {
                         today1Expense += Double.valueOf(transactions[i][2]);
                     } else if (transactions[i][3].equals(today2)) {

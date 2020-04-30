@@ -299,8 +299,6 @@ public class Transaction  extends Report{
             // year [5]
             // category [6]
 
-            String amount = each[2];
-            String category = each[6];
             int month = MONTHMAP.get(each[4]);
 
             int year = Integer.parseInt(each[5].trim());
