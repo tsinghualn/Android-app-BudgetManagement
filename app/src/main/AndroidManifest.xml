@@ -13,7 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ForgotPassword"></activity>
-        <activity android:name=".MainActivity" />
         <activity android:name=".Calculator" />
         <activity android:name=".Report" />
         <activity android:name=".GoalActivity" />

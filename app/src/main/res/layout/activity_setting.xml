@@ -34,37 +34,33 @@
         app:layout_constraintBottom_toTopOf="@+id/appInfoButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notificationButton" />
+        app:layout_constraintTop_toBottomOf="@+id/logoutBtn" />
 
     <Button
-        android:id="@+id/downloadButton"
+        android:id="@+id/calculatorButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="46dp"
-        android:layout_marginLeft="46dp"
         android:layout_marginEnd="46dp"
-        android:layout_marginRight="46dp"
         android:layout_marginBottom="19dp"
-        android:text="download transaction"
-        app:layout_constraintBottom_toTopOf="@+id/notificationButton"
+        android:text="Calculator"
+        app:layout_constraintBottom_toTopOf="@+id/logoutBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profileButton" />
 
     <Button
-        android:id="@+id/notificationButton"
+        android:id="@+id/logoutBtn"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="46dp"
-        android:layout_marginLeft="46dp"
         android:layout_marginEnd="46dp"
-        android:layout_marginRight="46dp"
         android:layout_marginBottom="25dp"
-        android:text="notification setting"
+        android:text="Logout"
         app:layout_constraintBottom_toTopOf="@+id/userGuideButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/downloadButton" />
+        app:layout_constraintTop_toBottomOf="@+id/calculatorButton" />
 
     <Button
         android:id="@+id/profileButton"
@@ -76,7 +72,7 @@
         android:layout_marginRight="43dp"
         android:layout_marginBottom="26dp"
         android:text="profile"
-        app:layout_constraintBottom_toTopOf="@+id/downloadButton"
+        app:layout_constraintBottom_toTopOf="@+id/calculatorButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -85,7 +81,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="46dp"
+        android:layout_marginStart="168dp"
         android:layout_marginTop="42dp"
         android:layout_marginBottom="41dp"
         android:text="Setting"
@@ -105,15 +101,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation" />
 
-    <Button
-        android:id="@+id/goCalc"
-        android:layout_width="56dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="32dp"
-        android:onClick="onClick_calc"
-        android:text="C"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
-        app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

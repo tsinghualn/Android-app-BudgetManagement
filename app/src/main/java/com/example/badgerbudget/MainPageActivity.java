@@ -29,6 +29,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -50,10 +51,12 @@ public class MainPageActivity extends AppCompatActivity {
     List<DataEntry> barDataEntries;
 
 
+
+
     double totalAmount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+            System.out.println();
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main_page);
             Bundle un = getIntent().getExtras();
@@ -70,6 +73,7 @@ public class MainPageActivity extends AppCompatActivity {
 
             String totalAmount = "";
             String response = client.sendMessage("gettransactions;" + username);
+            System.out.print("Response: " + response);
             if (!response.equals("")) {
                 String[] transactions = response.split(";");
 
@@ -80,9 +84,10 @@ public class MainPageActivity extends AppCompatActivity {
 
                 int total = 0;
                 for (int i = 0; i < transactions.length; i++) {
-                    int trans = Integer.parseInt(transAmount[i][2]);
-                    total += trans;
-
+                    if (transAmount[i][4].equals(getMonth()) && transAmount[i][5].equals(getYear())) {
+                        int trans = Integer.parseInt(transAmount[i][2]);
+                        total += trans;
+                    }
                 }
                 totalAmount = String.valueOf(total);
             } else {
@@ -118,7 +123,20 @@ public class MainPageActivity extends AppCompatActivity {
 
 
             int cbalance = Integer.parseInt(currentBalanceString);
-            int texpense = cbalance - expense;
+
+            String category = client.sendMessage("getcategories;" + passable);
+            String[] categoriesMessage = category.split(";");
+            String[][] categories = new String[categoriesMessage.length][2];
+            int target = 0;
+
+            for (int i = 0; i < categoriesMessage.length; i++) {
+                categories[i] = categoriesMessage[i].split(" ");
+                target +=  Integer.parseInt(categories[i][1]);
+            }
+
+        //Should be all of the categories budgets added up.
+
+            int texpense = target;
             String targetExpenseString = String.valueOf(texpense);
 
         /*
@@ -141,13 +159,10 @@ public class MainPageActivity extends AppCompatActivity {
             // super.onCreate(savedInstanceState);
             //  setContentView(R.layout.activity_main_page);
 
-            String category = client.sendMessage("getcategories;" + passable);
-            String[] categoriesMessage = category.split(";");
-            String[][] categories = new String[categoriesMessage.length][2];
+
 
             String[] arrayCategorySpinner = new String[categories.length ];
             for (int i = 0; i < categoriesMessage.length; i++) {
-                    categories[i] = categoriesMessage[i].split(" ");
                     arrayCategorySpinner[i] = categories[i][0];
             }
 
@@ -292,7 +307,7 @@ public class MainPageActivity extends AppCompatActivity {
         String today4 = getDateString(4);
         String today5 = getDateString(5);
         String today6 = getDateString(6);
-
+        System.out.println("Today 1: " + today6);
         double todayExpense = 0;
         double today1Expense = 0;
         double today2Expense = 0;
@@ -439,6 +454,7 @@ public class MainPageActivity extends AppCompatActivity {
 
         return monthString;
     }
+
 
     private void toastMessage(String message) {
         Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
