@@ -8,6 +8,7 @@ import static java.lang.Boolean.FALSE;
 import static org.junit.Assert.*;
 
 public class LoginTest extends LoginActivity {
+    o
     @Test
     public void SuccesfulLogin(){
         LoginActivity a = new LoginActivity();
