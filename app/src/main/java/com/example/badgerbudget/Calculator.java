@@ -166,7 +166,7 @@ public class Calculator extends AppCompatActivity {
                 tempTip = tempTip.substring(0, tempTip.length() - 1);
                 tipPerc = 0.01 * Double.valueOf(tempTip);
 
-                Toast.makeText(getApplicationContext(), "SELECTED " + tempTip, Toast.LENGTH_SHORT). show();
+                //Toast.makeText(getApplicationContext(), "SELECTED " + tempTip, Toast.LENGTH_SHORT). show();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -192,7 +192,7 @@ public class Calculator extends AppCompatActivity {
                     }
                 }*/
                 taxPerc = findTaxPerc(tempState, keys);
-                Toast.makeText(getApplicationContext(), "SELECTED " + taxPerc, Toast.LENGTH_SHORT). show();
+                //Toast.makeText(getApplicationContext(), "SELECTED " + taxPerc, Toast.LENGTH_SHORT). show();
             }
 
             @Override
