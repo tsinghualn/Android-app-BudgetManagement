@@ -3,7 +3,9 @@ package com.example.badgerbudget;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.view.Gravity;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
@@ -15,6 +17,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -159,7 +162,21 @@ public class MainPageActivity extends AppCompatActivity {
 
             // super.onCreate(savedInstanceState);
             //  setContentView(R.layout.activity_main_page);
-
+        if (texpense < expense) {
+            Context context =  getApplicationContext();
+            LinearLayout layout = new LinearLayout(context);
+            layout.setOrientation(LinearLayout.VERTICAL);
+            TextView warning = new TextView(MainPageActivity.this);
+            warning.setText("Whoops. Looks Like Your Current Expenses are more than your Target Expenses for the month. Time to Cut Back on Spending!");
+            warning.setGravity(Gravity.CENTER);
+            androidx.appcompat.app.AlertDialog.Builder warningView = new androidx.appcompat.app.AlertDialog.Builder(MainPageActivity.this);
+            warningView.setTitle("WARNING");
+            layout.addView(warning);
+            warningView.setView(layout);
+            warningView.setPositiveButton("Ok",null);
+            androidx.appcompat.app.AlertDialog dialog = warningView.create();
+            dialog.show();
+        }
 
 
             String[] arrayCategorySpinner = new String[categories.length ];
