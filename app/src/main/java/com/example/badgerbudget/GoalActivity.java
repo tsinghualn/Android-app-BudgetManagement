@@ -19,6 +19,9 @@ import android.widget.TextView;
 import com.example.badgerbudget.data.model.Client;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class GoalActivity extends AppCompatActivity {
     String passable;
     Client client = new Client(6868, "10.0.2.2");
@@ -35,6 +38,7 @@ public class GoalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goal);
         Bundle un = getIntent().getExtras();
+        System.out.println("Date: " + getMonth() + " " + getYear());
         String username = un.getString("username");
         passable = username;
         //Default
@@ -143,32 +147,46 @@ public class GoalActivity extends AppCompatActivity {
         for (int i = 0; i < transactions.length; i++) {
             if (!response.equals("")) {
                 if (transAmount[i][6].equals(food.getText().toString())) {
-                    int trans = Integer.parseInt(transAmount[i][2]);
-                    foodTotal += trans;
+                    if (transAmount[i][4].equals(getMonth()) && transAmount[i][5].equals(getYear())) {
+                        int trans = Integer.parseInt(transAmount[i][2]);
+                        foodTotal += trans;
+                    }
                 }
                 if (transAmount[i][6].equals(clothes.getText().toString())) {
-                    int trans = Integer.parseInt(transAmount[i][2]);
-                    clothesTotal += trans;
+                    if (transAmount[i][4].equals(getMonth()) && transAmount[i][5].equals(getYear())) {
+                        int trans = Integer.parseInt(transAmount[i][2]);
+                        clothesTotal += trans;
+                    }
                 }
                 if (transAmount[i][6].equals(groceries.getText().toString())) {
-                    int trans = Integer.parseInt(transAmount[i][2]);
-                    groceriesTotal += trans;
+                    if (transAmount[i][4].equals(getMonth()) && transAmount[i][5].equals(getYear())) {
+                        int trans = Integer.parseInt(transAmount[i][2]);
+                        groceriesTotal += trans;
+                    }
                 }
                 if (transAmount[i][6].equals(cat1.getText().toString())) {
-                    int trans = Integer.parseInt(transAmount[i][2]);
-                    cat1Total += trans;
+                    if (transAmount[i][4].equals(getMonth()) && transAmount[i][5].equals(getYear())) {
+                        int trans = Integer.parseInt(transAmount[i][2]);
+                        cat1Total += trans;
+                    }
                 }
                 if (transAmount[i][6].equals(cat2.getText().toString())) {
-                    int trans = Integer.parseInt(transAmount[i][2]);
-                    cat2Total += trans;
+                    if (transAmount[i][4].equals(getMonth()) && transAmount[i][5].equals(getYear())) {
+                        int trans = Integer.parseInt(transAmount[i][2]);
+                        cat2Total += trans;
+                    }
                 }
                 if (transAmount[i][6].equals(cat3.getText().toString())) {
-                    int trans = Integer.parseInt(transAmount[i][2]);
-                    cat3Total += trans;
+                    if (transAmount[i][4].equals(getMonth()) && transAmount[i][5].equals(getYear())) {
+                        int trans = Integer.parseInt(transAmount[i][2]);
+                        cat3Total += trans;
+                    }
                 }
                 if (transAmount[i][6].equals(cat4.getText().toString())) {
-                    int trans = Integer.parseInt(transAmount[i][2]);
-                    cat4Total += trans;
+                    if (transAmount[i][4].equals(getMonth()) && transAmount[i][5].equals(getYear())) {
+                        int trans = Integer.parseInt(transAmount[i][2]);
+                        cat4Total += trans;
+                    }
                 }
             }
         }
@@ -373,6 +391,65 @@ public class GoalActivity extends AppCompatActivity {
             cat4Prog.setText("");
         }
         navigation();
+    }
+
+    /**
+     * Get year as a string to be used in the report page
+     * @return
+     */
+    private String getYear() {
+        Date today = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(today);
+
+        int year = cal.get(Calendar.YEAR);
+        String yearString = String.valueOf(year);
+        return yearString;
+    }
+
+    /**
+     * Get months as a string to be used in the report page
+     * @return
+     */
+    private String getMonth(){
+        String[] months = new String[]{"January", "February", "March", "April",
+                "May", "June", "July", "August", "September", "October",
+                "November", "December"};
+        String monthString;
+        Date today = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(today);
+
+        int month = cal.get(Calendar.MONTH);
+        if (month == 0) {
+            monthString = months[0];
+        } else if (month == 1) {
+            monthString = months[1];
+        } else if (month == 2) {
+            monthString = months[2];
+        } else if (month == 3) {
+            monthString = months[3];
+        } else if (month == 4) {
+            monthString = months[4];
+        } else if (month == 5) {
+            monthString = months[5];
+        } else if (month == 6) {
+            monthString = months[6];
+        } else if (month == 7) {
+            monthString = months[7];
+        } else if (month == 8) {
+            monthString = months[8];
+        } else if (month == 9) {
+            monthString = months[9];
+        } else if (month == 10) {
+            monthString = months[10];
+        } else if (month == 11) {
+            monthString = months[11];
+        } else {
+            return "Unable to retrieve month";
+        }
+
+        return monthString;
     }
 
 

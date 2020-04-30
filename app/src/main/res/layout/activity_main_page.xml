@@ -91,7 +91,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="37dp"
         android:layout_marginEnd="24dp"
-        android:text="Current Balance:"
+        android:text="Monthly Income:"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         app:layout_constraintEnd_toStartOf="@+id/currentBalanceText"
         app:layout_constraintStart_toStartOf="parent"

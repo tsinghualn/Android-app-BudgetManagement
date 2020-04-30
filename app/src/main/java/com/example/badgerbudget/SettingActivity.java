@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.badgerbudget.ui.login.LoginActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class SettingActivity extends AppCompatActivity {
@@ -25,8 +26,8 @@ public class SettingActivity extends AppCompatActivity {
 
 
         final Button profileButton = (Button) findViewById(R.id.profileButton);
-        Button downloadButton = (Button) findViewById(R.id.downloadButton);
-        Button notificationButton = (Button) findViewById(R.id.notificationButton);
+        Button calculatorBtn = (Button) findViewById(R.id.calculatorButton);
+        Button logoutBtn = (Button) findViewById(R.id.logoutBtn);
         Button userGuideButton = (Button) findViewById(R.id.userGuideButton);
         Button appInfoButton = (Button) findViewById(R.id.appInfoButton);
 
@@ -52,6 +53,22 @@ public class SettingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent appInfoIntent = new Intent(SettingActivity.this, AppInfoActivity.class);
                 SettingActivity.this.startActivity(appInfoIntent);
+            }
+        });
+
+        calculatorBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent calcIntent = new Intent(SettingActivity.this, Calculator.class);
+                SettingActivity.this.startActivity(calcIntent);
+            }
+        });
+
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loginIntent = new Intent(SettingActivity.this, LoginActivity.class);
+                SettingActivity.this.startActivity(loginIntent);
             }
         });
 

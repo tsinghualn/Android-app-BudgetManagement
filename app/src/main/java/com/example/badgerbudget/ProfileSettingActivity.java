@@ -35,15 +35,7 @@ public class ProfileSettingActivity extends AppCompatActivity {
 
         nameText = (EditText) findViewById(id.nameText);
         birthdayText = (EditText) findViewById(id.birthdayText);
-        Button logout = findViewById(id.logoutButton);
 
-        logout.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                  Intent intent = new Intent(ProfileSettingActivity.this, LoginActivity.class);
-                  startActivity(intent);
-              }
-        });
 
 
         a1Text = (EditText) findViewById(id.a1Text);
