@@ -126,7 +126,7 @@ public class Calculator extends AppCompatActivity {
         tipAmount = double_amount_tip * tipPerc;
 
         tipDisp = (TextView) findViewById(R.id.tipDisp);
-        tipDisp.setText(String.format("%.3f", tipAmount));
+        tipDisp.setText("$ " + String.format("%.2f", tipAmount));
 
     }
 
@@ -148,10 +148,11 @@ public class Calculator extends AppCompatActivity {
         }
         double_amount_tax = Double.valueOf(string_amount_tax);
         taxAmount = double_amount_tax * taxPerc;
+        double totalAmount = taxAmount + double_amount_tax;
 
-        taxPercDisp.setText(String.format("%.3f", taxPerc) + "%");
+        taxPercDisp.setText(String.format("%.2f", taxPerc) + "%");
         taxDisp = (TextView) findViewById(R.id.taxDisp);
-        taxDisp.setText(String.format("%.3f", taxAmount));
+        taxDisp.setText("$ " + String.format("%.2f", totalAmount));
 
     }
 
