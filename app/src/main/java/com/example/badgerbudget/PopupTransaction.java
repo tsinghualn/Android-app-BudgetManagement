@@ -57,7 +57,6 @@ public class PopupTransaction extends AppCompatActivity{
         ListView listview = (ListView) findViewById(R.id.transactionListView);
         listview.setAdapter(adapter);
 
-
     }
 
 

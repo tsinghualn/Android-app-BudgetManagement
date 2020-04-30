@@ -19,11 +19,17 @@ import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.Cartesian;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Description;
+//import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
+//import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -42,8 +48,9 @@ public class Report extends AppCompatActivity {
 
     String sMonth, sYear, eMonth, eYear;
     // new pie chart
-    PieChart pieChart;
-    ArrayList<PieEntry> yValues;
+
+    //Cartesian bar;
+
 
     // A bar chart that shows trend of overall spending/expense
     AnyChartView barChartView;
@@ -99,10 +106,8 @@ public class Report extends AppCompatActivity {
         passable = username;
 
 
-        pieChart = (PieChart)findViewById(R.id.piechart);
 
         //transaction = new Transaction(passable);
-
 
         // show&use navigation
         // navigation bar
@@ -161,26 +166,32 @@ public class Report extends AppCompatActivity {
      */
     public void viewExpenseBarChart(HashMap<String, Double> expByMonth){
 
-        barChartView=findViewById(R.id.bar_chart_view);
+        BarChart barChart = (BarChart) findViewById(R.id.bar_chart_view);
 
         Set<String> monthSet = expByMonth.keySet();
 
-        List<DataEntry> barDataEntries = new ArrayList<>();
+        ArrayList<BarEntry> entries = new ArrayList<>();
+        ArrayList monthYear = new ArrayList();
+
+        int count = 0;
 
         for(String month: monthSet){
-            barDataEntries.add(new ValueDataEntry(month, expByMonth.get(month)));
+            double tempAmount = expByMonth.get(month).doubleValue();
+            float amount = (float) tempAmount;
+            entries.add(new BarEntry(amount, count));
+            count ++;
+            monthYear.add(month);
         }
 
-        Cartesian bar = AnyChart.column();
+        //BarDataSet barDataSet = new BarDataSet(entries, "expense by month");
+        BarDataSet barDataSet = new BarDataSet(entries, "expense by month");
+        barDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+        //barChart.animateY(5000);
+        BarData data = new BarData(monthYear, barDataSet);
 
-        if(barDataEntries.isEmpty()){
-
-        } else {
-            bar.data(barDataEntries);
-            bar.title("Monthly expense trend");
-            barChartView.setChart(bar);
-
-        }
+        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        barChart.setData(data);
+        barChart.invalidate();
 
     }
 
@@ -193,52 +204,30 @@ public class Report extends AppCompatActivity {
      */
 
     public void viewCategPieChart(){
-
-        pieChart.setUsePercentValues(true);
-        pieChart.getDescription().setEnabled(false);
-        pieChart.setExtraOffsets(5,10,5,5);
-
-        pieChart.setDragDecelerationFrictionCoef(0.95f);
-
-        pieChart.setDrawHoleEnabled(false);
-        pieChart.setHoleColor(Color.BLACK);
-        pieChart.setTransparentCircleRadius(61f);
-
-        setyValues();
-        
-        Description description = new Description();
-        description.setText("Expense");
-        description.setTextSize(10);
-        pieChart.setDescription(description);
-
-        PieDataSet dataSet = new PieDataSet(yValues,"");
-        dataSet.setSliceSpace(3f);
-        dataSet.setSelectionShift(5f);
-        dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
-
-        PieData data = new PieData((dataSet));
-        data.setValueTextSize(10f);
-        data.setValueTextColor(Color.BLACK);
-
-        pieChart.setData(data);
-
-
-    }
-
-    public void setyValues(){
-
-        yValues = new ArrayList<PieEntry>();
-
+        PieChart pieChart = (PieChart)findViewById(R.id.piechart);
+        ArrayList<Entry> entries = new ArrayList<>();
+        ArrayList<String> labels = new ArrayList<String>();
         Set<String> cat = categList.keySet();
 
+        int count = 0;
         for(String category: cat){
             double tempAmount = categList.get(category).doubleValue();
             float amount = (float) tempAmount;
-            yValues.add(new PieEntry(amount, category));
+            entries.add(new Entry(amount, count));
+            //category
+            labels.add(category);
         }
+        PieDataSet pieDataSet = new PieDataSet(entries, "expense by category");
+        pieDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+        PieData data = new PieData(labels, pieDataSet);
+        pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
+        pieChart.setData(data);
+        pieChart.animateXY(1000,1000);
+        pieChart.invalidate();
 
     }
+
 
     public void createDropDownMenu(){
         // dropdown menu: startMonth
@@ -285,7 +274,7 @@ public class Report extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v){
-                pieChart.clear();
+
                 if(barChartView != null){
                     barChartView.clear();
                 }
@@ -342,7 +331,7 @@ public class Report extends AppCompatActivity {
                     // get total expense
                     TextView textView_totSpDisp = (TextView) findViewById(R.id.TotSpendDisp);
                     totalSpend = getTotalValue(expenseByMonth);
-                    textView_totSpDisp.setText("$" + totalSpend);
+                    textView_totSpDisp.setText("$" + String.format("%.2f", totalSpend));
 
                     // get total income
                     TextView textView_totIncDisp = (TextView) findViewById(R.id.TotIncDisp);
@@ -354,7 +343,8 @@ public class Report extends AppCompatActivity {
                     // salary - (- totalIncome)
                     double totalIncomeDisp = (double) (salary - totalIncome);
 
-                    textView_totIncDisp.setText("$" + totalIncomeDisp);
+                    textView_totIncDisp.setText("$" + String.format("%.2f", totalIncomeDisp));
+
 
                 } else {
                     Toast.makeText(Report.this,

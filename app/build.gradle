@@ -37,7 +37,9 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
 
     // for pie chart
-    implementation 'com.github.PhilJay:MpAndroidChart:v3.0.2'
+    //implementation 'com.github.PhilJay:MpAndroidChart:v3.0.2'
+    implementation 'com.github.PhilJay:MPAndroidChart:v2.2.4'
+
 
     // for line graph @Joon
     implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
