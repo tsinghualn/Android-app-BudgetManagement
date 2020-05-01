@@ -20,8 +20,6 @@ public class Transaction  extends Report{
     ArrayList<String[]> wholeTransaction = new ArrayList<>();
     double salary;
 
-    Double totalIncome;
-
 
     private static final Map<String, Integer> MONTHMAP = new HashMap<String, Integer>() {
         {
@@ -48,12 +46,30 @@ public class Transaction  extends Report{
     public Transaction(String username){
 
         client = new Client(6868, "10.0.2.2");
+
         this.passable = username;
+
         transaction = client.sendMessage("gettransactions;" + passable);
         userInfo = client.sendMessage("getuserinfo;" + passable);
-
         setSalary(userInfo);
         setTransaction(transaction);
+
+
+    }
+
+    // For testing
+    public Transaction(){
+
+        //transaction = client.sendMessage("gettransactions;" + passable);
+        //userInfo = client.sendMessage("getuserinfo;" + passable);
+        //setSalary(userInfo);
+        //setTransaction(transaction);
+        transaction = "";
+        userInfo = "";
+
+    }
+
+    public void setValues(){
 
     }
 
@@ -226,7 +242,7 @@ public class Transaction  extends Report{
 
 
 
-    public ArrayList<String[]> setwholeInRange(String sMonth, String sYear, String eMonth, String eYear) {
+/*    public ArrayList<String[]> setwholeInRange(String sMonth, String sYear, String eMonth, String eYear) {
 
         ArrayList<String[]> wholeTransInRange = new ArrayList<>();
         Integer sMonthInt = MONTHMAP.get(sMonth);
@@ -280,8 +296,9 @@ public class Transaction  extends Report{
             }
         }
         return wholeTransInRange;
-    }
+    }*/
 
+/*
 
     public ArrayList<String[]> setTransactionInRange(String sMonth, String sYear, String eMonth, String eYear){
 
@@ -338,6 +355,7 @@ public class Transaction  extends Report{
         }
         return expenseInRange;
     }
+*/
 
 
 
@@ -383,11 +401,8 @@ public class Transaction  extends Report{
                         expenseByMonth.put(monthYearPair, 0.0);
                     }
                 }
-
             }
-
         }
-
 
         for(String[] eachExpense: expenseInRange){
 
@@ -400,17 +415,7 @@ public class Transaction  extends Report{
 
             // amount in the transaction
             Double amount = Double.parseDouble(eachExpense[2]);
-            /*
-            if(expenseByMonth != null && expenseByMonth.containsKey(monthYearPair)){
-                // already exist in the hashmap
-                Double prevExpense = expenseByMonth.get(monthYearPair);
-                Double currentExpense = prevExpense + amount;
-                expenseByMonth.put(monthYearPair, currentExpense);
-            } else {
-                // doesn't exist in the hashmap
-                expenseByMonth.put(monthYearPair, amount);
-            }
-            */
+
             Double prevExpense = expenseByMonth.get(monthYearPair);
             Double currentExpense = prevExpense + amount;
             expenseByMonth.put(monthYearPair, currentExpense);
@@ -439,66 +444,6 @@ public class Transaction  extends Report{
         }
         return categList;
     }
-
-
-
-    public ArrayList<String[]> setIncomeInRange(String sMonth, String sYear, String eMonth, String eYear){
-
-        ArrayList<String[]> incomeInRange = new ArrayList<>();
-        Integer sMonthInt = MONTHMAP.get(sMonth);
-        Integer eMonthInt = MONTHMAP.get(eMonth);
-        Integer sYearInt = Integer.parseInt(sYear.trim());
-        Integer eYearInt = Integer.parseInt(eYear.trim());
-
-        for(String[] each: typeIncome){
-
-            // orderID [0]
-            // type [1]
-            // amount[2]
-            // date [3]
-            // month [4]
-            // year [5]
-            // category [6]
-
-            String amount = each[2];
-            String category = each[6];
-            int month = MONTHMAP.get(each[4]);
-
-            int year = Integer.parseInt(each[5].trim());
-
-            // year of transaction is in the range
-            if(sYearInt.intValue() <= year && year <= eYearInt.intValue()){
-
-                // the range is for same year (sYear = eYear = year)
-                if(sYearInt.intValue() == year && eYearInt.intValue() == year) {
-                    if(sMonthInt.intValue() <= month && month <= eMonthInt.intValue()){
-                        incomeInRange.add(each);
-                    }
-                } else {
-                    // year of transaction = start year
-                    if(sYearInt.intValue() == year) {
-                        if (sMonthInt.intValue() <= month && month <= 12) {
-                            // month of transaction is after start month of the range
-                            incomeInRange.add(each);
-                        }
-                        // year of transaction is not same with sYear or eYear, but in the range
-                    } else if(sYearInt.intValue() < year && year < eYearInt.intValue()){
-                        if (1 <= month && month <= 12){
-                            // valid month
-                            incomeInRange.add(each);
-                        }
-                    } else if(eYearInt.equals(year)){
-                        if(eMonthInt.intValue() >= month && month >= 1){
-                            // less than endMonth
-                            incomeInRange.add(each);
-                        }
-                    }
-                }
-            }
-        }
-        return incomeInRange;
-    }
-
 
     public LinkedHashMap<String, Double> getIncomeByMonth(ArrayList<String[]> incomeInRange){
 

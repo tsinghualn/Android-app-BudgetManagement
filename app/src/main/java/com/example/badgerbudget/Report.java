@@ -2,9 +2,7 @@ package com.example.badgerbudget;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,15 +11,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.anychart.AnyChart;
-import com.anychart.AnyChartView;
-import com.anychart.chart.common.dataentry.DataEntry;
-import com.anychart.chart.common.dataentry.ValueDataEntry;
-import com.anychart.charts.Cartesian;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
-//import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -29,18 +20,12 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
-//import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import static java.lang.Double.sum;
 
 
 public class Report extends AppCompatActivity {
@@ -48,15 +33,6 @@ public class Report extends AppCompatActivity {
     boolean valid = false;
 
     String sMonth, sYear, eMonth, eYear;
-    // new pie chart
-
-    //Cartesian bar;
-
-
-    // A bar chart that shows trend of overall spending/expense
-    AnyChartView barChartView;
-
-    double totalAmount;
 
     Spinner startMonth, endMonth, startYear, endYear;
     Button btnSubmit;
@@ -69,6 +45,7 @@ public class Report extends AppCompatActivity {
     // A list of pairs of month with corresponding expense in dollar
     LinkedHashMap<String, Double> categList;
     LinkedHashMap<String, Double> expenseByMonth,incomeByMonth;
+
     // map of month in string - month in integer
     private static final Map<String, Integer> MONTHMAP = new LinkedHashMap<String, Integer>() {
         {
@@ -87,13 +64,13 @@ public class Report extends AppCompatActivity {
         }
     };
 
-    String str_startMonth, str_endMonth, str_startYear, str_endYear;
-
     // Display total spend on Report and use for calculating expense proportion of each category
     double totalSpend = 0;
     // Display total income on Report
     double totalIncome = 0;
+    double totalAmount;
 
+    // username
     String passable;
     Transaction transaction;
 
@@ -106,10 +83,6 @@ public class Report extends AppCompatActivity {
         String username = un.getString("username");
         passable = username;
 
-
-
-        //transaction = new Transaction(passable);
-
         // show&use navigation
         // navigation bar
         navigation();
@@ -117,7 +90,6 @@ public class Report extends AppCompatActivity {
         // drop down menu (spinner)
         createDropDownMenu();
         addListenerOnButton();
-
 
     }
 
@@ -183,7 +155,6 @@ public class Report extends AppCompatActivity {
             monthYear.add(month);
         }
 
-        //BarDataSet barDataSet = new BarDataSet(entries, "expense by month");
         BarDataSet barDataSet = new BarDataSet(entries, "expense by month");
         barDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         //barChart.animateY(5000);
@@ -194,8 +165,6 @@ public class Report extends AppCompatActivity {
         barChart.invalidate();
 
     }
-
-
 
 
     /*
@@ -262,7 +231,6 @@ public class Report extends AppCompatActivity {
         // show adapter in the spinner
         endYear.setAdapter(eYearAdapter);
 
-
     }
 
     /* get the selected dropdown list value */
@@ -274,10 +242,6 @@ public class Report extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v){
-
-                if(barChartView != null){
-                    barChartView.clear();
-                }
 
                 sMonth = String.valueOf(startMonth.getSelectedItem());
                 sYear =  String.valueOf(startYear.getSelectedItem());
@@ -354,13 +318,6 @@ public class Report extends AppCompatActivity {
                     valid = false;
                 }
 
-                /*Toast.makeText(Report.this,
-                        "OnClickListener: " +
-                        "\nstartMonth : " + sMonth +
-                                " startYear: " + sYear +
-                        "\nendMoth : " + eMonth +
-                        " endYear: " + eYear,
-                        Toast.LENGTH_SHORT).show();*/
             }
         });
     }
@@ -427,7 +384,6 @@ public class Report extends AppCompatActivity {
             intent.putExtra("userID", passable);
             intent.putExtra("expInRange", expenseInRange);
             intent.putExtra("inInRange", incomeInRange);
-
 
             startActivity(intent);
 

@@ -25,14 +25,11 @@ import java.util.Set;
 
 public class Calculator extends AppCompatActivity {
 
-    double userPrice;
     double tipPerc, taxPerc;
-    String state;
     double tipAmount;
     double taxAmount;
 
     Spinner tip, tax;
-    Button btn_tip, btn_tax;
 
     EditText text_amount_tip, text_amount_tax;
     TextView tipDisp, taxDisp;
@@ -51,18 +48,23 @@ public class Calculator extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
+        taxPercDisp = (TextView) findViewById(R.id.taxPercDisp);
+        is = this.getResources().openRawResource(R.raw.statetax);
+        tip = (Spinner) findViewById(R.id.tipDropDown);
+        tax = (Spinner) findViewById(R.id.taxDropDown);
 
+        text_amount_tax = (EditText) findViewById(R.id.enterCost2);
+        // get user input amount
+        text_amount_tip = (EditText) findViewById(R.id.enterCost1);
         setStateTax();
         showDropDown();
         getTipPerc();
         getTaxPerc();
 
-
     }
 
     public void setStateTax(){
-        taxPercDisp = (TextView) findViewById(R.id.taxPercDisp);
-        is = this.getResources().openRawResource(R.raw.statetax);
+
         reader = new BufferedReader(new InputStreamReader(is));
         String data = "";
         if(is != null){
@@ -93,7 +95,6 @@ public class Calculator extends AppCompatActivity {
     private void showDropDown(){
 
         // tip dropdown
-        tip = (Spinner) findViewById(R.id.tipDropDown);
         ArrayAdapter<String> tipAdapter = new ArrayAdapter<String>(Calculator.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.Tip));
         tipAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -101,7 +102,7 @@ public class Calculator extends AppCompatActivity {
         tip.setAdapter(tipAdapter);
 
         // tax dropdown
-        tax = (Spinner) findViewById(R.id.taxDropDown);
+
         ArrayAdapter<String> taxAdapter = new ArrayAdapter<String>(Calculator.this,
                 android.R.layout.simple_list_item_1, statesList);
         taxAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -112,8 +113,6 @@ public class Calculator extends AppCompatActivity {
 
     public void onClick_tip(View view){
 
-        // get user input amount
-        text_amount_tip = (EditText) findViewById(R.id.enterCost1);
         String string_amount_tip = "";
         if(isEmpty(text_amount_tip)){
             string_amount_tip = "0.0";
@@ -138,7 +137,6 @@ public class Calculator extends AppCompatActivity {
 
     public void onClick_tax(View view){
 
-        text_amount_tax = (EditText) findViewById(R.id.enterCost2);
         String string_amount_tax = "";
 
         if(isEmpty(text_amount_tax)){
@@ -185,14 +183,8 @@ public class Calculator extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String tempState = tax.getSelectedItem().toString();
                 Set<String> keys = stateTaxList.keySet();
-/*                for(String key : keys){
-                    if(tempState.equals(key)){
-                        taxPerc = 0.01 * Double.valueOf(stateTaxList.get(key));
-                        break;
-                    }
-                }*/
                 taxPerc = findTaxPerc(tempState, keys);
-                //Toast.makeText(getApplicationContext(), "SELECTED " + taxPerc, Toast.LENGTH_SHORT). show();
+
             }
 
             @Override

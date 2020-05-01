@@ -3,11 +3,9 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class PopupTransaction extends AppCompatActivity{
@@ -18,7 +16,6 @@ public class PopupTransaction extends AppCompatActivity{
     String eMonth;
     String eYear;
     ArrayList<String[]> transInRange;
-
     String passable;
 
 
@@ -84,14 +81,13 @@ public class PopupTransaction extends AppCompatActivity{
             transList.add(putData(title, subTit));
 
         }
-
         return transList;
 
     }
 
 
-    private HashMap<String, String> putData(String title, String subTit) {
-        HashMap<String, String> item = new HashMap<String, String>();
+    private LinkedHashMap<String, String> putData(String title, String subTit) {
+        LinkedHashMap<String, String> item = new LinkedHashMap<String, String>();
         item.put("title", title);
         item.put("subTit", subTit);
         return item;
