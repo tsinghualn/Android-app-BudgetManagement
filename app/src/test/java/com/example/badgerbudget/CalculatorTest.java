@@ -1,5 +1,6 @@
 package com.example.badgerbudget;
 
+import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.EditText;
 
@@ -23,9 +24,6 @@ public class CalculatorTest {
 
     @Before
     public void setUp() throws Exception {
-        //calculator = Mockito.spy(new Calculator());
-        //text_amount_tip = mock(EditText.class);
-
 
 
     }
@@ -42,17 +40,22 @@ public class CalculatorTest {
     @Test
     public void setStateTax() {
 
+        Calculator calculator = new Calculator();
+
+
+        calculator.setStateTax();
+/*
+
         calculator = mock(Calculator.class);
         calculator.setStateTax();
         verify(calculator).setStateTax();
+*/
 
 
     }
 
     @Test
     public void onClick_tip() {
-
-
 
     }
 

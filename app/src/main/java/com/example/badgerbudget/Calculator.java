@@ -63,6 +63,7 @@ public class Calculator extends AppCompatActivity {
 
     }
 
+
     public void setStateTax(){
 
         reader = new BufferedReader(new InputStreamReader(is));
