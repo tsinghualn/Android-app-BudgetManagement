@@ -93,7 +93,7 @@ public class MainPageActivity extends AppCompatActivity {
                         total += trans;
                     }
                 }
-                totalAmount = String.valueOf(total);
+                totalAmount = String.format("%.2f", total);
             } else {
                 totalAmount = "0";
             }
@@ -114,6 +114,7 @@ public class MainPageActivity extends AppCompatActivity {
             // current expense
             TextView currentExpense = new TextView(getApplicationContext());
             String currentExpenseString = totalAmount;
+
         /*
         select sum(Amount) from Transaction
         where Type = 'expense' AND month(Datetime) = 3 And year(Datetime) = 2020 AND
