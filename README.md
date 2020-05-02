@@ -70,7 +70,77 @@ username: testuser, password: testuser
 - Username: user00, password: pass0000
 - Sample data can be imported by running the following queries on MySQL Workbench
 - QUERIES:
+```
+SELECT * FROM users.users;
+# INSERT USER Mannually in the application (to make a password encrypted)
 
+###############DONT FORGET TO CHANGE USERNAME!!! budgetinfo_USERID_ ####################
+###############user00 -> your userID #######################
+
+#category table
+SELECT * FROM budgetinfouser00.category;
+# INSERT INTO budgetinfouser00.category (categoryName, budget, month, year) VALUES ();
+INSERT INTO budgetinfouser00.category (categoryName, budget, month, year) VALUES ("Book", "100", "November", "2019"), ("Coffee", "100", "November", "2019"), 
+("salary", "0", "November", "2019"), ("Transportation", "100", "November", "2019");
+
+# transaction table 
+SELECT * FROM budgetinfouser00.transaction;
+# INSERT INTO budgetinfouser00.transaction (type, amount, date, month, year, category, note) VALUES ();
+# DELETE FROM budgetinfouser00.transaction WHERE orderId > 100 ;
+# transaction for November 19
+## both income and expense transaction exsit
+INSERT INTO budgetinfouser00.transaction (type, amount, date, month, year, category, note) VALUES ("Expense", "24.56", "11/1/19", "November", "2019", "Food", "Lunch"),
+("Expense", "5.42", "11/3/19", "November", "2019", "Coffee", "NULL"), ("Expense", "12.45", "11/5/19", "November", "2019", "Transportation", "Uber"),
+("Expense", "50.23", "11/5/19", "November", "2019", "Clothes", "Pants"), ("Income", "-200", "11/14/19", "November", "2019", "salary", "extraSalary"),
+("Expense", "60.59", "11/16/19", "November", "2019", "Book", "English"), ("Expense", "20.21", "11/20/19", "November", "2019", "Food", "Dinner"), 
+("Expense", "10.25", "11/25/19", "November", "2019", "Book", "NULL"), ("Income", "-100", "11/28/19", "November", "2019", "salary", "extraSalary");
+
+
+# transaction for December 19
+## both income and expense transaction exsit
+## no expense on book category
+# 
+INSERT INTO budgetinfouser00.transaction (type, amount, date, month, year, category, note) VALUES ("Expense", "21.26", "12/1/19", "December", "2019", "Food", "Lunch"),
+("Expense", "8.42", "12/3/19", "December", "2019", "Coffee", "NULL"), ("Expense", "24.45", "12/5/19", "December", "2019", "Transportation", "Uber"),
+("Expense", "89.23", "12/5/19", "December", "2019", "Clothes", "Pants"), ("Income", "-250", "12/10/19", "December", "2019", "salary", "extraSalary"), 
+("Expense", "32.59", "12/16/19", "December", "2019", "Food", "Steak"), ("Expense", "18.21", "12/20/19", "December", "2019", "Food", "Dinner"), 
+("Expense", "24.32", "12/21/19", "December", "2019", "Coffee", "powder"), ("Expense", "8.21", "12/21/19", "December", "2019", "Transportation", "Bus"), 
+("Expense", "39.25", "12/25/19", "December", "2019", "Groceries", "NULL"), ("Income", "-100", "12/28/19", "December", "2019", "salary", "extraSalary");
+
+# transaction for January 20
+## Income type transaction does not exist
+INSERT INTO budgetinfouser00.transaction (type, amount, date, month, year, category, note) VALUES ("Income", "-300", "01/10/20", "January", "20", "salary", "extraSalary"),
+("Expense", "23.32", "01/16/20", "January", "2020", "Food", "Steak"), ("Expense", "36.21", "01/20/20", "January", "2020", "Food", "Dinner"), 
+("Expense", "10.24", "01/21/20", "January", "2020", "Coffee", "powder"), ("Expense", "2.21", "01/21/20", "January", "2020", "Transportation", "Bus");
+
+
+# transaction for February 20
+INSERT INTO budgetinfouser00.transaction (type, amount, date, month, year, category, note) VALUES ("Income", "-150", "02/10/20", "February", "20", "salary", "extraSalary"),
+("Expense", "23.32", "02/16/20", "February", "2020", "Food", "Steak"), ("Expense", "36.21", "02/20/20", "February", "2020", "Food", "Dinner"), 
+("Expense", "10.24", "02/21/20", "February", "2020", "Coffee", "powder"), ("Expense", "2.21", "02/21/20", "February", "2020", "Transportation", "Bus");
+
+
+# transaction for March 20
+## both income and expense transaction exsit
+INSERT INTO budgetinfouser00.transaction (type, amount, date, month, year, category, note) VALUES ("Expense", "50.24", "03/1/20", "March", "2020", "Food", "Lunch"),
+("Expense", "9.42", "03/3/20", "March", "2020", "Coffee", "NULL"), ("Expense", "35.62", "03/5/20", "March", "2020", "Transportation", "Uber"),
+("Expense", "150.2", "03/5/20", "March", "2020", "Clothes", "Pants"), ("Income", "-50", "03/10/20", "March", "2020", "salary", "extraSalary"), 
+("Expense", "23.32", "03/16/20", "March", "2020", "Food", "Steak"), ("Expense", "36.21", "03/20/20", "March", "2020", "Food", "Dinner"), 
+("Expense", "10.24", "03/21/20", "March", "2020", "Coffee", "powder"), ("Expense", "2.21", "03/21/20", "March", "2020", "Transportation", "Bus"), 
+("Expense", "60.66", "03/25/20", "March", "2020", "Groceries", "NULL"), ("Income", "-200", "03/28/20", "March", "2020", "salary", "extraSalary");
+
+# transaction for April 20
+## both income and expense transaction exsit
+INSERT INTO budgetinfouser00.transaction (type, amount, date, month, year, category, note) VALUES ("Expense", "52.35", "04/1/20", "April", "2020", "Food", "Lunch"),
+("Expense", "3.41", "04/3/20", "April", "2020", "Coffee", "NULL"), ("Expense", "25.63", "04/5/20", "April", "2020", "Transportation", "Uber"),
+("Expense", "50.2", "04/5/20", "April", "2020", "Clothes", "Pants"), ("Income", "-100", "04/10/20", "April", "2020", "salary", "extraSalary"), 
+("Expense", "13.32", "04/16/20", "April", "2020", "Food", "Steak"), ("Expense", "48.21", "04/20/20", "April", "2020", "Food", "Dinner"), 
+("Expense", "24.24", "04/21/20", "April", "2020", "Coffee", "powder"), ("Expense", "10.21", "04/21/20", "April", "2020", "Transportation", "Bus"), 
+("Expense", "88.66", "04/25/20", "April", "2020", "Groceries", "NULL"), ("Expense", "13.31", "04/26/20", "April", "2020", "Coffee", "NULL"),
+("Income", "-250", "04/27/20", "April", "2020", "salary", "extraSalary"), ("Expense", "43.13", "04/28/20", "April", "2020", "Clothes", "NULL"),
+("Expense", "38.24", "04/29/20", "April", "2020", "Book", "Textbook"), ("Expense", "8.21", "04/29/20", "April", "2020", "Food", "Restaurant"),
+("Expense", "24.13", "04/30/20", "April", "2020", "Book", "Textbook2"), ("Expense", "4.21", "04/30/20", "April", "2020", "Coffee", "Starbucks");
+```
 
 
 Make sure you are running the server before running the tests.
