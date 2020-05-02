@@ -151,6 +151,8 @@ BudgetManagementApplication\app\build\reports\coverage\debug\index.html
 The summary of Espresso UI Test
 
 The summary of JUnit Server Test
+![ServerClientTestSummary](https://user-images.githubusercontent.com/50937419/80853374-ff9dc700-8bf5-11ea-802a-f24048b3e994.JPG)
+
 
 The summary of JUnit Backend Test
 
