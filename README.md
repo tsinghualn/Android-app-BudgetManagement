@@ -142,7 +142,6 @@ INSERT INTO budgetinfouser00.transaction (type, amount, date, month, year, categ
 ("Expense", "24.13", "04/30/20", "April", "2020", "Book", "Textbook2"), ("Expense", "4.21", "04/30/20", "April", "2020", "Coffee", "Starbucks");
 ```
 
-
 Make sure you are running the server before running the tests.
 
 You can find the summary of code coverage in:
@@ -155,7 +154,8 @@ The summary of JUnit Server Test
 ![ServerClientTestSummary](https://user-images.githubusercontent.com/50937419/80853374-ff9dc700-8bf5-11ea-802a-f24048b3e994.JPG)
 
 
-The summary of JUnit Backend Test: tests that are not linked with UI
+The summary of JUnit Backend Test: tests that are not linked with the interface
+![BackendTestSummary](https://user-images.githubusercontent.com/50937419/80853431-7aff7880-8bf6-11ea-9fe4-d3c92f13a609.JPG)
 
 
 
