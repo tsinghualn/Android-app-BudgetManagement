@@ -1,5 +1,7 @@
 # BudgetManagementApplication
 
+# Implement the server
+
 First, you need to implement the server.
 
 1. Download MySQL
@@ -45,6 +47,7 @@ f) Should be able to access the app with database after this.
 
 8. You now should be able to start the server in Eclipse or another IDE of your choice with the Driver in the classpath and then run the Android Studio app. 
 
+# Run the app
 
 Here are some instructions on how to run our application! After you have cloned our repository...
 1. Download Android Studio, if you do not already. You can download Android Studio from the following link: https://developer.android.com/studio
@@ -54,3 +57,32 @@ Here are some instructions on how to run our application! After you have cloned 
 5. Now, you should be able to hit the green triangle near the top left of the screen in Android Studio, and it can run on the AVD that you created earlier. You should be able to see the first page of our application, the login page.
 
 6. The only other thing that is needed to be done is for our UI Testing located in the filepath java/com.example.badgerbudget (androidTest)/ui.login is change the username and password for all the tests to a user you have created. Alternatively, you can also create a user in the application with username and password that are in the test cases. After one of these is done, the UI Tests should run smoothly. 
+
+# Testings
+We used Espresso and JUnit testing to test the application and server.
+
+If you want to try running Espresso UI testing,
+
+1. Create a new user: 
+username: testuser, password: testuser
+	
+2. Create a new user with sample data
+- Username: user00, password: pass0000
+- Sample data can be imported by running the following queries on MySQL Workbench
+- QUERIES:
+
+
+
+Make sure you are running the server before running the tests.
+
+You can find the summary of code coverage in:
+BudgetManagementApplication\app\build\reports\coverage\debug\index.html
+
+The summary of Espresso UI Test
+
+The summary of JUnit Server Test
+
+The summary of JUnit Backend Test
+
+
+
