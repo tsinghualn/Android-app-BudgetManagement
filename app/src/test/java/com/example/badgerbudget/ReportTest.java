@@ -13,22 +13,6 @@ import static org.junit.Assert.*;
 public class ReportTest {
 
     @Test
-    public void onCreate() {
-    }
-
-    @Test
-    public void viewExpenseBarChart() {
-    }
-
-    @Test
-    public void viewCategPieChart() {
-    }
-
-    @Test
-    public void createDropDownMenu() {
-    }
-
-    @Test
     public void isValidRange() {
         Report report = new Report();
 
@@ -70,8 +54,4 @@ public class ReportTest {
 
     }
 
-    @Test
-    public void onClick_viewTrans() {
-
-    }
 }
