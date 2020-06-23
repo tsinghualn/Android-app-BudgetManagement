@@ -145,7 +145,7 @@ INSERT INTO budgetinfouser00.transaction (type, amount, date, month, year, categ
 Make sure you are running the server before running the tests.
 
 You can find the summary of code coverage in:
-//BudgetManagementApplication\app\build\reports\coverage\debug\index.html
+BudgetManagementApplication\app\build\reports\coverage\debug\index.html
 
 The summary of Espresso UI Test
 ![UItestSummary](https://user-images.githubusercontent.com/50937419/80853405-468bbc80-8bf6-11ea-8810-9b05be207d5d.JPG)
