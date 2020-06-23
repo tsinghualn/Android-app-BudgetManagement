@@ -43,7 +43,7 @@ f) Should be able to access the app with database after this.
 
 6. Before you run it, since you’re required to log into MySQL with a database, we need to make one. 
 
-7. Well call it ‘User’. Click the create database button in MySQL and create the new schema. Then we need tables for userID, username, password, security question 1, security question 2, security question 3, birthday, and name. After that we’re good to go.  
+7. Well call it ‘Users’. Click the create database button in MySQL and create the new schema. Then we need tables for userID, username, password, security question 1, security question 2, security question 3, birthday, and name. After that we’re good to go.  
 
 8. You now should be able to start the server in Eclipse or another IDE of your choice with the Driver in the classpath and then run the Android Studio app. 
 
